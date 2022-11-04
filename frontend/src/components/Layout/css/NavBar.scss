@@ -1,0 +1,15 @@
+@import '@/global';
+
+.navbar {
+  background-color: $background;
+}
+
+.navbar-brand, .navbar-brand :hover {
+  font-weight: bold;
+  color: $main-theme;
+  margin-left: 2rem;
+}
+
+.navbar-nav :hover {
+  color: $main-theme;
+}

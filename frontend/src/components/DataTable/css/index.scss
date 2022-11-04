@@ -1,0 +1,15 @@
+@import "@/global";
+
+th, tr {
+  text-align: center;
+}
+
+#data-table-header {
+  border-radius: 10px;
+}
+
+#year-column {
+  color: white;
+  background: $main-theme;
+  border: none;
+}

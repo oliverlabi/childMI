@@ -1,0 +1,46 @@
+//Theme variables
+
+$main-theme: #0F758F;
+$background: #F2F2F2;
+
+//Global default styles
+
+body {
+  display: flex;
+}
+
+h1 {
+  color: black;
+}
+
+#root {
+  width: 100%;
+}
+
+#background #background-container-theme {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+#background {
+  margin-top: 25px;
+  width: 100%;
+}
+
+#background-title-container {
+  display: flex;
+  justify-content: flex-start;
+}
+
+#background-container-theme {
+  align-items: center;
+  padding: 20px;
+
+  width: fit-content;
+  min-height: 100px;
+  margin-top: 25px;
+  border-radius: 10px;
+
+  background-color: $background;
+}

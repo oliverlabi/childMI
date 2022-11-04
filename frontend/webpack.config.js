@@ -20,21 +20,49 @@ module.exports = {
                         },
                     },
                 ],
+            },
+            {
+                test: /\.(css|scss)$/,
+                use: [
+                    { loader: 'style-loader' },
+                    { loader: 'css-loader' },
+                    {
+                        loader: 'sass-loader',
+                        options: {
+                            sassOptions: {
+                                data: '@import "styles/global.scss";',
+                                includePaths: [__dirname, 'src']
+                            }
+                        }
+                    }
+                ],
+            },
+            {
+                test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
+                loader: 'url-loader',
+                options: {
+                    limit: 10000
+                }
             }
         ]
     },
     plugins: [isDevelopment && new ReactRefreshWebpackPlugin()].filter(Boolean),
 
     resolve: {
-        extensions: ['*', '.js', '.jsx', '.ts', '.tsx']
+        extensions: ['*', '.js', '.jsx', '.ts', '.tsx'],
+        alias: {
+            '@': path.join(__dirname, 'src'),
+        }
     },
     output: {
-        path: path.resolve(__dirname, './build'),
-        filename: 'bundle.js'
+        path: path.resolve(__dirname, './dist'),
+        filename: 'bundle.js',
+        publicPath: "/"
     },
 
     devServer: {
         hot: true,
-        static: path.resolve(__dirname, './build'),
+        static: path.resolve(__dirname, './dist'),
+        historyApiFallback: true,
     },
 };

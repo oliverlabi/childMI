@@ -5,6 +5,7 @@
     ["@babel/preset-react", {"runtime":  "automatic"}]
   ],
   "plugins": [
-    "react-refresh/babel"
+    "react-refresh/babel",
+    "transform-class-properties"
   ]
 }
