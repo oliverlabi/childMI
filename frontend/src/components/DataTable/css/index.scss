@@ -1,15 +1,28 @@
 @import "@/global";
 
-th, tr {
-  text-align: center;
+Table {
+  background-color: $tertiary-theme;
+  overflow: hidden;
+  border-radius: 10px;
 }
 
-#data-table-header {
-  border-radius: 10px;
+.table-responsive {
+  max-width: 99.9%;
+}
+
+th, tr {
+  overflow: auto;
+  text-align: center;
+  border-color: $secondary-theme  ;
+}
+
+#data-type-text {
+  align-self: flex-start;
 }
 
 #year-column {
   color: white;
   background: $main-theme;
   border: none;
+  min-width: 10%;
 }

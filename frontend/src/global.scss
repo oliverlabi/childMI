@@ -1,7 +1,8 @@
 //Theme variables
 
 $main-theme: #0F758F;
-$background: #F2F2F2;
+$secondary-theme: #F2F2F2;
+$tertiary-theme: white;
 
 //Global default styles
 
@@ -42,5 +43,5 @@ h1 {
   margin-top: 25px;
   border-radius: 10px;
 
-  background-color: $background;
+  background-color: $secondary-theme;
 }

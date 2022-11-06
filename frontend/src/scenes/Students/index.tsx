@@ -8,7 +8,7 @@ const Students = () => {
                 <h1>Õpilaste andmed</h1>
             </Container>
             <Container id="background-container-theme">
-                <p>Andmed: Kvantitatiivsed | Kvalitatiivsed</p>
+                <p id="data-type-text">Andmed: Kvantitatiivsed | Kvalitatiivsed</p>
                 <DataTable columns={[]} rows={[]} />
             </Container>
         </>
