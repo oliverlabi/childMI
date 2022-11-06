@@ -17,31 +17,3 @@ h1 {
 #root {
   width: 100%;
 }
-
-#background #background-container-theme {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-}
-
-#background {
-  margin-top: 25px;
-  width: 100%;
-}
-
-#background-title-container {
-  display: flex;
-  justify-content: flex-start;
-}
-
-#background-container-theme {
-  align-items: center;
-  padding: 20px;
-
-  width: fit-content;
-  min-height: 100px;
-  margin-top: 25px;
-  border-radius: 10px;
-
-  background-color: $secondary-theme;
-}

@@ -4,12 +4,21 @@
   background-color: $secondary-theme;
 }
 
-.navbar-brand, .navbar-brand :hover {
+.navbar-brand, .navbar-brand:hover, .navbar-brand:focus {
   font-weight: bold;
   color: $main-theme;
   margin-left: 2rem;
 }
 
-.navbar-nav :hover {
+.navbar-nav {
+  width: 100%;
+}
+
+.navbar-nav, .navbar-toggle {
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+
+.navbar-nav :hover, .navbar-nav .nav-link.active {
   color: $main-theme;
 }

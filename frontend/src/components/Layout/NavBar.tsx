@@ -5,13 +5,16 @@ import Navbar from 'react-bootstrap/Navbar';
 const NavBar = () => {
     return (
         <>
-            <Navbar>
-                    <Navbar.Brand>Lastekeele korpuse haldusliides</Navbar.Brand>
-                    <Nav className="me-auto">
-                        <Nav.Link href="/students">Õpilased</Nav.Link>
+            <Navbar expand="md">
+                <Navbar.Brand>Lastekeele korpuse haldusliides</Navbar.Brand>
+                <Navbar.Toggle className="navbar-toggle"></Navbar.Toggle>
+                <Navbar.Collapse role={undefined}>
+                    <Nav className="justify-content-end" activeKey={location.pathname}>
+                        <Nav.Link href="/">Õpilased</Nav.Link>
                         <Nav.Link href="/teachers">Õpetajad</Nav.Link>
                         <Nav.Link href="/schools">Koolid</Nav.Link>
                     </Nav>
+                </Navbar.Collapse>
             </Navbar>
         </>
     )
