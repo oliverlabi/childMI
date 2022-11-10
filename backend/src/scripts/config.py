@@ -9,8 +9,11 @@ import mysql.connector
 excludedGroups = ["Taustaandmed", "Kodune keelekeskkond"]
 excludedProperties = ["Kommentaarid"]
 
+parentGroupName = "Taustaandmed"
+
 # Excel file
 dataframe = pd.read_excel('./data/qv-2020-1.ods', index_col=0, header=2)
+dataframe = dataframe.where(dataframe.notna(), None)
 
 # -------------------------------------------------------------------------------
 

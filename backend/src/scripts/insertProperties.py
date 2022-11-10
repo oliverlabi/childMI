@@ -10,8 +10,10 @@ lastGroupIndex = None
 i = 1
 for group, value in rawPropertiesWithGroups:
     group = group.capitalize()
+
     if not "Unnamed" in group and group not in excludedGroups:
         lastGroupIndex = lookupIndex(group, propertyGroups)
+
     if lastGroupIndex is not None:
         if propertyHeaders[i - 1] not in excludedProperties:
             properties.append({"name": propertyHeaders[i - 1], "group": lastGroupIndex})

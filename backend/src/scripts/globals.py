@@ -29,18 +29,29 @@ def lookupIndex(lookupValue, dictionary):
             return key
 
 
-def lookupGroupProperties(lookupValue, propertiesWithGroups, headers):
+def lookupGroupProperties(lookupValue, propertiesWithGroups, headers, excludedProps):
     properties = []
-    currentGroup = None
+    lastValidHeader = None
+
     i = 0
     for key, value in propertiesWithGroups:
         key = key.capitalize()
-        if key == lookupValue or currentGroup == lookupValue:
-            properties.append({"name": headers[i]})
-            if not "Unnamed" in key:
-                currentGroup = key
-                if lookupValue != key:
-                    break
+        if not "Unnamed" in key:
+            lastValidHeader = key
+
+        if headers[i] in excludedProps:
+            i += 1
+            continue
+
+        if lastValidHeader != lookupValue:
+            i += 1
+            continue
+
+        properties.append({"index": i, "name": headers[i]})
+
+        if lastValidHeader != lookupValue:
+            break
+
         i += 1
 
     return properties
