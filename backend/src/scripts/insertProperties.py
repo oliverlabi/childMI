@@ -7,8 +7,6 @@ propertyGroups = list(({"id":id, "name":name, "sheet_id":sheet_id}) for (id, nam
 
 properties = []
 
-print(propertyGroups)
-
 lastGroupIndex = None
 i = 1
 for group, value in rawPropertiesWithGroups:
