@@ -9,6 +9,8 @@ import mysql.connector
 excludedGroups = ["Taustaandmed", "Kodune keelekeskkond"]
 excludedProperties = ["Kommentaarid"]
 
+commentPropertyName = "Kommentaarid"
+commentGroupName = "Kirjutamine"
 parentGroupName = "Taustaandmed"
 
 # Excel file

@@ -29,6 +29,10 @@ def lookupIndex(lookupValue, dictionary):
             return key
 
 
+def lookupDictInList(lookupValue, dictionary, itemName):
+    return next(item for item in dictionary if item[itemName] == lookupValue)
+
+
 def lookupGroupProperties(lookupValue, propertiesWithGroups, headers, excludedProps):
     properties = []
     lastValidHeader = None
