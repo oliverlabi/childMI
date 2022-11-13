@@ -1,11 +1,11 @@
 from globals import *
 
 excludedProperties = []
-parentHeaders = lookupGroupProperties(parentGroupName, rawPropertiesWithGroups, propertyHeaders, excludedProperties)
+childHeaders = lookupGroupProperties(parentGroupName, rawPropertiesWithGroups, propertyHeaders, excludedProperties)
 
 childData = []
 
-firstHeader = parentHeaders[0]["index"]
+firstHeader = childHeaders[0]["index"]
 
 currentDataFrame = dataframe.iloc[1:, [firstHeader]].drop_duplicates()
 
