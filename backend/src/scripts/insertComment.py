@@ -1,25 +1,24 @@
 from globals import *
 
-excludedProperties = []
-writingHeaders = lookupGroupProperties(commentGroupName, rawPropertiesWithGroups, propertyHeaders, excludedProperties)
+cursor.execute("SELECT id, name_code FROM child")
 
-comments = []
-headers = []
+childData = list(cursor.fetchall())
+childData = list(({"id": child_id, "name_code": name}) for (child_id, name) in childData)
 
-commentDictValue = lookupDictInList(commentPropertyName, writingHeaders, "name")
+excelCommentData = dataframe.iloc[1:, -1:]
+excelChildIndexes = dataframe.iloc[1:, 1:2]
 
-currentDataFrame = dataframe.iloc[1:, [commentDictValue["index"]]]
+commentData = []
 
-for i in range(0, len(currentDataFrame.iloc[0:])):
-    comment = currentDataFrame.iloc[0:, [0]].iloc[i, 0]
+for i in range(0, len(excelCommentData.iloc[0:])):
 
-    if comment is None:
-        continue
+    comment = excelCommentData.iloc[0:, [0]].iloc[i, 0]
+    excelChildNameCode = excelChildIndexes.iloc[0:, [0]].iloc[i, 0]
 
-    comments.append({"child_id": i, "comment": comment})
+    childID = lookupDictInList(str(excelChildNameCode), childData, "name_code")["id"]
 
-sql = "INSERT INTO comment (child_id, comment) SELECT * FROM (SELECT (%(child_id)s), %(comment)s) AS tmp WHERE NOT EXISTS (SELECT child_id, comment FROM comment WHERE child_id = (%(child_id)s) AND comment = (%(comment)s)) LIMIT 1"
+    if comment != '':
+        commentData.append({"child_id": childID, "comment": comment})
 
-print(comments)
-
-insertData(sql, comments)
+sql = "INSERT INTO comment (child_id, comment) SELECT * FROM (SELECT (%(child_id)s), (%(comment)s)) AS tmp WHERE NOT EXISTS (SELECT child_id, comment FROM comment WHERE child_id = (%(child_id)s) AND comment = (%(comment)s)) LIMIT 1"
+insertData(sql, commentData)
