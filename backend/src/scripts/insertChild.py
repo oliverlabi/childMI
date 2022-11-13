@@ -12,6 +12,8 @@ currentDataFrame = dataframe.iloc[1:, firstHeader:childHeadersLength]
 
 for i in range(0, len(currentDataFrame.iloc[0:])):
     teacherCode = currentDataFrame.iloc[0:, [0]].iloc[i, 0]
+    teacherCode = teacherCode.split(' ', 1)
+
     nameCode = currentDataFrame.iloc[0:, [1]].iloc[i, 0]
     if nameCode is None:
         nameCode = "Nimeviga"
@@ -26,8 +28,8 @@ for i in range(0, len(currentDataFrame.iloc[0:])):
     else:
         special_need = 0
 
-    childData.append({"t_name_code": teacherCode, "c_name_code": str(nameCode), "age": age, "gender": gender, "special_need": special_need})
+    childData.append({"first_name": teacherCode[0], "last_name": teacherCode[1], "c_name_code": str(nameCode), "age": age, "gender": gender, "special_need": special_need})
 
-sql = "INSERT INTO child (name_code, age, gender, special_need) SELECT * FROM (SELECT %(c_name_code)s, %(age)s, %(gender)s, %(special_need)s) AS tmp WHERE NOT EXISTS (SELECT t.name_code, c.name_code, c.age, c.gender, c.special_need FROM child c, teacher t WHERE t.name_code = (%(t_name_code)s) AND c.name_code = (%(c_name_code)s) AND c.age = (%(age)s) AND gender = (%(gender)s) AND special_need = (%(special_need)s)) LIMIT 1"
+sql = "INSERT INTO child (name_code, age, gender, special_need) SELECT * FROM (SELECT %(c_name_code)s, %(age)s, %(gender)s, %(special_need)s) AS tmp WHERE NOT EXISTS (SELECT t.first_name, t.last_name, c.name_code, c.age, c.gender, c.special_need FROM child c, teacher t WHERE t.first_name = (%(first_name)s) AND t.last_name = (%(last_name)s) AND c.name_code = (%(c_name_code)s) AND c.age = (%(age)s) AND gender = (%(gender)s) AND special_need = (%(special_need)s)) LIMIT 1"
 
 insertData(sql, childData)
