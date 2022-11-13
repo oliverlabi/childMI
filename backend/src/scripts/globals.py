@@ -16,6 +16,7 @@ excludedProperties = ["Kommentaarid"]
 commentPropertyName = "Kommentaarid"
 commentGroupName = "Kirjutamine"
 childDataGroupName = "Taustaandmed"
+childNameProperty = "Lapse kood"
 
 for group in rawPropertyGroups:
     if not "Unnamed" in group:
@@ -29,12 +30,6 @@ def insertData(sql, variables):
     childMI.commit()
     print(cursor.rowcount, "was inserted.")
     cursor.close()
-
-
-def lookupIndex(lookupValue, dictionary):
-    for key, value in dictionary.items():
-        if value == lookupValue:
-            return key
 
 
 def lookupDictInList(lookupValue, listData, itemName):
