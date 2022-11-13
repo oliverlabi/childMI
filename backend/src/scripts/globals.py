@@ -9,6 +9,14 @@ allPropertyGroups = []  # capitalized rawPropertyGroup values without unnamed da
 
 propertyHeaders = dataframe.iloc[0].values
 
+# Exclude groups to properly set data to properties and property_group
+excludedGroups = ["Taustaandmed", "Kodune keelekeskkond"]
+excludedProperties = ["Kommentaarid"]
+
+commentPropertyName = "Kommentaarid"
+commentGroupName = "Kirjutamine"
+childDataGroupName = "Taustaandmed"
+
 for group in rawPropertyGroups:
     if not "Unnamed" in group:
         allPropertyGroups.append(group.capitalize())

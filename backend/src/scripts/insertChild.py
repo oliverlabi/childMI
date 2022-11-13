@@ -1,7 +1,7 @@
 from globals import *
 
 excludedProperties = []
-childHeaders = lookupGroupProperties(parentGroupName, rawPropertiesWithGroups, propertyHeaders, excludedProperties)
+childHeaders = lookupGroupProperties(childDataGroupName, rawPropertiesWithGroups, propertyHeaders, excludedProperties)
 
 childData = []
 

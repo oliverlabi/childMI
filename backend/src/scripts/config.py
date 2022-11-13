@@ -3,16 +3,6 @@ import mysql.connector
 
 # -------------------------------------------------------------------------------
 
-# Per file configurations
-
-# Exclude groups to properly set data to properties and property_group
-excludedGroups = ["Taustaandmed", "Kodune keelekeskkond"]
-excludedProperties = ["Kommentaarid"]
-
-commentPropertyName = "Kommentaarid"
-commentGroupName = "Kirjutamine"
-parentGroupName = "Taustaandmed"
-
 # Excel file
 fileName = "qv-2020-1.ods"
 
