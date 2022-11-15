@@ -5,8 +5,17 @@ cursor.execute("SELECT id, name_code FROM child")
 childData = list(cursor.fetchall())
 childData = list(({"id": child_id, "name_code": name}) for (child_id, name) in childData)
 
-excelCommentData = dataframe.iloc[1:, -1:]
-excelChildIndexes = dataframe.iloc[1:, 1:2]
+excludedProperties = []
+
+childHeaders = lookupGroupProperties(childDataGroupName, rawPropertiesWithGroups, propertyHeaders, excludedProperties)
+rawPropertiesWithGroups = dataframe.items()
+commentGroup = lookupGroupProperties(writingGroupName, rawPropertiesWithGroups, propertyHeaders, excludedProperties)
+
+commentDataIndex = lookupPropertyInGroup(commentProperty, "name", commentGroup)["index"]
+childDataIndex = lookupPropertyInGroup(childNameProperty, "name", childHeaders)["index"]
+
+excelCommentData = dataframe.iloc[1:, commentDataIndex:]
+excelChildIndexes = dataframe.iloc[1:, childDataIndex:childDataIndex + 1]
 
 commentData = []
 

@@ -5,10 +5,12 @@ childHeaders = lookupGroupProperties(childDataGroupName, rawPropertiesWithGroups
 
 childData = []
 
+teacherDataIndex = lookupPropertyInGroup(teacherNameProperty, "name", childHeaders)["index"]
+
 firstHeader = childHeaders[0]["index"]
 childHeadersLength = len(childHeaders) + 1
 
-currentDataFrame = dataframe.iloc[1:, firstHeader:childHeadersLength]
+currentDataFrame = dataframe.iloc[1:, teacherDataIndex:childHeadersLength]
 
 for i in range(0, len(currentDataFrame.iloc[0:])):
     teacherCode = currentDataFrame.iloc[0:, [0]].iloc[i, 0]

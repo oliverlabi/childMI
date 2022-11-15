@@ -1,5 +1,10 @@
 from globals import *
 
+childHeaders = lookupGroupProperties(childDataGroupName, rawPropertiesWithGroups, propertyHeaders, excludedProperties)
+
+teacherDataIndex = lookupPropertyInGroup(teacherNameProperty, "name", childHeaders)["index"]
+childDataIndex = lookupPropertyInGroup(childNameProperty, "name", childHeaders)["index"]
+
 cursor.execute("SELECT id, name_code FROM child")
 
 childData = list(cursor.fetchall())
@@ -10,7 +15,7 @@ cursor.execute("SELECT id, first_name, last_name FROM teacher")
 teacherData = list(cursor.fetchall())
 teacherData = list(({"id": teacher_id, "first_name": first_name, "last_name": last_name}) for (teacher_id, first_name, last_name) in teacherData)
 
-excelChildTeacherData = dataframe.iloc[1:, 0:2]
+excelChildTeacherData = dataframe.iloc[1:, [teacherDataIndex, childDataIndex]]
 
 childTeacherData = []
 

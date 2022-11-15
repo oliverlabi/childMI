@@ -1,5 +1,14 @@
 from globals import *
 
+childHeaders = lookupGroupProperties(childDataGroupName, rawPropertiesWithGroups, propertyHeaders, excludedProperties)
+
+if schoolNameProperty == 0:
+    schoolDataIndex = lookupPropertyInGroup(schoolNameProperty, "name", childHeaders)["index"]
+else:
+    schoolDataIndex = 0
+
+teacherDataIndex = lookupPropertyInGroup(teacherNameProperty, "name", childHeaders)["index"]
+
 cursor.execute("SELECT id, name FROM school")
 
 schoolData = list(cursor.fetchall())

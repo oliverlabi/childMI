@@ -13,10 +13,12 @@ propertyHeaders = dataframe.iloc[0].values
 excludedGroups = ["Taustaandmed", "Kodune keelekeskkond"]
 excludedProperties = ["Kommentaarid"]
 
-commentPropertyName = "Kommentaarid"
-commentGroupName = "Kirjutamine"
+writingGroupName = "Kirjutamine"
 childDataGroupName = "Taustaandmed"
 childNameProperty = "Lapse kood"
+commentProperty = "Kommentaarid"
+teacherNameProperty = "Õpetaja kood"
+schoolNameProperty = "Kool"
 
 for group in rawPropertyGroups:
     if not "Unnamed" in group:
@@ -34,6 +36,12 @@ def insertData(sql, variables):
 
 def lookupDictInList(lookupValue, listData, itemName):
     return next(item for item in listData if item[itemName] == lookupValue)
+
+
+def lookupPropertyInGroup(lookupValue, itemName, list):
+    for value in list:
+        if value[itemName] == lookupValue:
+            return value
 
 
 def lookupGroupProperties(lookupValue, propertiesWithGroups, headers, excludedProps):
