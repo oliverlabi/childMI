@@ -10,15 +10,20 @@ allPropertyGroups = []  # capitalized rawPropertyGroup values without unnamed da
 propertyHeaders = dataframe.iloc[0].values
 
 # Exclude groups to properly set data to properties and property_group
-excludedGroups = ["Taustaandmed", "Kodune keelekeskkond"]
-excludedProperties = ["Kommentaarid"]
+
 
 writingGroupName = "Kirjutamine"
 childDataGroupName = "Taustaandmed"
+parentDataGroupName = "Kodune keelekeskkond"
 childNameProperty = "Lapse kood"
 commentProperty = "Kommentaarid"
 teacherNameProperty = "Õpetaja kood"
+childLanguageProperty = "Mis keelt laps ise kodus räägib?"
+childLanguageExposureProperty = "Mis keeltega on lapsel veel kokkupuuteid?"
 schoolNameProperty = "Kool"
+
+excludedGroups = [childDataGroupName, parentDataGroupName]
+excludedProperties = [commentProperty]
 
 for group in rawPropertyGroups:
     if not "Unnamed" in group:
