@@ -9,6 +9,8 @@ def appendDataIfNotExist(languageArray, languageDict, columnName):
 
 parentHeaders = lookupGroupProperties(parentDataGroupName, rawPropertiesWithGroups, propertyHeaders, excludedProperties)
 
+excludedGroups = []
+excludedProperties = []
 parentData = []
 
 parentDataStartIndex = parentHeaders[0]["index"]

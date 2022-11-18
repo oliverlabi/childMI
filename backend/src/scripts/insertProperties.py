@@ -1,5 +1,7 @@
 from globals import *
 
+excludedGroups = [childDataGroupName]
+excludedProperties = [commentProperty, childLanguageProperty, childLanguageExposureProperty]
 cursor.execute("SELECT * FROM property_group")
 
 propertyGroups = list(cursor.fetchall())

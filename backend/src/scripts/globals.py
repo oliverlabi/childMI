@@ -5,12 +5,9 @@ from config import *
 rawPropertiesWithGroups = dataframe.items()
 
 rawPropertyGroups = dataframe.columns
-allPropertyGroups = []  # capitalized rawPropertyGroup values without unnamed data
+allPropertyGroups = []  # capitalized rawPropertyGroup values without unnamed data headers
 
 propertyHeaders = dataframe.iloc[0].values
-
-# Exclude groups to properly set data to properties and property_group
-
 
 writingGroupName = "Kirjutamine"
 childDataGroupName = "Taustaandmed"
@@ -21,6 +18,8 @@ teacherNameProperty = "Õpetaja kood"
 childLanguageProperty = "Mis keelt laps ise kodus räägib?"
 childLanguageExposureProperty = "Mis keeltega on lapsel veel kokkupuuteid?"
 schoolNameProperty = "Kool"
+
+# Exclude groups to properly set data to properties and property_group
 
 excludedGroups = [childDataGroupName, parentDataGroupName]
 excludedProperties = [commentProperty]

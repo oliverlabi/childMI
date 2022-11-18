@@ -1,5 +1,6 @@
 from globals import *
 
+excludedGroups = [childDataGroupName]
 propertyGroups = []
 
 for group in allPropertyGroups:
