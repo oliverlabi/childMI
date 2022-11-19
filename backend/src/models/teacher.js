@@ -6,10 +6,6 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
-    name_code: {
-      type: DataTypes.STRING(75),
-      allowNull: true
-    },
     first_name: {
       type: DataTypes.STRING(75),
       allowNull: false
@@ -20,7 +16,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     start_year: {
       type: DataTypes.DATE,
-      allowNull: false
+      allowNull: true
     }
   }, {
     sequelize,

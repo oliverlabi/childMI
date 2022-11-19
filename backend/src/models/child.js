@@ -15,7 +15,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     gender: {
-      type: DataTypes.TINYINT,
+      type: DataTypes.STRING(1),
       allowNull: false
     },
     special_need: {

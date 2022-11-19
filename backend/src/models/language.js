@@ -6,8 +6,8 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
-    group: {
-      type: DataTypes.STRING(50),
+    language_name: {
+      type: DataTypes.STRING(75),
       allowNull: false
     }
   }, {

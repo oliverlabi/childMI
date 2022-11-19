@@ -7,11 +7,10 @@ const _comment = require("./comment");
 const _grading_paper = require("./grading_paper");
 const _language = require("./language");
 const _language_group = require("./language_group");
-const _parent = require("./parent");
-const _parent_children_language = require("./parent_children_language");
 const _properties = require("./properties");
 const _property_group = require("./property_group");
 const _school = require("./school");
+const _sheet = require("./sheet");
 const _teacher = require("./teacher");
 const _teacher_children = require("./teacher_children");
 const _teacher_school = require("./teacher_school");
@@ -25,11 +24,10 @@ function initModels(sequelize) {
   const grading_paper = _grading_paper(sequelize, DataTypes);
   const language = _language(sequelize, DataTypes);
   const language_group = _language_group(sequelize, DataTypes);
-  const parent = _parent(sequelize, DataTypes);
-  const parent_children_language = _parent_children_language(sequelize, DataTypes);
   const properties = _properties(sequelize, DataTypes);
   const property_group = _property_group(sequelize, DataTypes);
   const school = _school(sequelize, DataTypes);
+  const sheet = _sheet(sequelize, DataTypes);
   const teacher = _teacher(sequelize, DataTypes);
   const teacher_children = _teacher_children(sequelize, DataTypes);
   const teacher_school = _teacher_school(sequelize, DataTypes);
@@ -44,24 +42,20 @@ function initModels(sequelize) {
   child.hasMany(comment, { as: "comments", foreignKey: "child_id"});
   grading_paper.belongsTo(child, { as: "child", foreignKey: "child_id"});
   child.hasMany(grading_paper, { as: "grading_papers", foreignKey: "child_id"});
-  parent_children_language.belongsTo(child, { as: "child", foreignKey: "child_id"});
-  child.hasMany(parent_children_language, { as: "parent_children_languages", foreignKey: "child_id"});
   teacher_children.belongsTo(child, { as: "child", foreignKey: "child_id"});
   child.hasMany(teacher_children, { as: "teacher_children", foreignKey: "child_id"});
   child_language.belongsTo(language, { as: "language", foreignKey: "language_id"});
   language.hasMany(child_language, { as: "child_languages", foreignKey: "language_id"});
-  parent_children_language.belongsTo(language, { as: "language", foreignKey: "language_id"});
-  language.hasMany(parent_children_language, { as: "parent_children_languages", foreignKey: "language_id"});
   child_language_group.belongsTo(language_group, { as: "language_group", foreignKey: "language_group_id"});
   language_group.hasMany(child_language_group, { as: "child_language_groups", foreignKey: "language_group_id"});
-  parent_children_language.belongsTo(parent, { as: "parent", foreignKey: "parent_id"});
-  parent.hasMany(parent_children_language, { as: "parent_children_languages", foreignKey: "parent_id"});
   child_properties.belongsTo(properties, { as: "property", foreignKey: "property_id"});
   properties.hasMany(child_properties, { as: "child_properties", foreignKey: "property_id"});
   properties.belongsTo(property_group, { as: "group_property_group", foreignKey: "group"});
   property_group.hasMany(properties, { as: "properties", foreignKey: "group"});
   teacher_school.belongsTo(school, { as: "school", foreignKey: "school_id"});
   school.hasMany(teacher_school, { as: "teacher_schools", foreignKey: "school_id"});
+  property_group.belongsTo(sheet, { as: "sheet", foreignKey: "sheet_id"});
+  sheet.hasMany(property_group, { as: "property_groups", foreignKey: "sheet_id"});
   teacher_children.belongsTo(teacher, { as: "teacher", foreignKey: "teacher_id"});
   teacher.hasMany(teacher_children, { as: "teacher_children", foreignKey: "teacher_id"});
   teacher_school.belongsTo(teacher, { as: "teacher", foreignKey: "teacher_id"});
@@ -76,11 +70,10 @@ function initModels(sequelize) {
     grading_paper,
     language,
     language_group,
-    parent,
-    parent_children_language,
     properties,
     property_group,
     school,
+    sheet,
     teacher,
     teacher_children,
     teacher_school,

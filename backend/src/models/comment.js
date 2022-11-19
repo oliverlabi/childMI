@@ -15,7 +15,7 @@ module.exports = function(sequelize, DataTypes) {
       }
     },
     comment: {
-      type: DataTypes.STRING(150),
+      type: DataTypes.STRING(750),
       allowNull: false
     }
   }, {

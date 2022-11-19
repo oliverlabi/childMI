@@ -21,6 +21,10 @@ module.exports = function(sequelize, DataTypes) {
     season: {
       type: DataTypes.INTEGER,
       allowNull: false
+    },
+    url: {
+      type: DataTypes.STRING(300),
+      allowNull: true
     }
   }, {
     sequelize,

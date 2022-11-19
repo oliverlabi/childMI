@@ -1,22 +1,22 @@
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('parent', {
+  return sequelize.define('sheet', {
     id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    gender: {
-      type: DataTypes.STRING(1),
+    year: {
+      type: DataTypes.DATE,
       allowNull: false
     },
-    biological: {
-      type: DataTypes.TINYINT,
-      allowNull: false
+    url: {
+      type: DataTypes.STRING(200),
+      allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'parent',
+    tableName: 'sheet',
     timestamps: false,
     indexes: [
       {

@@ -10,9 +10,13 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(75),
       allowNull: false
     },
-    type: {
+    sheet_id: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: 'sheet',
+        key: 'id'
+      }
     }
   }, {
     sequelize,
@@ -25,6 +29,13 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "id" },
+        ]
+      },
+      {
+        name: "property_group_sheet_idx",
+        using: "BTREE",
+        fields: [
+          { name: "sheet_id" },
         ]
       },
     ]
