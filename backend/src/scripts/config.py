@@ -9,7 +9,9 @@ fileName = "qv-2020-1.ods"
 splitFileName = fileName.split("-")
 currentSheetDataType = splitFileName[0]
 currentSheetYear = splitFileName[1]
-currentSheetID = splitFileName[2].split(".")[0]
+currentSheetSeason = splitFileName[2].split(".")[0]
+currentSheetURL = 'https://drive.google.com/drive/u/1/folders/1-DNyesUvEzLJZSrEFVuri1R9hDMdnzOi'
+currentSheetID = "1"
 
 dataframe = pd.read_excel("./data/" + fileName, index_col=0, header=2, keep_default_na=False)
 dataframe = dataframe.where(dataframe.notna(), None)
