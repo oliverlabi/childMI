@@ -1,16 +1,18 @@
 const express = require("express");
 const cors = require("cors");
+const dbModels = require("./models");
+const childRoutes = require("./routes/child")
 
 const app = express();
+app.use(express.json());
 
 const corsOptions = {
-    origin: "http://localhost:8081"
+    origin: "http://localhost:" + process.env.PORT || 8081
 };
 
 app.use(cors(corsOptions));
 
-const db = require("./src/models");
-db.sequelize.sync({ force: true })
+dbModels.sequelize.sync({ force: false })
     .then(() => {
         console.log("Synced db.");
     })
@@ -18,15 +20,11 @@ db.sequelize.sync({ force: true })
         console.log("Failed to sync db: " + err.message);
     });
 
-app.use(express.json());
-
-app.use(express.urlencoded({ extended: true }));
-
-app.get("/", (req, res) => {
-    res.json({ message: "childMI API" });
-});
+app.use("/api/child", childRoutes);
 
 const PORT = process.env.PORT || 8081;
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}.`);
+    console.log("Server is running on port ${PORT}.");
 });
+
+module.exports = app
