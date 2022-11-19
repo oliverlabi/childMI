@@ -5,7 +5,7 @@ childHeaders = lookupGroupProperties(childDataGroupName, rawPropertiesWithGroups
 teacherDataIndex = lookupPropertyInGroup(teacherNameProperty, "name", childHeaders)["index"]
 childDataIndex = lookupPropertyInGroup(childNameProperty, "name", childHeaders)["index"]
 
-cursor.execute("SELECT id, name_code FROM child")
+cursor.execute("SELECT c.id, c.name_code FROM child c JOIN child_properties cp on c.id = cp.child_id JOIN properties p on cp.property_id = p.id JOIN property_group pg on p.group = pg.id RIGHT JOIN sheet s on pg.sheet_id = s.id WHERE s.id = " + currentSheetID + " GROUP BY c.id, c.name_code")
 
 childData = list(cursor.fetchall())
 childData = list(({"id": child_id, "name_code": name}) for (child_id, name) in childData)

@@ -2,7 +2,7 @@ from globals import *
 
 excludedGroups = [childDataGroupName]
 excludedProperties = [commentProperty, childLanguageProperty, childLanguageExposureProperty]
-cursor.execute("SELECT * FROM property_group")
+cursor.execute("SELECT * FROM property_group WHERE sheet_id=" + currentSheetID)
 
 propertyGroups = list(cursor.fetchall())
 propertyGroups = list(({"id":id, "name":name, "sheet_id":sheet_id}) for (id, name, sheet_id) in propertyGroups)

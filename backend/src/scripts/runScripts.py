@@ -24,11 +24,11 @@ subprocess.call("insertLanguage.py", shell=True)
 print("Insert children data: ")
 subprocess.call("insertChild.py", shell=True)
 
-print("Insert teacher children data: ")
-subprocess.call("insertTeacherChildren.py", shell=True)
-
 print("Insert children properties data: ")
 subprocess.call("insertChildProperties.py", shell=True)
+
+print("Insert teacher children data: ")
+subprocess.call("insertTeacherChildren.py", shell=True)
 
 print("Insert children languages data: ")
 subprocess.call("insertChildLanguage.py", shell=True)
