@@ -1,7 +1,7 @@
 const sequelize = require("../sequelize").sequelize
 const { QueryTypes } = require("sequelize");
 
-exports.getAllChildRows = async (req, res) => {
+exports.getAllChildData = async (req, res) => {
     try {
         const results = await sequelize.query(
         "SELECT sc.name, CONCAT(t.first_name, ' ' , t.last_name) as full_name, c.name_code, c.age, c.gender, c.special_need, pg.name, p.name, cp.value " +
