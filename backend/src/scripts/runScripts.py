@@ -18,9 +18,6 @@ subprocess.call("insertSchools.py", shell=True)
 print("Insert teacher schools data: ")
 subprocess.call("insertTeacherSchool.py", shell=True)
 
-print("Insert languages data: ")
-subprocess.call("insertLanguage.py", shell=True)
-
 print("Insert children data: ")
 subprocess.call("insertChild.py", shell=True)
 
@@ -29,9 +26,6 @@ subprocess.call("insertChildProperties.py", shell=True)
 
 print("Insert teacher children data: ")
 subprocess.call("insertTeacherChildren.py", shell=True)
-
-print("Insert children languages data: ")
-subprocess.call("insertChildLanguage.py", shell=True)
 
 print("Insert comments data: ")
 subprocess.call("insertComment.py", shell=True)

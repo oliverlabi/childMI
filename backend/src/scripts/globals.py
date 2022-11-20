@@ -15,8 +15,6 @@ parentDataGroupName = "Kodune keelekeskkond"
 childNameProperty = "Lapse kood"
 commentProperty = "Kommentaarid"
 teacherNameProperty = "Õpetaja kood"
-childLanguageProperty = "Mis keelt laps ise kodus räägib?"
-childLanguageExposureProperty = "Mis keeltega on lapsel veel kokkupuuteid?"
 schoolNameProperty = "Kool"
 
 # Exclude groups to properly set data to properties and property_group
