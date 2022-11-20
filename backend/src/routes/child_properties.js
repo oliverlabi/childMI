@@ -1,7 +1,7 @@
 const router = require("express").Router()
-const childController = require("../controllers/child_properties")
+const childPropertiesController = require("../controllers/child_properties")
 
-router.get("/:id", childController.getChildProperties)
-router.get("/", childController.getAllChildProperties)
+router.get("/:id", childPropertiesController.getChildProperties)
+router.get("/", childPropertiesController.getAllChildProperties)
 
 module.exports = router;

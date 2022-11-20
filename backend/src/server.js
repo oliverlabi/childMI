@@ -3,6 +3,7 @@ const cors = require("cors");
 const dbModels = require("./sequelize");
 const childPropertyRoutes = require("./routes/child_properties")
 const childRoutes = require("./routes/child")
+const schoolRoutes = require("./routes/school")
 
 const app = express();
 app.use(express.json());
@@ -25,6 +26,7 @@ dbModels.sequelize.sync({ force: false })
 
 app.use("/api/child_properties/", childPropertyRoutes);
 app.use("/api/child/", childRoutes);
+app.use("/api/school/", schoolRoutes);
 
 const PORT = process.env.PORT || 8081;
 app.listen(PORT, () => {
