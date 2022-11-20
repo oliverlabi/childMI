@@ -1,4 +1,4 @@
-const sequelize = require("../models").sequelize
+const sequelize = require("../sequelize").sequelize
 const { QueryTypes } = require("sequelize");
 
 exports.getAllChildRows = async (req, res) => {

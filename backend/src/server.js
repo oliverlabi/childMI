@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const dbModels = require("./models");
+const dbModels = require("./sequelize");
 const childRoutes = require("./routes/child")
 
 const app = express();
