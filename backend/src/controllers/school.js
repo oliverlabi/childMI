@@ -16,7 +16,7 @@ exports.getAllSchools = async (req, res) => {
 
 exports.getSchool = async (req, res) => {
     try {
-        const { name } = req.params;
+        const { name } = req.body;
         const results = await sequelize.query(
             "SELECT " +
                 "name " +
