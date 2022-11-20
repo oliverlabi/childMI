@@ -7,7 +7,9 @@ const app = express();
 app.use(express.json());
 
 const corsOptions = {
-    origin: "http://localhost:" + process.env.PORT || 8081
+    origin : [ 'http://localhost:8081' , 'http://dev-childmi.ee:8080' ],
+    methods:["GET" , "POST" , "PUT", "DELETE"],
+    credentials: true
 };
 
 app.use(cors(corsOptions));
@@ -24,7 +26,7 @@ app.use("/api/child", childRoutes);
 
 const PORT = process.env.PORT || 8081;
 app.listen(PORT, () => {
-    console.log("Server is running on port ${PORT}.");
+    console.log(`Server is running on port ${PORT}.`);
 });
 
 module.exports = app
