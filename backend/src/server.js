@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const dbModels = require("./sequelize");
+const childPropertyRoutes = require("./routes/child_properties")
 const childRoutes = require("./routes/child")
 
 const app = express();
@@ -22,7 +23,8 @@ dbModels.sequelize.sync({ force: false })
         console.log("Failed to sync db: " + err.message);
     });
 
-app.use("/api/child", childRoutes);
+app.use("/api/child_properties/", childPropertyRoutes);
+app.use("/api/child/", childRoutes);
 
 const PORT = process.env.PORT || 8081;
 app.listen(PORT, () => {
