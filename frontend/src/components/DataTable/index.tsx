@@ -10,8 +10,8 @@ const DataTable = ({columns, rows}: DataTableProps) => {
     return (
         <Table responsive>
             <thead>
-                <tr id="data-table-header">
-                    <th id="year-column">Aasta</th>
+                <tr className="data-table-header">
+                    <th className="data-year-column">Aasta</th>
                     <th>Õpetaja kood</th>
                     <th>Lapse kodeering</th>
                     <th>Vanus</th>
@@ -24,7 +24,7 @@ const DataTable = ({columns, rows}: DataTableProps) => {
             </thead>
             <tbody>
                 <tr>
-                    <td id="year-column">2020 sügis</td>
+                    <td className="data-year-column">2020 sügis</td>
                     <td>RH</td>
                     <td>KA</td>
                     <td>7</td>
@@ -35,7 +35,7 @@ const DataTable = ({columns, rows}: DataTableProps) => {
                     <td>vene</td>
                 </tr>
                 <tr>
-                    <td id="year-column">2021 kevad</td>
+                    <td className="data-year-column">2021 kevad</td>
                     <td>JM</td>
                     <td>DB</td>
                     <td>7</td>
@@ -46,7 +46,7 @@ const DataTable = ({columns, rows}: DataTableProps) => {
                     <td>eesti</td>
                 </tr>
                 <tr>
-                    <td id="year-column">2021 sügis</td>
+                    <td className="data-year-column">2021 sügis</td>
                     <td>KK</td>
                     <td>RMB</td>
                     <td>6</td>
@@ -57,7 +57,7 @@ const DataTable = ({columns, rows}: DataTableProps) => {
                     <td>eesti</td>
                 </tr>
                 <tr>
-                    <td id="year-column">2021 sügis</td>
+                    <td className="data-year-column">2021 sügis</td>
                     <td>KK</td>
                     <td>RMB</td>
                     <td>6</td>

@@ -16,13 +16,13 @@ th, tr {
   border-color: $secondary-theme  ;
 }
 
-#data-type-text {
+.data-type-text {
   align-self: flex-start;
 }
 
-#year-column {
-  color: white;
-  background: $main-theme;
+.data-year-column {
+  color: black;
+  background: $main-theme !important;
   border: none;
   min-width: 10%;
 }

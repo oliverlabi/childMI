@@ -1,28 +1,33 @@
 @import '@/global';
 
-#background #background-container-theme {
+.background .background-container-theme {
   display: flex;
   justify-content: center;
   flex-direction: column;
 }
 
-#background {
+.background {
   margin-top: 25px;
   margin-left: auto;
   margin-right: auto;
   width: 100%;
 }
 
-#background-title-container {
+.background-title-container {
   display: flex;
   justify-content: flex-start;
 }
 
-#background-container-theme {
+.background-container-theme {
   align-items: center;
   padding: 20px;
   margin-top: 25px;
   border-radius: 10px;
+  width: fit-content;
 
   background-color: $secondary-theme;
+}
+
+.container-title {
+  margin-bottom: 20px;
 }

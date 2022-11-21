@@ -7,7 +7,7 @@ const Layout = () => {
     return (
         <>
             <NavBar />
-            <Container id="background">
+            <Container className="background">
                 <Outlet />
             </Container>
         </>

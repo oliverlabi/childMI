@@ -64,5 +64,7 @@ module.exports = {
         hot: true,
         static: path.resolve(__dirname, './dist'),
         historyApiFallback: true,
+        host: "dev-childmi.ee",
+        port: 8080,
     },
 };

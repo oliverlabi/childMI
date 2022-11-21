@@ -1,0 +1,28 @@
+@import '@/global';
+
+.scrollable-list {
+  border-radius: 10px;
+  background-color: white;
+  text-align: center;
+  min-width: 25rem;
+}
+
+.scrollable-list-data-header {
+  padding: 10px 0 10px 0;
+  border: $border-color;
+  border-style: solid;
+  border-width: 0 0 1px 0;
+}
+
+.scrollable-list-data-container {
+  max-height: 30rem;
+  overflow: auto;
+  margin-top: -17px;
+}
+
+.scrollable-list-data-row {
+  border: $border-color;
+  border-style: solid;
+  border-width: 1px 0 0 0;
+  padding: 10px;
+}

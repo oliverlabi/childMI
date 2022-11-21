@@ -1,14 +1,16 @@
 import DataTable from "../../components/DataTable";
 import { Container } from "react-bootstrap";
+import { useGetAllChildDataQuery } from "../../api/childPropertiesApi";
 
 const Students = () => {
+    const { data: students } = useGetAllChildDataQuery()
     return (
         <>
-            <Container id="background-title-container">
+            <Container className="background-title-container">
                 <h1>Õpilaste andmed</h1>
             </Container>
-            <Container id="background-container-theme">
-                <p id="data-type-text">Andmed: Kvantitatiivsed | Kvalitatiivsed</p>
+            <Container className="background-container-theme">
+                <p className="data-type-text">Andmed: Kvantitatiivsed | Kvalitatiivsed</p>
                 <DataTable columns={[]} rows={[]} />
             </Container>
         </>
