@@ -15,7 +15,29 @@ export const teacherApi = createApi({
             transformResponse: (results: { results: { teacherData: ITeacherResponse }}) =>
                 results.results,
         }),
+        getTeacherData: builder.query<any, number>({
+            query(id) {
+                return {
+                    url: `teacher/${id}`
+                }
+            },
+            transformResponse: (results: { results: { teacherData: ITeacherResponse }[]}) =>
+                results.results[0],
+        }),
+        getTeacherChildren: builder.query<any, number>({
+            query(id){
+                return {
+                    url: `teacher/${id}/children`
+                }
+            },
+            transformResponse: (results: { results: { teacherData: ITeacherResponse }}) =>
+                results.results,
+        })
     }),
 })
 
-export const { useGetAllTeacherDataQuery } = teacherApi
+export const {
+    useGetAllTeacherDataQuery,
+    useGetTeacherDataQuery,
+    useGetTeacherChildrenQuery
+} = teacherApi

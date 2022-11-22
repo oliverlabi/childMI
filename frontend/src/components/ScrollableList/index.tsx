@@ -1,8 +1,14 @@
-import './css/index.scss';
+import "./css/index.scss";
+import { Link } from "react-router-dom";
 
 type ScrollableListProps = {
     header: string,
-    data: any[]
+    data: listDataField[],
+}
+
+type listDataField = {
+    id: number,
+    name: string,
 }
 
 const ScrollableList = ({header, data}: ScrollableListProps) => {
@@ -12,11 +18,11 @@ const ScrollableList = ({header, data}: ScrollableListProps) => {
                 <p className="scrollable-list-data-header">{header}</p>
                 <div className="scrollable-list-data-container">
                     {
-                        data ? data.map((value) => (
-                            value != ''
-                                ? <div className="scrollable-list-data-row" key={value}>{value}</div>
+                        data ? data.map((entry) => (
+                            entry.name != ''
+                                ? <div className="scrollable-list-data-row" key={entry.id}><Link to={`${entry.id}`}>{entry.name}</Link></div>
                                 : null
-                        )): <div>Andmeid puuduvad</div>
+                        )): <div>Andmed puuduvad</div>
                     }
                 </div>
             </div>

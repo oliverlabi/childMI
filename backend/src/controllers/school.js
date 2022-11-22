@@ -5,6 +5,7 @@ exports.getAllSchools = async (req, res) => {
     try {
         const results = await sequelize.query(
             "SELECT " +
+                "id, " +
                 "name " +
             "FROM school",
             { type: QueryTypes.SELECT })
@@ -16,14 +17,14 @@ exports.getAllSchools = async (req, res) => {
 
 exports.getSchool = async (req, res) => {
     try {
-        const { name } = req.body;
+        const { id } = req.params;
         const results = await sequelize.query(
             "SELECT " +
                 "name " +
             "FROM school " +
-            "WHERE name = ?",
+            "WHERE id = ?",
             {
-                replacements: [name],
+                replacements: [id],
                 type: QueryTypes.SELECT
             })
         return res.status(200).json({ results });

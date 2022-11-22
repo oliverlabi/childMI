@@ -24,8 +24,12 @@ module.exports = {
             {
                 test: /\.(css|scss)$/,
                 use: [
-                    { loader: 'style-loader' },
-                    { loader: 'css-loader' },
+                    {
+                        loader: 'style-loader'
+                    },
+                    {
+                        loader: 'css-loader',
+                    },
                     {
                         loader: 'sass-loader',
                         options: {
@@ -59,6 +63,8 @@ module.exports = {
         filename: 'bundle.js',
         publicPath: "/"
     },
+
+    devtool: 'inline-source-map',
 
     devServer: {
         hot: true,

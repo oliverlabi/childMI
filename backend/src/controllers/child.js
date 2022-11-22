@@ -5,6 +5,7 @@ exports.getAllChildren = async (req, res) => {
     try {
         const results = await sequelize.query(
             "SELECT " +
+                "c.id, " +
                 "CONCAT(t.first_name, ' ', t.last_name) AS full_name, " +
                 "c.name_code, " +
                 "c.age, " +
