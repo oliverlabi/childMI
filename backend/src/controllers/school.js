@@ -21,8 +21,11 @@ exports.getSchool = async (req, res) => {
             "SELECT " +
                 "name " +
             "FROM school " +
-            "WHERE name = " + name,
-            { type: QueryTypes.SELECT })
+            "WHERE name = ?",
+            {
+                replacements: [name],
+                type: QueryTypes.SELECT
+            })
         return res.status(200).json({ results });
     } catch (error) {
         return res.status(500).send(error.message);

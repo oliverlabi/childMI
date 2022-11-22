@@ -23,8 +23,11 @@ exports.getTeacher = async (req, res) => {
             "CONCAT(first_name, ' ', last_name) AS full_name " +
             "start_year " +
             "FROM teacher " +
-            "WHERE full_name = " + name,
-            { type: QueryTypes.SELECT })
+            "WHERE full_name = ?",
+            {
+                replacements: [name],
+                type: QueryTypes.SELECT
+            })
         return res.status(200).json({ results });
     } catch (error) {
         return res.status(500).send(error.message);

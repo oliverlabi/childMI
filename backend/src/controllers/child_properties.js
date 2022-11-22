@@ -33,8 +33,11 @@ exports.getChildProperties = async (req, res) => {
             "INNER JOIN child_properties cp on c.id = cp.child_id " +
             "INNER JOIN properties p on p.id = cp.property_id " +
             "INNER JOIN property_group pg on p.group = pg.id " +
-            "WHERE c.id = " + id,
-            { type: QueryTypes.SELECT })
+            "WHERE c.id = ?",
+            {
+                replacements: [id],
+                type: QueryTypes.SELECT
+            })
         return res.status(200).json({ results });
     } catch (error) {
         return res.status(500).send(error.message);
