@@ -60,7 +60,7 @@ const Teachers = () => {
                         })): null}
                     </Tabs>
                 :
-                <></>
+                <>Loading error</>
             }
 
         </>

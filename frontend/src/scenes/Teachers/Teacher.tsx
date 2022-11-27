@@ -28,32 +28,36 @@ const Teacher = () => {
 
     return (
         <>
-            <Container className="background-title-container">
-                <h2>{header}</h2>
-            </Container>
-            <Container className="background-container-theme">
-                <Row>
-                    <Col className="container-left-column">
-                        <p className="teacher-name">Nimi:</p>
-                        <p className="teacher-start-year">Alustusaasta:</p>
-                    </Col>
-                    <Col className="container-middle-column">
-                        <p>{teacherName}</p>
-                        <p>{teacherStartYear}</p>
-                    </Col>
-                    <Col className="container-right-column">
-                        <ScrollableList header="Lapse nimetähed">
-                            {
-                                !isTeacherChildrenDataLoading ? childrenListData.map((entry: ListDataField) => (
-                                    entry.name != ''
-                                        ? <div className="scrollable-list-data-row" key={entry.id}><Link to={`${entry.id}`}>{entry.name}</Link></div>
-                                        : null
-                                )): <div>Andmed puuduvad</div>
-                            }
-                        </ScrollableList>
-                    </Col>
-                </Row>
-            </Container>
+            {!isTeacherDataLoading && !isTeacherChildrenDataLoading ?
+                <>
+                    <Container className="background-title-container">
+                        <h2>{header}</h2>
+                    </Container>
+                    <Container className="background-container-theme">
+                        <Row>
+                            <Col className="container-left-column">
+                                <p className="teacher-name">Nimi:</p>
+                                <p className="teacher-start-year">Alustusaasta:</p>
+                            </Col>
+                            <Col className="container-middle-column">
+                                <p>{teacherName}</p>
+                                <p>{teacherStartYear}</p>
+                            </Col>
+                            <Col className="container-right-column">
+                                <ScrollableList header="Lapse nimetähed">
+                                    {
+                                        childrenListData ? childrenListData.map((entry: ListDataField) => (
+                                            entry.name != ''
+                                                ? <div className="scrollable-list-data-row" key={entry.id}><Link to={`${entry.id}`}>{entry.name}</Link></div>
+                                                : null
+                                        )): <div>Andmed puuduvad</div>
+                                    }
+                                </ScrollableList>
+                            </Col>
+                        </Row>
+                    </Container>
+                </> : <>Loading error!</>
+            }
         </>
     )
 }

@@ -5,6 +5,7 @@ const childPropertyRoutes = require("./routes/child_properties")
 const childRoutes = require("./routes/child")
 const schoolRoutes = require("./routes/school")
 const teacherRoutes = require("./routes/teacher")
+const schoolTeacherRoutes = require("./routes/teacher_school")
 
 const app = express();
 app.use(express.json());
@@ -28,6 +29,7 @@ dbModels.sequelize.sync({ force: false })
 app.use("/api/child_properties/", childPropertyRoutes);
 app.use("/api/child/", childRoutes);
 app.use("/api/school/", schoolRoutes);
+app.use("/api/school_teachers/", schoolTeacherRoutes);
 app.use("/api/teacher/", teacherRoutes);
 
 const PORT = process.env.PORT || 8081;
