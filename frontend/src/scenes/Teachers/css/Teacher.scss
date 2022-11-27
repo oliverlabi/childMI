@@ -1,0 +1,23 @@
+.background-container-theme {
+  width: fit-content;
+}
+
+.container-left-column, .container-right-column, .container-middle-column {
+  display: flex;
+  padding: 20px 30px 20px 30px;
+  flex-direction: column;
+}
+
+.container-middle-column {
+  min-width: 300px;
+}
+
+.container-left-column {
+  display: flex;
+  font-weight: bolder;
+  min-width: 30px;
+}
+
+.container-right-column {
+
+}

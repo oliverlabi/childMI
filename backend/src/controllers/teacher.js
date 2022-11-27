@@ -16,18 +16,39 @@ exports.getAllTeachers = async (req, res) => {
     }
 }
 
+exports.getAllTeachersByYear = async (req, res) => {
+    try {
+        const { year } = req.params;
+        const results = await sequelize.query(
+            "SELECT " +
+            "id, " +
+            "CONCAT(first_name, ' ', last_name) AS full_name, " +
+            "start_year " +
+            "FROM teacher " +
+            "WHERE start_year = ?;",
+            {
+                replacements: [year],
+                type: QueryTypes.SELECT,
+            })
+        return res.status(200).json({ results });
+    } catch (error) {
+        return res.status(500).send(error.message);
+    }
+}
+
 exports.getTeacher = async (req, res) => {
     try {
-        const { id } = req.params;
+        const { id, year } = req.params;
         const results = await sequelize.query(
             "SELECT " +
                 "id, " +
                 "CONCAT(first_name, ' ', last_name) AS full_name, " +
                 "start_year " +
             "FROM teacher " +
-            "WHERE id = ?;",
+            "WHERE id = ? " +
+            "AND start_year = ?;",
             {
-                replacements: [id],
+                replacements: [id, year],
                 type: QueryTypes.SELECT,
             })
         return res.status(200).json({ results });
@@ -51,6 +72,21 @@ exports.getTeacherDataWithChildren = async (req, res) => {
             "WHERE t.id = ?;",
             {
                 replacements: [id],
+                type: QueryTypes.SELECT,
+            })
+        return res.status(200).json({ results });
+    } catch (error) {
+        return res.status(500).send(error.message);
+    }
+}
+
+exports.getAllYears = async (req, res) => {
+    try {
+        const results = await sequelize.query(
+            "SELECT DISTINCT " +
+                "start_year " +
+            "FROM teacher;",
+            {
                 type: QueryTypes.SELECT,
             })
         return res.status(200).json({ results });

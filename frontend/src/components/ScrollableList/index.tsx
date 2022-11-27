@@ -1,29 +1,18 @@
 import "./css/index.scss";
-import { Link } from "react-router-dom";
+import {ReactElement} from "react";
 
 type ScrollableListProps = {
     header: string,
-    data: listDataField[],
+    children?: ReactElement,
 }
 
-type listDataField = {
-    id: number,
-    name: string,
-}
-
-const ScrollableList = ({header, data}: ScrollableListProps) => {
+const ScrollableList = ({header, children}: ScrollableListProps) => {
     return (
         <>
             <div className="scrollable-list">
                 <p className="scrollable-list-data-header">{header}</p>
                 <div className="scrollable-list-data-container">
-                    {
-                        data ? data.map((entry) => (
-                            entry.name != ''
-                                ? <div className="scrollable-list-data-row" key={entry.id}><Link to={`${entry.id}`}>{entry.name}</Link></div>
-                                : null
-                        )): <div>Andmed puuduvad</div>
-                    }
+                    {children}
                 </div>
             </div>
         </>

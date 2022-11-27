@@ -11,7 +11,7 @@ const App = () =>
             <Route path="/" element={ <Layout /> }>
                 <Route index element={<Students />} />
                 <Route path="/teachers" element={ <Teachers /> } />
-                <Route path="/teachers/:id" element={ <Teacher /> } />
+                <Route path="/teachers/:year/:id" element={ <Teacher /> } />
                 <Route path="/schools" element={ <Schools /> } />
                 <Route path="*" element={<Navigate to="/" replace />} />
             </Route>

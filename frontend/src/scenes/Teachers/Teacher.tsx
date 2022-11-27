@@ -1,23 +1,30 @@
 import { Col, Container, Row } from "react-bootstrap";
 import { useGetTeacherChildrenQuery, useGetTeacherDataQuery } from "../../api/teacherApi";
-import { useParams } from "react-router-dom";
-import { ITeacherChildrenResponse, ITeacherResponse } from "../../store/types";
+import {Link, useParams} from "react-router-dom";
 import ScrollableList from "../../components/ScrollableList";
+import "./css/Teacher.scss";
+
+type ListDataField = {
+    id: number,
+    name: string,
+}
 
 const Teacher = () => {
     const params = useParams();
     const paramsId = parseInt(params.id);
-    const { data: teacher, error: teacherDataError, isLoading: isTeacherDataLoading } = useGetTeacherDataQuery(paramsId);
-    const { data: children, error: teacherChildrenDataError, isLoading: isTeacherChildrenDataLoading } = useGetTeacherChildrenQuery(paramsId);
+    const paramsYear = parseInt(params.year);
+    const { data: teacher, isLoading: isTeacherDataLoading } = useGetTeacherDataQuery({year: paramsYear, id: paramsId});
+    const { data: children, isLoading: isTeacherChildrenDataLoading } = useGetTeacherChildrenQuery({year: paramsYear, id: paramsId});
 
-    const childrenListData = children
-        ? children.map((childrenObject: ITeacherChildrenResponse) => (
+    const childrenListData = !isTeacherChildrenDataLoading
+        ? children.map((childrenObject: any) => (
             {"id": childrenObject.child_id, "name": childrenObject.child_name}
         ))
-        : null;
+        : "No data";
 
-    console.log(teacher)
-    const header = teacher ? `Õpetaja ${teacher.full_name}` : "Õpetaja andmed";
+    const header = !isTeacherDataLoading ? `Õpetaja ${teacher.full_name}` : "Andmeid pole!";
+    const teacherName = !isTeacherDataLoading ? teacher.full_name : "Puudu";
+    const teacherStartYear = !isTeacherDataLoading ? teacher.start_year : "Puudu";
 
     return (
         <>
@@ -26,11 +33,24 @@ const Teacher = () => {
             </Container>
             <Container className="background-container-theme">
                 <Row>
-                    <Col>
-                        <p className="container-title">Õpetaja</p>
+                    <Col className="container-left-column">
+                        <p className="teacher-name">Nimi:</p>
+                        <p className="teacher-start-year">Alustusaasta:</p>
                     </Col>
-                    <Col>
-                        <ScrollableList header="Lapse nimetähed" data={childrenListData}></ScrollableList>
+                    <Col className="container-middle-column">
+                        <p>{teacherName}</p>
+                        <p>{teacherStartYear}</p>
+                    </Col>
+                    <Col className="container-right-column">
+                        <ScrollableList header="Lapse nimetähed">
+                            {
+                                !isTeacherChildrenDataLoading ? childrenListData.map((entry: ListDataField) => (
+                                    entry.name != ''
+                                        ? <div className="scrollable-list-data-row" key={entry.id}><Link to={`${entry.id}`}>{entry.name}</Link></div>
+                                        : null
+                                )): <div>Andmed puuduvad</div>
+                            }
+                        </ScrollableList>
                     </Col>
                 </Row>
             </Container>

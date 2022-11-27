@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { ISchoolResponse } from "../store/types";
 
 export const schoolApi = createApi({
     reducerPath: 'schoolApi',
@@ -12,7 +11,7 @@ export const schoolApi = createApi({
                     credentials: "include"
                 }
             },
-            transformResponse: (results: { results: { schoolData: ISchoolResponse }}) =>
+            transformResponse: (results: { results: { schoolData: any }}) =>
                 results.results,
         }),
     }),

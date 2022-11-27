@@ -1,5 +1,14 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { ITeacherResponse } from "../store/types";
+
+export interface ITeacherResponse {
+    id: number,
+    full_name: string,
+    start_year?: number
+}
+
+export type ITeachersByYearDict = {
+    [start_year: number]: ITeacherResponse[];
+}
 
 export const teacherApi = createApi({
     reducerPath: 'teacherApi',
@@ -12,32 +21,73 @@ export const teacherApi = createApi({
                     credentials: "include"
                 }
             },
-            transformResponse: (results: { results: { teacherData: ITeacherResponse }}) =>
-                results.results,
+            transformResponse: (response: { results: []}) =>
+                response.results,
         }),
-        getTeacherData: builder.query<any, number>({
-            query(id) {
+        getAllTeachersByYear: builder.query<any, { year: number }>({
+            query(args) {
+                const { year } = args;
                 return {
-                    url: `teacher/${id}`
+                    url: `teacher/${year}/`
                 }
             },
-            transformResponse: (results: { results: { teacherData: ITeacherResponse }[]}) =>
-                results.results[0],
+            transformResponse: (response: { results: { teacherData: ITeacherResponse }[]}) => {
+                response.results;
+                const yearlyTeacherData: ITeachersByYearDict = {};
+
+                response.results.map((data: any) => {
+                    if(yearlyTeacherData[data.start_year] == undefined){
+                        yearlyTeacherData[data.start_year] = [];
+                    }
+
+                    yearlyTeacherData[data.start_year].push(
+                        {
+                            id: data.id,
+                            full_name: data.full_name
+                        }
+                    )
+                })
+
+                return yearlyTeacherData;
+            }
         }),
-        getTeacherChildren: builder.query<any, number>({
-            query(id){
+        getTeacherData: builder.query<any, { id: number, year: number }>({
+            query(args) {
+                const { id, year } = args;
                 return {
-                    url: `teacher/${id}/children`
+                    url: `teacher/${year}/${id}/`
                 }
             },
-            transformResponse: (results: { results: { teacherData: ITeacherResponse }}) =>
-                results.results,
-        })
+            transformResponse: (response: { results: { teacherData: any }[]}) =>
+                response.results[0],
+        }),
+        getTeacherChildren: builder.query<any, { id: number, year: number }>({
+            query(args){
+                const { id, year } = args;
+                return {
+                    url: `teacher/${year}/${id}/children/`
+                }
+            },
+            transformResponse: (response: { results: []}) =>
+                response.results,
+        }),
+        getAllTeacherYears: builder.query<any, void>({
+            query() {
+                return {
+                    url: `teacher/years/`,
+                    credentials: "include"
+                }
+            },
+            transformResponse: (response: { results: []}) =>
+                response.results,
+        }),
     }),
 })
 
 export const {
     useGetAllTeacherDataQuery,
+    useGetAllTeachersByYearQuery,
     useGetTeacherDataQuery,
-    useGetTeacherChildrenQuery
+    useGetTeacherChildrenQuery,
+    useGetAllTeacherYearsQuery,
 } = teacherApi

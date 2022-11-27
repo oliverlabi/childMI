@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { IChildPropertyResponse } from "../store/types";
 
 export const childPropertiesApi = createApi({
     reducerPath: 'childApi',
@@ -12,7 +11,7 @@ export const childPropertiesApi = createApi({
                     credentials: "include"
                 }
             },
-            transformResponse: (results: { results: { propertyData: IChildPropertyResponse }}) =>
+            transformResponse: (results: { results: { propertyData: any }}) =>
                 results.results,
         }),
     }),
