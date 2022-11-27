@@ -4,12 +4,14 @@ import { childPropertiesApi } from "../api/childPropertiesApi";
 import { schoolApi } from "../api/schoolApi";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { teacherApi } from "../api/teacherApi";
+import { schoolTeachersApi } from "../api/schoolTeachersApi";
 
 export const store = configureStore({
     reducer: {
         [childPropertiesApi.reducerPath]: childPropertiesApi.reducer,
         [schoolApi.reducerPath]: schoolApi.reducer,
         [teacherApi.reducerPath]: teacherApi.reducer,
+        [schoolTeachersApi.reducerPath]: schoolTeachersApi.reducer,
     },
     devTools: true,
     middleware: (getDefaultMiddleware) =>
@@ -17,6 +19,7 @@ export const store = configureStore({
             childPropertiesApi.middleware,
             schoolApi.middleware,
             teacherApi.middleware,
+            schoolTeachersApi.middleware
     ]),
 })
 

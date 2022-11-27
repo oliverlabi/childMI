@@ -41,12 +41,16 @@ exports.getTeacher = async (req, res) => {
         const { id, year } = req.params;
         const results = await sequelize.query(
             "SELECT " +
-                "id, " +
-                "CONCAT(first_name, ' ', last_name) AS full_name, " +
-                "start_year " +
-            "FROM teacher " +
-            "WHERE id = ? " +
-            "AND start_year = ?;",
+                "t.id AS teacher_id, " +
+                "CONCAT(t.first_name, ' ', t.last_name) AS full_name, " +
+                "t.start_year, " +
+                "s.id AS school_id, " +
+                "s.name AS school_name " +
+            "FROM teacher t " +
+            "INNER JOIN teacher_school ts ON t.id = ts.teacher_id " +
+            "INNER JOIN school s ON s.id = ts.school_id " +
+            "WHERE t.id = ? " +
+            "AND t.start_year = ?;",
             {
                 replacements: [id, year],
                 type: QueryTypes.SELECT,

@@ -3,7 +3,9 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 export interface ITeacherResponse {
     id: number,
     full_name: string,
-    start_year?: number
+    start_year?: number,
+    school_name?: string,
+    school_id?: number,
 }
 
 export type ITeachersByYearDict = {

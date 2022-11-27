@@ -22,9 +22,10 @@ const Teacher = () => {
         ))
         : "No data";
 
-    const header = !isTeacherDataLoading ? `Õpetaja ${teacher.full_name}` : "Andmeid pole!";
-    const teacherName = !isTeacherDataLoading ? teacher.full_name : "Puudu";
-    const teacherStartYear = !isTeacherDataLoading ? teacher.start_year : "Puudu";
+    const header = !isTeacherDataLoading && teacher.full_name ? `Õpetaja ${teacher.full_name}` : "Andmeid pole!";
+    const teacherName = !isTeacherDataLoading && teacher.full_name ? teacher.full_name : "Puudu";
+    const teacherStartYear = !isTeacherDataLoading && teacher.start_year ? teacher.start_year : "Puudu";
+    const teacherSchool = !isTeacherDataLoading && teacher.school_name ? teacher.school_name : "Puudu";
 
     return (
         <>
@@ -38,10 +39,12 @@ const Teacher = () => {
                             <Col className="container-left-column">
                                 <p className="teacher-name">Nimi:</p>
                                 <p className="teacher-start-year">Alustusaasta:</p>
+                                <p className="teacher-school">Kool/Koolid:</p>
                             </Col>
                             <Col className="container-middle-column">
                                 <p>{teacherName}</p>
                                 <p>{teacherStartYear}</p>
+                                <Link to={`/schools/${teacher.school_id}`}>{teacherSchool}</Link>
                             </Col>
                             <Col className="container-right-column">
                                 <ScrollableList header="Lapse nimetähed">

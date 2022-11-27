@@ -7,6 +7,7 @@ exports.getSchoolTeachers = async (req, res) => {
         const results = await sequelize.query(
             "SELECT " +
                 "ts.teacher_id, " +
+                "t.start_year, " +
                 "CONCAT(t.first_name, ' ' , t.last_name) as teacher_full_name, " +
                 "ts.school_id, " +
                 "s.name AS school_name " +
