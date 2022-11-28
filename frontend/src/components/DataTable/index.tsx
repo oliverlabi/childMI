@@ -22,47 +22,15 @@ const DataTable = ({headers, data}: DataTableProps) => {
             <tbody>
                 <tr>
                     <td className="data-year-column">2020 sügis</td>
-                    <td>RH</td>
-                    <td>KA</td>
-                    <td>7</td>
-                    <td>M</td>
-                    <td>Ei</td>
-                    <td>vene</td>
-                    <td>vene, eesti</td>
-                    <td>vene</td>
                 </tr>
                 <tr>
                     <td className="data-year-column">2021 kevad</td>
-                    <td>JM</td>
-                    <td>DB</td>
-                    <td>7</td>
-                    <td>N</td>
-                    <td>Ei</td>
-                    <td>vene, eesti</td>
-                    <td>vene, eesti</td>
-                    <td>eesti</td>
                 </tr>
                 <tr>
                     <td className="data-year-column">2021 sügis</td>
-                    <td>KK</td>
-                    <td>RMB</td>
-                    <td>6</td>
-                    <td>M</td>
-                    <td>Ei</td>
-                    <td>eesti</td>
-                    <td>eesti</td>
-                    <td>eesti</td>
                 </tr>
                 <tr>
                     <td className="data-year-column">2021 sügis</td>
-                    <td>KK</td>
-                    <td>RMB</td>
-                    <td>6</td>
-                    <td>M</td>
-                    <td>Ei</td>
-                    <td>eesti</td>
-                    <td>eesti</td>
-                    <td>eesti</td>
                 </tr>
             </tbody>
         </Table>
