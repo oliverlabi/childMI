@@ -2,26 +2,21 @@ import Table from 'react-bootstrap/Table';
 import './css/index.scss';
 
 type DataTableProps = {
-    headers: string[],
-    data: string[]
+    headers: any[],
+    data: any[]
 }
 
 const DataTable = ({headers, data}: DataTableProps) => {
-    console.log(headers, data);
+    console.log(data);
 
     return (
         <Table responsive>
             <thead>
                 <tr className="data-table-header">
                     <th className="data-year-column">Aasta</th>
-                    <th>Õpetaja kood</th>
-                    <th>Lapse kodeering</th>
-                    <th>Vanus</th>
-                    <th>Sugu</th>
-                    <th>Erivajadus</th>
-                    <th>Kodune keel / keeled</th>
-                    <th>Kokkupuude keeltega</th>
-                    <th>Mis keeli lapsega kodus räägitakse? (Ema, vanem 1)</th>
+                    {headers ? headers.map(header => {
+                        return <th id={header.id}>{header.name}</th>
+                    }) : <th>No headers data</th>}
                 </tr>
             </thead>
             <tbody>

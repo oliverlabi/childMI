@@ -6,8 +6,6 @@ const Students = () => {
     const { data: childProperties, isLoading: isChildPropsLoading } = useGetAllChildrenDataBySheetQuery({sheetId: 1});
     const { data: properties, isLoading: isPropsLoading } = useGetAllPropertiesBySheetQuery({sheetId: 1});
 
-    console.log(childProperties, properties);
-
     return (
         <>
             <Container className="background-title-container">
@@ -15,7 +13,7 @@ const Students = () => {
             </Container>
             <Container className="background-container-theme">
                 <p className="data-type-text">Andmed: Kvantitatiivsed | Kvalitatiivsed</p>
-                <DataTable headers={[]} data={[]} />
+                <DataTable headers={properties} data={childProperties} />
             </Container>
         </>
     )
