@@ -10,13 +10,15 @@ const School = () => {
     const { data: schoolTeachersData, isLoading: isSchoolTeachersDataLoading } = useGetSchoolTeachersByIdQuery({id: paramsId});
     const { data: schoolChildrenData, isLoading: isSchoolChildrenDataLoading } = useGetSchoolChildrenByIdQuery({id: paramsId});
 
+    const header = !isSchoolTeachersDataLoading && schoolTeachersData[0] ? `${schoolTeachersData[0].school_name}` : "Andmeid pole!";
+
     return (
         <>
             {!isSchoolChildrenDataLoading && !isSchoolTeachersDataLoading
                 ?
                 <>
                     <Container className="background-title-container">
-                        <h2>Kool</h2>
+                        <h2>{header}</h2>
                     </Container>
                     <Container className="background-container-theme">
                         <Row>
