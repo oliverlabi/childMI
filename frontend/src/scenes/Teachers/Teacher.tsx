@@ -59,7 +59,7 @@ const Teacher = () => {
                             </Col>
                         </Row>
                     </Container>
-                </> : <>Loading error!</>
+                </> : <>Loading</>
             }
         </>
     )

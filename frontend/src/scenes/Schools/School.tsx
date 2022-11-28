@@ -49,7 +49,7 @@ const School = () => {
                         </Row>
                     </Container>
                 </>
-                : <>Loading error!</>
+                : <>Loading</>
             }
         </>
     )
