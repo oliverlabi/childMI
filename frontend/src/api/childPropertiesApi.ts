@@ -8,7 +8,7 @@ export const childPropertiesApi = createApi({
             query(args) {
                 const { sheetId } = args;
                 return {
-                    url: `child_properties/${sheetId}`,
+                    url: `child_properties/child/${sheetId}`,
                     credentials: "include"
                 }
             },

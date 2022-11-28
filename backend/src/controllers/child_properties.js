@@ -9,7 +9,7 @@ exports.getAllChildProperties = async (req, res) => {
         "SELECT " +
             "c.name_code as child_name_code, " +
             "pg.name as property_group_name, " +
-            "p.name as property_name, " +
+            "p.id as property_id, " +
             "cp.value as child_property_value " +
         "FROM child c " +
         "INNER JOIN child_properties cp on c.id = cp.child_id " +
@@ -34,7 +34,7 @@ exports.getChildProperties = async (req, res) => {
             "SELECT " +
                 "c.name_code as child_name_code, " +
                 "pg.name as property_group_name, " +
-                "p.name as property_name, " +
+                "p.id as property_id, " +
                 "cp.value as child_property_value " +
             "FROM child c " +
             "INNER JOIN child_properties cp on c.id = cp.child_id " +
@@ -45,6 +45,45 @@ exports.getChildProperties = async (req, res) => {
             "AND s.id = ?;",
             {
                 replacements: [sheetId, childId],
+                type: QueryTypes.SELECT
+            })
+        return res.status(200).json({ results });
+    } catch (error) {
+        return res.status(500).send(error.message);
+    }
+}
+
+exports.getPropertiesBySheet = async (req, res) => {
+    try {
+        const { sheetId } = req.params;
+        const results = await sequelize.query(
+            "SELECT " +
+                "p.id, " +
+                "p.name " +
+            "FROM properties p " +
+            "INNER JOIN property_group pg ON p.group = pg.id " +
+            "INNER JOIN sheet s ON pg.sheet_id = s.id " +
+            "WHERE s.id = ?;",
+            {
+                replacements: [sheetId],
+                type: QueryTypes.SELECT
+            })
+        return res.status(200).json({ results });
+    } catch (error) {
+        return res.status(500).send(error.message);
+    }
+}
+
+exports.getAllProperties = async (req, res) => {
+    try {
+        const results = await sequelize.query(
+            "SELECT " +
+                "p.id, " +
+                "p.name " +
+            "FROM properties p " +
+            "INNER JOIN property_group pg ON p.group = pg.id " +
+            "INNER JOIN sheet s ON pg.sheet_id = s.id;",
+            {
                 type: QueryTypes.SELECT
             })
         return res.status(200).json({ results });
