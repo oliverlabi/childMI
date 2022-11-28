@@ -4,10 +4,11 @@ export const childPropertiesApi = createApi({
     reducerPath: 'childApi',
     baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8081/api/' }),
     endpoints: (builder) => ({
-        getAllChildData: builder.query<any, void>({
-            query() {
+        getAllChildData: builder.query<any, {sheetId: number}>({
+            query(args) {
+                const { sheetId } = args;
                 return {
-                    url: `child_properties/`,
+                    url: `child_properties/${sheetId}`,
                     credentials: "include"
                 }
             },

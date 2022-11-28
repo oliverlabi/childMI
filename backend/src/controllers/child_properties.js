@@ -3,6 +3,8 @@ const { QueryTypes } = require("sequelize");
 
 exports.getAllChildProperties = async (req, res) => {
     try {
+        const { sheetId } = req.params;
+        console.log(sheetId);
         const results = await sequelize.query(
         "SELECT " +
             "c.name_code as child_name_code, " +
@@ -12,8 +14,13 @@ exports.getAllChildProperties = async (req, res) => {
         "FROM child c " +
         "INNER JOIN child_properties cp on c.id = cp.child_id " +
         "INNER JOIN properties p on p.id = cp.property_id " +
-        "INNER JOIN property_group pg on p.group = pg.id",
-        { type: QueryTypes.SELECT })
+        "INNER JOIN property_group pg on p.group = pg.id " +
+        "INNER JOIN sheet s ON pg.sheet_id = s.id " +
+        "WHERE s.id = ?;",
+        {
+            replacements: [sheetId],
+            type: QueryTypes.SELECT
+        })
         return res.status(200).json({ results });
     } catch (error) {
         return res.status(500).send(error.message);
@@ -22,7 +29,7 @@ exports.getAllChildProperties = async (req, res) => {
 
 exports.getChildProperties = async (req, res) => {
     try {
-        const { id } = req.params;
+        const { sheetId, childId } = req.params;
         const results = await sequelize.query(
             "SELECT " +
                 "c.name_code as child_name_code, " +
@@ -33,9 +40,11 @@ exports.getChildProperties = async (req, res) => {
             "INNER JOIN child_properties cp on c.id = cp.child_id " +
             "INNER JOIN properties p on p.id = cp.property_id " +
             "INNER JOIN property_group pg on p.group = pg.id " +
-            "WHERE c.id = ?",
+            "INNER JOIN sheet s ON s.id = pg.sheet_id " +
+            "WHERE c.id = ? " +
+            "AND s.id = ?;",
             {
-                replacements: [id],
+                replacements: [sheetId, childId],
                 type: QueryTypes.SELECT
             })
         return res.status(200).json({ results });

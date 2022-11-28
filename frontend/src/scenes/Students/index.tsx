@@ -1,7 +1,12 @@
 import DataTable from "../../components/DataTable";
 import { Container } from "react-bootstrap";
+import { useGetAllChildDataQuery } from "../../api/childPropertiesApi";
 
 const Students = () => {
+    const { data: childProperties, isLoading: isChildPropsLoading } = useGetAllChildDataQuery({sheetId: 1});
+
+    console.log(childProperties);
+
     return (
         <>
             <Container className="background-title-container">
