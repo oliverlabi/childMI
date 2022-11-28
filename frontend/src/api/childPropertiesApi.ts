@@ -4,7 +4,7 @@ export const childPropertiesApi = createApi({
     reducerPath: 'childApi',
     baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8081/api/' }),
     endpoints: (builder) => ({
-        getAllChildData: builder.query<any, {sheetId: number}>({
+        getAllChildrenDataBySheet: builder.query<any, {sheetId: number}>({
             query(args) {
                 const { sheetId } = args;
                 return {
@@ -15,7 +15,21 @@ export const childPropertiesApi = createApi({
             transformResponse: (results: { results: { propertyData: any }}) =>
                 results.results,
         }),
+        getAllPropertiesBySheet: builder.query<any, {sheetId: number}>({
+            query(args) {
+                const { sheetId } = args;
+                return {
+                    url: `child_properties/properties/${sheetId}`,
+                    credentials: "include"
+                }
+            },
+            transformResponse: (results: { results: { propertyData: any }}) =>
+                results.results,
+        }),
     }),
 })
 
-export const { useGetAllChildDataQuery } = childPropertiesApi
+export const {
+    useGetAllChildrenDataBySheetQuery,
+    useGetAllPropertiesBySheetQuery
+} = childPropertiesApi

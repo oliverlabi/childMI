@@ -2,11 +2,13 @@ import Table from 'react-bootstrap/Table';
 import './css/index.scss';
 
 type DataTableProps = {
-    columns: string[],
-    rows: string[]
+    headers: string[],
+    data: string[]
 }
 
-const DataTable = ({columns, rows}: DataTableProps) => {
+const DataTable = ({headers, data}: DataTableProps) => {
+    console.log(headers, data);
+
     return (
         <Table responsive>
             <thead>
