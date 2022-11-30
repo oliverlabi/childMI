@@ -7,31 +7,35 @@ type DataTableProps = {
 }
 
 const DataTable = ({headers, data}: DataTableProps) => {
-    console.log(data);
+    const parsedData: any = {};
+
+    data.forEach((dict) => {
+        if (parsedData[dict["child_id"]] === undefined){
+            parsedData[dict["child_id"]] = {};
+        }
+
+        parsedData[dict["child_id"]][dict["property_id"]] = dict["child_property_value"]
+    })
 
     return (
         <Table responsive>
             <thead>
                 <tr className="data-table-header">
-                    <th className="data-year-column">Aasta</th>
                     {headers ? headers.map(header => {
-                        return <th id={header.id}>{header.name}</th>
+                        return <th id={header.id} key={`${header.id + header.name}`}>{header.name}</th>
                     }) : <th>No headers data</th>}
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td className="data-year-column">2020 sügis</td>
-                </tr>
-                <tr>
-                    <td className="data-year-column">2021 kevad</td>
-                </tr>
-                <tr>
-                    <td className="data-year-column">2021 sügis</td>
-                </tr>
-                <tr>
-                    <td className="data-year-column">2021 sügis</td>
-                </tr>
+                {Object.values(parsedData).map((dataDict) => {
+                    return (
+                        <tr>
+                            {Object.entries(dataDict).map((entry) => {
+                                return <td headers={entry[0]} key={entry[0] + entry[1]}>{entry[1]}</td>
+                            })}
+                        </tr>
+                    )
+                })}
             </tbody>
         </Table>
     )

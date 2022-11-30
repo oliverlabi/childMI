@@ -7,6 +7,7 @@ exports.getAllChildProperties = async (req, res) => {
         console.log(sheetId);
         const results = await sequelize.query(
         "SELECT " +
+            "c.id as child_id,   " +
             "c.name_code as child_name_code, " +
             "pg.name as property_group_name, " +
             "p.id as property_id, " +

@@ -4,8 +4,8 @@ import {useGetAllChildrenDataBySheetQuery, useGetAllPropertiesBySheetQuery} from
 import Loader from "../../components/Loader";
 
 const Students = () => {
-    const { data: childProperties, isSuccess: isChildPropsLoaded } = useGetAllChildrenDataBySheetQuery({sheetId: 2});
-    const { data: properties, isSuccess: isPropsLoaded } = useGetAllPropertiesBySheetQuery({sheetId: 2});
+    const { data: childProperties, isSuccess: isChildPropsLoaded } = useGetAllChildrenDataBySheetQuery({sheetId: 1});
+    const { data: properties, isSuccess: isPropsLoaded } = useGetAllPropertiesBySheetQuery({sheetId: 1});
 
     return (
         <>

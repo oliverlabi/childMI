@@ -1,4 +1,5 @@
 export interface IAllChildrenDataBySheetResponse {
+    child_id: number,
     child_name_code: string,
     property_group_name: string,
     property_id: number,
@@ -8,6 +9,13 @@ export interface IAllChildrenDataBySheetResponse {
 export interface IAllPropertiesBySheetResponse {
     id: number,
     name: string
+}
+
+export interface IAllChildPropertiesBySheetIdAndChildIdResponse {
+    child_name_code: string,
+    property_group_name: string,
+    property_id: number,
+    child_property_value: string
 }
 
 export interface IAllSchoolDataResponse {
