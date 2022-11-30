@@ -11,7 +11,7 @@ export const schoolApi = createApi({
                     credentials: "include"
                 }
             },
-            transformResponse: (results: { results: { schoolData: any }}) =>
+            transformResponse: (results: { results: { schoolData: IAllSchoolDataResponse }}) =>
                 results.results,
         }),
     }),

@@ -11,7 +11,7 @@ export const schoolTeachersApi = createApi({
                     url: `school_teachers/teacher/${id}/`
                 }
             },
-            transformResponse: (response: { results: { schoolData: any }[]}) =>
+            transformResponse: (response: { results: { schoolData: ISchoolTeachersByIdResponse }[]}) =>
                 response.results,
         }),
         getSchoolChildrenById: builder.query<any, { id: number }>({
@@ -21,7 +21,7 @@ export const schoolTeachersApi = createApi({
                     url: `school_teachers/child/${id}/`
                 }
             },
-            transformResponse: (response: { results: { schoolData: any }[]}) =>
+            transformResponse: (response: { results: { schoolData: ISchoolChildrenByIdResponse }[]}) =>
                 response.results,
         }),
     }),

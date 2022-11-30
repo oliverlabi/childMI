@@ -1,5 +1,4 @@
 import {
-    ITeacherResponse,
     useGetAllTeacherDataQuery,
 } from "../../api/teacherApi";
 import ScrollableList from "../../components/ScrollableList";
@@ -19,7 +18,7 @@ const Teachers = () => {
 
     isSuccess
         ?
-            yearData.forEach((data: ITeacherResponse) => {
+            yearData.forEach((data: IAllTeachersByYearResponse) => {
                 if (!years.includes(data.start_year)){
                     years.push(data.start_year);
                 }

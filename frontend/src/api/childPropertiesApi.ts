@@ -12,7 +12,7 @@ export const childPropertiesApi = createApi({
                     credentials: "include"
                 }
             },
-            transformResponse: (results: { results: { propertyData: any }}) =>
+            transformResponse: (results: { results: { propertyData: IAllChildrenDataBySheetResponse }}) =>
                 results.results,
         }),
         getAllPropertiesBySheet: builder.query<any, {sheetId: number}>({
@@ -23,7 +23,7 @@ export const childPropertiesApi = createApi({
                     credentials: "include"
                 }
             },
-            transformResponse: (results: { results: { propertyData: any }}) =>
+            transformResponse: (results: { results: { propertyData: IAllPropertiesBySheetResponse }}) =>
                 results.results,
         }),
     }),
