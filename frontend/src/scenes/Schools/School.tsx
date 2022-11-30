@@ -7,14 +7,14 @@ import "./css/School.scss"
 const School = () => {
     const params = useParams();
     const paramsId = parseInt(params.id);
-    const { data: schoolTeachersData, isLoading: isSchoolTeachersDataLoading } = useGetSchoolTeachersByIdQuery({id: paramsId});
-    const { data: schoolChildrenData, isLoading: isSchoolChildrenDataLoading } = useGetSchoolChildrenByIdQuery({id: paramsId});
+    const { data: schoolTeachersData, isSuccess: isSchoolTeachersDataLoaded, isLoading: isSchoolTeachersDataLoading } = useGetSchoolTeachersByIdQuery({id: paramsId});
+    const { data: schoolChildrenData, isSuccess: isSchoolChildrenDataLoaded, isLoading: isSchoolChildrenDataLoading } = useGetSchoolChildrenByIdQuery({id: paramsId});
 
-    const header = !isSchoolTeachersDataLoading && schoolTeachersData[0] ? `${schoolTeachersData[0].school_name}` : "Andmeid pole!";
+    const header = isSchoolTeachersDataLoaded && schoolTeachersData ? `${schoolTeachersData[0].school_name}` : "Andmeid pole!";
 
     return (
         <>
-            {!isSchoolChildrenDataLoading && !isSchoolTeachersDataLoading
+            {isSchoolChildrenDataLoaded && isSchoolTeachersDataLoaded
                 ?
                 <>
                     <Container className="background-title-container">
@@ -49,7 +49,7 @@ const School = () => {
                         </Row>
                     </Container>
                 </>
-                : <>Loading</>
+                : <>Andmete lugemise viga!</>
             }
         </>
     )

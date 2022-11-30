@@ -3,12 +3,12 @@ import { Container } from "react-bootstrap";
 import {useGetAllChildrenDataBySheetQuery, useGetAllPropertiesBySheetQuery} from "../../api/childPropertiesApi";
 
 const Students = () => {
-    const { data: childProperties, isLoading: isChildPropsLoading } = useGetAllChildrenDataBySheetQuery({sheetId: 1});
-    const { data: properties, isLoading: isPropsLoading } = useGetAllPropertiesBySheetQuery({sheetId: 1});
+    const { data: childProperties, isSuccess: isChildPropsLoaded, isLoading: isChildPropsLoading } = useGetAllChildrenDataBySheetQuery({sheetId: 2});
+    const { data: properties, isSuccess: isPropsLoaded, isLoading: isPropsLoading } = useGetAllPropertiesBySheetQuery({sheetId: 2});
 
     return (
         <>
-            {!isChildPropsLoading && !isPropsLoading ?
+            {isChildPropsLoaded && isPropsLoaded ?
                 <>
                     <Container className="background-title-container">
                         <h2>Õpilaste andmed</h2>
@@ -18,8 +18,7 @@ const Students = () => {
                         <DataTable headers={properties} data={childProperties} />
                     </Container>
                 </>
-
-                : <>Loading</>
+                : <>Andmete lugemise viga!</>
             }
         </>
     )

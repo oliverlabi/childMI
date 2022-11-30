@@ -14,10 +14,10 @@ export type ListDataType = {
 }
 
 const Teachers = () => {
-    const { data: yearData, isLoading: isLoading } = useGetAllTeacherDataQuery();
+    const { data: yearData, isSuccess: isSuccess, isLoading: isLoading } = useGetAllTeacherDataQuery();
     const years: number[] = [];
 
-    !isLoading
+    isSuccess
         ?
             yearData.forEach((data: ITeacherResponse) => {
                 if (!years.includes(data.start_year)){
@@ -32,13 +32,13 @@ const Teachers = () => {
             <Container className="background-title-container">
                 <h2>Õpetajate andmed</h2>
             </Container>
-            {!isLoading
+            {isSuccess
                 ?
                     <Tabs
-                        defaultActiveKey={yearData[0] ? yearData[0].start_year : "Pole andmeid"}
+                        defaultActiveKey={yearData ? yearData[0].start_year : "Pole andmeid"}
                         className="background-year-tabs"
                     >
-                        {!isLoading ? years.map(((year: number) => {
+                        {years.map(((year: number) => {
                             const startYear = year;
 
                             return(
@@ -57,10 +57,10 @@ const Teachers = () => {
                                     </Container>
                                 </Tab>
                             )
-                        })): null}
+                        }))}
                     </Tabs>
                 :
-                <>Loading</>
+                <>Andmete lugemise viga!</>
             }
 
         </>

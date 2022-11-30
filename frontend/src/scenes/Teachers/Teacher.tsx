@@ -13,23 +13,23 @@ const Teacher = () => {
     const params = useParams();
     const paramsId = parseInt(params.id);
     const paramsYear = parseInt(params.year);
-    const { data: teacher, isLoading: isTeacherDataLoading } = useGetTeacherDataQuery({year: paramsYear, id: paramsId});
-    const { data: children, isLoading: isTeacherChildrenDataLoading } = useGetTeacherChildrenQuery({year: paramsYear, id: paramsId});
+    const { data: teacher, isSuccess: isTeacherDataLoaded, isLoading: isTeacherDataLoading } = useGetTeacherDataQuery({year: paramsYear, id: paramsId});
+    const { data: children, isSuccess: isTeacherChildrenDataLoaded, isLoading: isTeacherChildrenDataLoading } = useGetTeacherChildrenQuery({year: paramsYear, id: paramsId});
 
-    const childrenListData = !isTeacherChildrenDataLoading
+    const childrenListData = isTeacherChildrenDataLoaded
         ? children.map((childrenObject: any) => (
             {"id": childrenObject.child_id, "name": childrenObject.child_name}
         ))
         : "No data";
 
-    const header = !isTeacherDataLoading && teacher.full_name ? `Õpetaja ${teacher.full_name}` : "Andmeid pole!";
-    const teacherName = !isTeacherDataLoading && teacher.full_name ? teacher.full_name : "Puudu";
-    const teacherStartYear = !isTeacherDataLoading && teacher.start_year ? teacher.start_year : "Puudu";
-    const teacherSchool = !isTeacherDataLoading && teacher.school_name ? teacher.school_name : "Puudu";
+    const header = isTeacherDataLoaded && teacher.full_name ? `Õpetaja ${teacher.full_name}` : "Andmeid pole!";
+    const teacherName = isTeacherDataLoaded && teacher.full_name ? teacher.full_name : "Puudu";
+    const teacherStartYear = isTeacherDataLoaded && teacher.start_year ? teacher.start_year : "Puudu";
+    const teacherSchool = isTeacherDataLoaded && teacher.school_name ? teacher.school_name : "Puudu";
 
     return (
         <>
-            {!isTeacherDataLoading && !isTeacherChildrenDataLoading ?
+            {isTeacherDataLoaded && isTeacherChildrenDataLoaded ?
                 <>
                     <Container className="background-title-container">
                         <h2>{header}</h2>
@@ -59,7 +59,7 @@ const Teacher = () => {
                             </Col>
                         </Row>
                     </Container>
-                </> : <>Loading</>
+                </> : <>Andmete lugemise viga!</>
             }
         </>
     )
