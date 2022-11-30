@@ -3,12 +3,13 @@ import {Col, Container, Row} from "react-bootstrap";
 import {useGetSchoolChildrenByIdQuery, useGetSchoolTeachersByIdQuery} from "../../api/schoolTeachersApi";
 import ScrollableList from "../../components/ScrollableList";
 import "./css/School.scss"
+import Loader from "../../components/Loader";
 
 const School = () => {
     const params = useParams();
     const paramsId = parseInt(params.id);
-    const { data: schoolTeachersData, isSuccess: isSchoolTeachersDataLoaded, isLoading: isSchoolTeachersDataLoading } = useGetSchoolTeachersByIdQuery({id: paramsId});
-    const { data: schoolChildrenData, isSuccess: isSchoolChildrenDataLoaded, isLoading: isSchoolChildrenDataLoading } = useGetSchoolChildrenByIdQuery({id: paramsId});
+    const { data: schoolTeachersData, isSuccess: isSchoolTeachersDataLoaded } = useGetSchoolTeachersByIdQuery({id: paramsId});
+    const { data: schoolChildrenData, isSuccess: isSchoolChildrenDataLoaded } = useGetSchoolChildrenByIdQuery({id: paramsId});
 
     const header = isSchoolTeachersDataLoaded && schoolTeachersData ? `${schoolTeachersData[0].school_name}` : "Andmeid pole!";
 
@@ -49,7 +50,7 @@ const School = () => {
                         </Row>
                     </Container>
                 </>
-                : <>Andmete lugemise viga!</>
+                : <Loader></Loader>
             }
         </>
     )

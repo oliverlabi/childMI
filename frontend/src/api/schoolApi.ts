@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import {IAllSchoolDataResponse} from "./apiResponseTypes";
 
 export const schoolApi = createApi({
     reducerPath: 'schoolApi',

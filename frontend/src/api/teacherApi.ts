@@ -1,4 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import {
+    IAllTeacherDataResponse,
+    IAllTeachersByYearResponse,
+    IAllTeacherYearsResponse,
+    ITeacherChildrenResponse,
+    ITeacherDataResponse
+} from "./apiResponseTypes";
 
 export type ITeachersByYearDict = {
     [start_year: number]: IAllTeachersByYearResponse[];

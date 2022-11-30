@@ -5,6 +5,7 @@ import ScrollableList from "../../components/ScrollableList";
 import { Container, Tab, Tabs } from "react-bootstrap";
 import "./css/index.scss";
 import {Link} from "react-router-dom";
+import Loader from "../../components/Loader";
 
 export type ListDataType = {
     id: number,
@@ -13,18 +14,15 @@ export type ListDataType = {
 }
 
 const Teachers = () => {
-    const { data: yearData, isSuccess: isSuccess, isLoading: isLoading } = useGetAllTeacherDataQuery();
+    const { data: yearData, isSuccess: isSuccess } = useGetAllTeacherDataQuery();
     const years: number[] = [];
 
-    isSuccess
-        ?
-            yearData.forEach((data: IAllTeachersByYearResponse) => {
+    !isSuccess ||
+            yearData.forEach((data: any) => {
                 if (!years.includes(data.start_year)){
                     years.push(data.start_year);
                 }
             })
-        :
-            null;
 
     return (
         <>
@@ -59,7 +57,7 @@ const Teachers = () => {
                         }))}
                     </Tabs>
                 :
-                <>Andmete lugemise viga!</>
+                <Loader></Loader>
             }
 
         </>

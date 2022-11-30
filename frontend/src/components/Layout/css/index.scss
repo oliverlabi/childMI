@@ -1,9 +1,10 @@
 @import '@/global';
 
-.background .background-container-theme {
+.background, .background-container-theme {
   display: flex;
   justify-content: center;
   flex-direction: column;
+  align-items: center;
 }
 
 .background {

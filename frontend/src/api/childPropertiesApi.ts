@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import {IAllChildrenDataBySheetResponse, IAllPropertiesBySheetResponse} from "./apiResponseTypes";
 
 export const childPropertiesApi = createApi({
     reducerPath: 'childApi',

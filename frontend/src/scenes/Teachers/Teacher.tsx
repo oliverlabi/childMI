@@ -3,6 +3,7 @@ import { useGetTeacherChildrenQuery, useGetTeacherDataQuery } from "../../api/te
 import {Link, useParams} from "react-router-dom";
 import ScrollableList from "../../components/ScrollableList";
 import "./css/Teacher.scss";
+import Loader from "../../components/Loader";
 
 type ListDataField = {
     id: number,
@@ -13,8 +14,8 @@ const Teacher = () => {
     const params = useParams();
     const paramsId = parseInt(params.id);
     const paramsYear = parseInt(params.year);
-    const { data: teacher, isSuccess: isTeacherDataLoaded, isLoading: isTeacherDataLoading } = useGetTeacherDataQuery({year: paramsYear, id: paramsId});
-    const { data: children, isSuccess: isTeacherChildrenDataLoaded, isLoading: isTeacherChildrenDataLoading } = useGetTeacherChildrenQuery({year: paramsYear, id: paramsId});
+    const { data: teacher, isSuccess: isTeacherDataLoaded } = useGetTeacherDataQuery({year: paramsYear, id: paramsId});
+    const { data: children, isSuccess: isTeacherChildrenDataLoaded } = useGetTeacherChildrenQuery({year: paramsYear, id: paramsId});
 
     const childrenListData = isTeacherChildrenDataLoaded
         ? children.map((childrenObject: any) => (
@@ -53,13 +54,13 @@ const Teacher = () => {
                                             entry.name != ''
                                                 ? <div className="scrollable-list-data-row" key={entry.id}><Link to={`${entry.id}`}>{entry.name}</Link></div>
                                                 : null
-                                        )): <div>Andmed puuduvad</div>
+                                        )) : <div>Andmed puuduvad</div>
                                     }
                                 </ScrollableList>
                             </Col>
                         </Row>
                     </Container>
-                </> : <>Andmete lugemise viga!</>
+                </> : <Loader></Loader>
             }
         </>
     )

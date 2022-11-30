@@ -1,21 +1,21 @@
-interface IAllChildrenDataBySheetResponse {
+export interface IAllChildrenDataBySheetResponse {
     child_name_code: string,
     property_group_name: string,
     property_id: number,
     child_property_value: string
 }
 
-interface IAllPropertiesBySheetResponse {
+export interface IAllPropertiesBySheetResponse {
     id: number,
     name: string
 }
 
-interface IAllSchoolDataResponse {
+export interface IAllSchoolDataResponse {
     id: number,
     name: string
 }
 
-interface ISchoolTeachersByIdResponse {
+export interface ISchoolTeachersByIdResponse {
     teacher_id: number,
     start_year: number,
     teacher_full_name: string,
@@ -23,25 +23,25 @@ interface ISchoolTeachersByIdResponse {
     school_name: string
 }
 
-interface ISchoolChildrenByIdResponse {
+export interface ISchoolChildrenByIdResponse {
     child_id: number,
     name_code: string,
     school_id: number
 }
 
-interface IAllTeacherDataResponse {
+export interface IAllTeacherDataResponse {
     id: number,
     full_name: string,
     start_year: number
 }
 
-interface IAllTeachersByYearResponse {
+export interface IAllTeachersByYearResponse {
     id: number,
     full_name: string,
     start_year?: number
 }
 
-interface ITeacherDataResponse {
+export interface ITeacherDataResponse {
     id: number,
     full_name: string,
     start_year: number,
@@ -49,11 +49,11 @@ interface ITeacherDataResponse {
     school_name: string
 }
 
-interface ITeacherChildrenResponse {
+export interface ITeacherChildrenResponse {
     child_name: string,
     child_id: string
 }
 
-interface IAllTeacherYearsResponse {
+export interface IAllTeacherYearsResponse {
     start_year: number
 }
