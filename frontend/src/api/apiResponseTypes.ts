@@ -18,6 +18,13 @@ export interface IAllChildPropertiesBySheetIdAndChildIdResponse {
     child_property_value: string
 }
 
+export interface IAllSheetsDataResponse {
+    id: number,
+    year: number,
+    season: number,
+    type: number
+}
+
 export interface IAllSchoolDataResponse {
     id: number,
     name: string
