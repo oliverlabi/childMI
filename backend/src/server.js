@@ -6,13 +6,14 @@ const childRoutes = require("./routes/child")
 const schoolRoutes = require("./routes/school")
 const teacherRoutes = require("./routes/teacher")
 const schoolTeacherRoutes = require("./routes/teacher_school")
+const sheetRoutes = require("./routes/sheet")
 
 const app = express();
 app.use(express.json());
 
 const corsOptions = {
     origin : [ 'http://localhost:8081' , 'http://dev-childmi.ee:8080' ],
-    methods:["GET" , "POST" , "PUT", "DELETE"],
+    methods: ["GET" , "POST" , "PUT", "DELETE"],
     credentials: true
 };
 
@@ -31,6 +32,7 @@ app.use("/api/child/", childRoutes);
 app.use("/api/school/", schoolRoutes);
 app.use("/api/school_teachers/", schoolTeacherRoutes);
 app.use("/api/teacher/", teacherRoutes);
+app.use("/api/sheets/", sheetRoutes);
 
 const PORT = process.env.PORT || 8081;
 app.listen(PORT, () => {
