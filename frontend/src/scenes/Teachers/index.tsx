@@ -32,7 +32,7 @@ const Teachers = () => {
             {isSuccess
                 ?
                     <Tabs
-                        defaultActiveKey={yearData ? yearData[0].start_year : "Pole andmeid"}
+                        defaultActiveKey={yearData[0] ? yearData[0].start_year : "Pole andmeid"}
                         className="background-year-tabs"
                     >
                         {years.map(((year: number) => {
