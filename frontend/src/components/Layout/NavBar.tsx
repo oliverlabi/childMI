@@ -10,7 +10,7 @@ const NavBar = () => {
                 <Navbar.Toggle className="navbar-toggle"></Navbar.Toggle>
                 <Navbar.Collapse role={undefined}>
                     <Nav className="justify-content-end" activeKey={location.pathname}>
-                        <Nav.Link href="/">Õpilased</Nav.Link>
+                        <Nav.Link href="/children">Õpilased</Nav.Link>
                         <Nav.Link href="/teachers">Õpetajad</Nav.Link>
                         <Nav.Link href="/schools">Koolid</Nav.Link>
                     </Nav>

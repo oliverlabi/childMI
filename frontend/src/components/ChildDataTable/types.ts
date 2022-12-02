@@ -22,3 +22,11 @@ export type sheetType = {
     season: number,
     type: number
 }
+
+export type parsedDataType = {
+    [id: number]: parsedDataRow
+}
+
+export type parsedDataRow = {
+    [id: number]: string
+}
