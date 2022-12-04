@@ -3,18 +3,30 @@ const { QueryTypes } = require("sequelize");
 
 exports.getAllChildren = async (req, res) => {
     try {
+        const { sheetId } = req.params;
+
         const results = await sequelize.query(
             "SELECT " +
                 "c.id, " +
-                "CONCAT(t.first_name, ' ', t.last_name) AS full_name, " +
                 "c.name_code, " +
                 "c.age, " +
                 "c.gender, " +
                 "c.special_need " +
             "FROM child c " +
-            "INNER JOIN teacher_children tc ON c.id = tc.child_id " +
-            "INNER JOIN teacher t ON t.id = tc.teacher_id",
-            { type: QueryTypes.SELECT })
+            "INNER JOIN child_properties cp ON cp.child_id = c.id " +
+            "INNER JOIN properties p ON cp.property_id = p.id " +
+            "INNER JOIN property_group pg ON pg.id = p.group " +
+            "INNER JOIN sheet s ON s.id = pg.sheet_id " +
+            "WHERE s.id = ? " +
+            "GROUP BY c.id, " +
+                "c.name_code, " +
+                "c.age, " +
+                "c.gender, " +
+                "c.special_need;",
+            {
+                replacements: [sheetId],
+                type: QueryTypes.SELECT
+            })
         return res.status(200).json({ results });
     } catch (error) {
         return res.status(500).send(error.message);
@@ -23,20 +35,28 @@ exports.getAllChildren = async (req, res) => {
 
 exports.getChild = async (req, res) => {
     try {
-        const { id } = req.params;
+        const { sheetId, childId } = req.params;
         const results = await sequelize.query(
             "SELECT " +
-                "CONCAT(t.first_name, ' ', t.last_name) AS full_name, " +
+                "c.id, " +
                 "c.name_code, " +
                 "c.age, " +
                 "c.gender, " +
                 "c.special_need " +
             "FROM child c " +
-            "INNER JOIN teacher_children tc ON c.id = tc.child_id " +
-            "INNER JOIN teacher t ON t.id = tc.teacher_id " +
-            "WHERE c.id = ?",
+            "INNER JOIN child_properties cp ON cp.child_id = c.id " +
+            "INNER JOIN properties p ON cp.property_id = p.id " +
+            "INNER JOIN property_group pg ON pg.id = p.group " +
+            "INNER JOIN sheet s ON s.id = pg.sheet_id " +
+            "WHERE s.id = ? " +
+            "AND c.id = ? " +
+            "GROUP BY c.id, " +
+                "c.name_code, " +
+                "c.age, " +
+                "c.gender, " +
+                "c.special_need;",
             {
-                replacements: [id],
+                replacements: [sheetId, childId],
                 type: QueryTypes.SELECT
             })
         return res.status(200).json({ results });
