@@ -1,4 +1,4 @@
-from globals import *
+from config import *
 
 cursor.execute("SELECT c.id, c.name_code FROM child c JOIN child_properties cp on c.id = cp.child_id JOIN properties p on cp.property_id = p.id JOIN property_group pg on p.group = pg.id RIGHT JOIN sheet s on pg.sheet_id = s.id WHERE s.id = " + currentSheetID + " GROUP BY c.id, c.name_code")
 

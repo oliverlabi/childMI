@@ -1,4 +1,4 @@
-from globals import *
+from config import *
 
 cursor.execute("SELECT id, name_code FROM child")
 

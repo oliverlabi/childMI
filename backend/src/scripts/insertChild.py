@@ -1,4 +1,4 @@
-from globals import *
+from config import *
 
 excludedProperties = []
 childHeaders = lookupGroupProperties(childDataGroupName, rawPropertiesWithGroups, propertyHeaders, excludedProperties)

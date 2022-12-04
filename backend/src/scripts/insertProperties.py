@@ -1,4 +1,4 @@
-from globals import *
+from config import *
 
 excludedGroups = [childDataGroupName]
 excludedProperties = [commentProperty]
