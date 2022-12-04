@@ -4,21 +4,21 @@ import mysql.connector
 # -------------------------------------------------------------------------------
 
 # Excel file
-fileName = "qv-2020-0.ods"
+fileName = "qv-2022-1.ods"
 
 splitFileName = fileName.split("-")
 currentSheetDataType = splitFileName[0]
 currentSheetYear = splitFileName[1]
 currentSheetSeason = splitFileName[2].split(".")[0]
 currentSheetURL = "https://drive.google.com/drive/u/1/folders/1-DNyesUvEzLJZSrEFVuri1R9hDMdnzOi"
-currentSheetID = "1"
+currentSheetID = "2"
 
 if currentSheetDataType == "qv":
     currentSheetDataType = 0
 if currentSheetDataType == "ql":
     currentSheetDataType = 1
 
-dataframe = pd.read_excel("./data/" + fileName, index_col=0, header=2, keep_default_na=False)
+dataframe = pd.read_excel("./data/" + fileName, index_col=0, header=0, keep_default_na=False)
 dataframe = dataframe.where(dataframe.notna(), None)
 
 # -------------------------------------------------------------------------------
@@ -46,7 +46,7 @@ allPropertyGroups = []  # capitalized rawPropertyGroup values without unnamed da
 
 propertyHeaders = dataframe.iloc[0].values
 
-writingGroupName = "Kirjutamine"
+writingGroupName = "Kirjutamisoskus"
 childDataGroupName = "Taustaandmed"
 parentDataGroupName = "Kodune keelekeskkond"
 childNameProperty = "Lapse kood"
@@ -60,12 +60,14 @@ excludedGroups = [childDataGroupName, parentDataGroupName]
 excludedProperties = [commentProperty]
 
 for group in rawPropertyGroups:
-    if not "Unnamed" in group:
+    if "Unnamed" not in group:
         allPropertyGroups.append(group.capitalize())
+
 
 # -------------------------------------------------------------------------------
 
 # Global functions
+
 
 def insertData(sql, variables):
     cursor.executemany(sql, variables)
