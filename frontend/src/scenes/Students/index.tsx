@@ -13,6 +13,7 @@ import {
 } from "../../api/apiResponseTypes";
 import {SeasonEnums} from "../../utils/sheetDataMapping";
 import {ChildDataHeaders} from "../../utils/customHeaders";
+import {useParams} from "react-router-dom";
 
 const insertPropertiesData = (parsedData: parsedDataType, dict: IAllChildrenPropertiesDataBySheetResponse) => {
     if (parsedData[dict["child_id"]] === undefined){
@@ -78,12 +79,12 @@ const shiftLastCellsFirst = (parsedData: parsedDataType) => {
 }
 
 const Students = () => {
-    const sheetId = 1;
-
+    const { sheetId = 1 } = useParams();
+    const parsedParam = parseInt(String(sheetId))
     const { data: sheetsData, isSuccess: isSheetDataLoaded } = useGetAllSheetsDataQuery();
-    const { data: childPropertiesData, isSuccess: isChildPropsDataLoaded } = useGetAllChildrenPropertiesDataBySheetQuery({sheetId: sheetId});
-    const { data: childData, isSuccess: isChildDataLoaded } = useGetAllChildrenDataBySheetQuery({sheetId: sheetId});
-    const { data: propertiesData, isSuccess: isPropsDataLoaded } = useGetAllPropertiesBySheetQuery({sheetId: sheetId});
+    const { data: childPropertiesData, isSuccess: isChildPropsDataLoaded } = useGetAllChildrenPropertiesDataBySheetQuery({sheetId: parsedParam});
+    const { data: childData, isSuccess: isChildDataLoaded } = useGetAllChildrenDataBySheetQuery({sheetId: parsedParam});
+    const { data: propertiesData, isSuccess: isPropsDataLoaded } = useGetAllPropertiesBySheetQuery({sheetId: parsedParam});
 
     const parsedData: parsedDataType = {};
     let headers;

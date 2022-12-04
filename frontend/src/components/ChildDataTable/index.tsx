@@ -1,8 +1,15 @@
 import Table from 'react-bootstrap/Table';
 import './css/index.scss';
 import {ChildDataTableProps} from "./types";
+import {Link, useParams} from "react-router-dom";
 
 const ChildDataTable = ({headers, data, sheetsData}: ChildDataTableProps) => {
+    const { sheetId } = useParams();
+
+    const refreshPage = () => {
+        window.location.reload();
+    }
+
     return (
         <Table responsive>
             <thead>
@@ -17,12 +24,20 @@ const ChildDataTable = ({headers, data, sheetsData}: ChildDataTableProps) => {
                 </tr>
             </thead>
             <tbody>
-                {Object.values(data).map((dataDict, index) => {
+                {Object.entries(data).map((dataDict, index) => {
                     return (
-                        <tr className="data-table-body" key={dataDict as string + index}>
-                            {Object.entries(dataDict).map((entry, index) => {
+                        <tr className="data-table-body" key={dataDict[1] as string + index}>
+                            {Object.entries(dataDict[1]).map((entry, index) => {
                                 if(entry[0] === "0"){
-                                    return <td className="data-year-column" key={entry[0] + entry[1] + index}>{entry[1][1]}</td>
+                                    if(sheetId === dataDict[0]){
+                                        return <td className="data-year-column-active" key={entry[0] + entry[1] + index}><Link to={`/children/${dataDict[index]}/`}>{entry[1][1]}</Link></td>
+                                    }
+
+                                    return <td className="data-year-column" key={entry[0] + entry[1] + index} onClick={refreshPage}><Link to={`/children/${dataDict[index]}/`}>{entry[1][1]}</Link></td>
+                                }
+
+                                if(index === 1){
+                                    return <td className="data-clickable-column" key={entry[0] + entry[1] + index}><Link to={`/children/${sheetId}/${dataDict[0]}`}>{entry[1][1]}</Link></td>
                                 }
 
                                 return <td key={entry[0] + entry[1] + index}>{entry[1][1]}</td>

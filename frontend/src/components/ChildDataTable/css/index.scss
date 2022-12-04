@@ -21,9 +21,30 @@ th, tr {
   align-self: flex-start;
 }
 
-.data-year-column {
-  color: black;
+.data-year-column, .data-year-column-active {
   background: $main-theme !important;
   border: none;
   white-space: nowrap;
+}
+
+.data-year-column a {
+  color: black;
+}
+
+.data-year-column-active a {
+  color: white;
+  cursor: default;
+  text-decoration: none;
+}
+
+.data-year-column a:hover {
+  color: white;
+}
+
+.data-clickable-column a {
+  color: $main-theme;
+}
+
+.data-clickable-column a:hover {
+  color: black;
 }
