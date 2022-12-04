@@ -3,7 +3,7 @@ export interface IAllChildrenDataBySheetResponse {
     name_code: string,
     age: number,
     gender: string,
-    special_need: number
+    special_need: string
 }
 
 export interface IChildDataBySheetAndIdResponse {
