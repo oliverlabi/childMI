@@ -29,10 +29,6 @@ for i in range(0, len(currentDataFrame.iloc[0:])):
         gender = "E"
 
     special_need = currentDataFrame.iloc[0:, [4]].iloc[i, 0]
-    if special_need == 'jah':
-        special_need = 1
-    else:
-        special_need = 0
 
     childData.append({"first_name": teacherCode[0], "last_name": teacherCode[1], "c_name_code": str(nameCode), "age": age, "gender": gender, "special_need": special_need})
 

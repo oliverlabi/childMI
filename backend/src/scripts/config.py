@@ -11,7 +11,7 @@ currentSheetDataType = splitFileName[0]
 currentSheetYear = splitFileName[1]
 currentSheetSeason = splitFileName[2].split(".")[0]
 currentSheetURL = "https://drive.google.com/drive/u/1/folders/1-DNyesUvEzLJZSrEFVuri1R9hDMdnzOi"
-currentSheetID = "2"
+currentSheetID = "1"
 
 if currentSheetDataType == "qv":
     currentSheetDataType = 0
