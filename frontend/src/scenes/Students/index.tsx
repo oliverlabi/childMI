@@ -1,12 +1,12 @@
 import ChildDataTable from "../../components/ChildDataTable";
 import { Container } from "react-bootstrap";
-import {useGetAllChildrenDataBySheetQuery, useGetAllPropertiesBySheetQuery} from "../../api/childPropertiesApi";
+import {useGetAllChildrenPropertiesDataBySheetQuery, useGetAllPropertiesBySheetQuery} from "../../api/childPropertiesApi";
 import Loader from "../../components/Loader";
 import {useGetAllSheetsDataQuery} from "../../api/sheetApi";
 
 const Students = () => {
     const { data: sheets, isSuccess: isSheetDataLoaded } = useGetAllSheetsDataQuery();
-    const { data: childProperties, isSuccess: isChildPropsLoaded } = useGetAllChildrenDataBySheetQuery({sheetId: 1});
+    const { data: childProperties, isSuccess: isChildPropsLoaded } = useGetAllChildrenPropertiesDataBySheetQuery({sheetId: 1});
     const { data: properties, isSuccess: isPropsLoaded } = useGetAllPropertiesBySheetQuery({sheetId: 1});
 
     return (

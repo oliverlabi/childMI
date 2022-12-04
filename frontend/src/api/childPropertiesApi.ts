@@ -1,15 +1,15 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import {
     IAllChildPropertiesBySheetIdAndChildIdResponse,
-    IAllChildrenDataBySheetResponse,
+    IAllChildrenPropertiesDataBySheetResponse,
     IAllPropertiesBySheetResponse
 } from "./apiResponseTypes";
 
 export const childPropertiesApi = createApi({
-    reducerPath: 'childApi',
+    reducerPath: 'childPropertiesApi',
     baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8081/api/' }),
     endpoints: (builder) => ({
-        getAllChildrenDataBySheet: builder.query<any, {sheetId: number}>({
+        getAllChildrenPropertiesDataBySheet: builder.query<any, {sheetId: number}>({
             query(args) {
                 const { sheetId } = args;
                 return {
@@ -17,7 +17,7 @@ export const childPropertiesApi = createApi({
                     credentials: "include"
                 }
             },
-            transformResponse: (results: { results: { propertyData: IAllChildrenDataBySheetResponse }}) =>
+            transformResponse: (results: { results: { propertyData: IAllChildrenPropertiesDataBySheetResponse }}) =>
                 results.results,
         }),
         getAllPropertiesBySheet: builder.query<any, {sheetId: number}>({
@@ -46,7 +46,7 @@ export const childPropertiesApi = createApi({
 })
 
 export const {
-    useGetAllChildrenDataBySheetQuery,
+    useGetAllChildrenPropertiesDataBySheetQuery,
     useGetAllPropertiesBySheetQuery,
     useGetAllChildPropertiesBySheetIdAndChildIdQuery
 } = childPropertiesApi

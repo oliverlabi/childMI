@@ -1,4 +1,19 @@
 export interface IAllChildrenDataBySheetResponse {
+    id: number,
+    name_code: string,
+    age: number,
+    gender: string,
+    special_need: number
+}
+
+export interface IChildDataBySheetAndIdResponse {
+    name_code: string,
+    age: number,
+    gender: string,
+    special_need: number
+}
+
+export interface IAllChildrenPropertiesDataBySheetResponse {
     child_id: number,
     child_name_code: string,
     property_group_name: string,
