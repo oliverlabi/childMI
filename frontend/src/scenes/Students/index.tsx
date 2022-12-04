@@ -3,22 +3,26 @@ import { Container } from "react-bootstrap";
 import {useGetAllChildrenPropertiesDataBySheetQuery, useGetAllPropertiesBySheetQuery} from "../../api/childPropertiesApi";
 import Loader from "../../components/Loader";
 import {useGetAllSheetsDataQuery} from "../../api/sheetApi";
+import {useGetAllChildrenDataBySheetQuery} from "../../api/childApi";
 
 const Students = () => {
-    const { data: sheets, isSuccess: isSheetDataLoaded } = useGetAllSheetsDataQuery();
-    const { data: childProperties, isSuccess: isChildPropsLoaded } = useGetAllChildrenPropertiesDataBySheetQuery({sheetId: 1});
-    const { data: properties, isSuccess: isPropsLoaded } = useGetAllPropertiesBySheetQuery({sheetId: 1});
+    const sheetId = 1;
+
+    const { data: sheetsData, isSuccess: isSheetDataLoaded } = useGetAllSheetsDataQuery();
+    const { data: childPropertiesData, isSuccess: isChildPropsDataLoaded } = useGetAllChildrenPropertiesDataBySheetQuery({sheetId: sheetId});
+    const { data: childData, isSuccess: isChildDataLoaded } = useGetAllChildrenDataBySheetQuery({sheetId: sheetId});
+    const { data: propertiesData, isSuccess: isPropsDataLoaded } = useGetAllPropertiesBySheetQuery({sheetId: sheetId});
 
     return (
         <>
             <Container className="background-title-container">
                 <h2>Õpilaste andmed</h2>
             </Container>
-            {isChildPropsLoaded && isPropsLoaded && isSheetDataLoaded ?
+            {isChildPropsDataLoaded && isPropsDataLoaded && isSheetDataLoaded && isChildDataLoaded ?
                 <>
                     <Container className="background-container-theme">
                         <p className="data-type-text">Andmed: Kvantitatiivsed | Kvalitatiivsed</p>
-                        <ChildDataTable headers={properties} data={childProperties} sheets={sheets} />
+                        <ChildDataTable headers={propertiesData} propertiesData={childPropertiesData} childData={childData} sheetsData={sheetsData} />
                     </Container>
                 </>
                 : <Loader></Loader>
