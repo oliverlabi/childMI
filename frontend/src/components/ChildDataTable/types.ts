@@ -1,13 +1,10 @@
 import {
-    IAllChildrenDataBySheetResponse,
-    IAllChildrenPropertiesDataBySheetResponse,
     IAllPropertiesBySheetResponse, IAllSheetsDataResponse
 } from "../../api/apiResponseTypes";
 
 export type ChildDataTableProps = {
     headers: IAllPropertiesBySheetResponse[],
-    propertiesData: IAllChildrenPropertiesDataBySheetResponse[],
-    childData: IAllChildrenDataBySheetResponse[],
+    data: parsedDataType,
     sheetsData: IAllSheetsDataResponse[],
 }
 
