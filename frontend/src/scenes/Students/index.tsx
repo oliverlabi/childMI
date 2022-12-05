@@ -13,7 +13,7 @@ import {
 } from "../../api/apiResponseTypes";
 import {SeasonEnums} from "../../utils/sheetDataMapping";
 import {ChildDataHeaders} from "../../utils/customHeaders";
-import {useParams} from "react-router-dom";
+import {useEffect, useState} from "react";
 
 const insertPropertiesData = (parsedData: parsedDataType, dict: IAllChildrenPropertiesDataBySheetResponse) => {
     if (parsedData[dict["child_id"]] === undefined){
@@ -79,24 +79,36 @@ const shiftLastCellsFirst = (parsedData: parsedDataType) => {
 }
 
 const Students = () => {
-    const { sheetId = 1 } = useParams();
+    const [sheetId, setSheetId] = useState(0);
     const parsedParam = parseInt(String(sheetId))
-    const { data: sheetsData, isSuccess: isSheetDataLoaded } = useGetAllSheetsDataQuery();
-    const { data: childPropertiesData, isSuccess: isChildPropsDataLoaded } = useGetAllChildrenPropertiesDataBySheetQuery({sheetId: parsedParam});
-    const { data: childData, isSuccess: isChildDataLoaded } = useGetAllChildrenDataBySheetQuery({sheetId: parsedParam});
-    const { data: propertiesData, isSuccess: isPropsDataLoaded } = useGetAllPropertiesBySheetQuery({sheetId: parsedParam});
+    const sheetsData = useGetAllSheetsDataQuery();
+    const childrenPropertiesData = useGetAllChildrenPropertiesDataBySheetQuery({sheetId: parsedParam});
+    const childrenData = useGetAllChildrenDataBySheetQuery({sheetId: parsedParam});
+    const propsData = useGetAllPropertiesBySheetQuery({sheetId: parsedParam});
+
+    useEffect(() => {
+        if((sheetId === 0 || isNaN(sheetId)) && sheetsData.isSuccess){
+            setSheetId(sheetsData.data[0].id);
+            location.pathname = `/children/${sheetsData.data[0].id}`
+        }
+    }, [sheetsData.isSuccess])
+
+    useEffect(() => {
+        const sheetId = location.pathname.split("/")[2]
+        sheetsData && setSheetId(parseInt(sheetId));
+    }, [])
 
     const parsedData: parsedDataType = {};
     let headers;
 
-    if(isChildPropsDataLoaded && isPropsDataLoaded && isSheetDataLoaded && isChildDataLoaded) {
-        const highestHeaderId = Math.max(...propertiesData.map((o: IAllPropertiesBySheetResponse) => o.id))
-        headers = addChildHeaders(propertiesData);
+    if(childrenPropertiesData.isSuccess && propsData.isSuccess && sheetsData.isSuccess && childrenData.isSuccess) {
+        const highestHeaderId = Math.max(...propsData.data.map((o: IAllPropertiesBySheetResponse) => o.id))
+        headers = addChildHeaders(propsData.data);
 
-        childPropertiesData.forEach((dict: IAllChildrenPropertiesDataBySheetResponse, index: number) => {
+        childrenPropertiesData.data.forEach((dict: IAllChildrenPropertiesDataBySheetResponse, index: number) => {
             insertPropertiesData(parsedData, dict);
-            insertYearlyData(sheetsData, index, parsedData, dict, highestHeaderId);
-            insertChildrenData(parsedData, dict, highestHeaderId, childData);
+            insertYearlyData(sheetsData.data, index, parsedData, dict, highestHeaderId);
+            insertChildrenData(parsedData, dict, highestHeaderId, childrenData.data);
         })
 
         insertNullCells(parsedData, headers);
@@ -109,11 +121,11 @@ const Students = () => {
             <Container className="background-title-container">
                 <h2>Õpilaste andmed</h2>
             </Container>
-            {isChildPropsDataLoaded && isPropsDataLoaded && isSheetDataLoaded && isChildDataLoaded ?
+            {childrenPropertiesData.isSuccess && propsData.isSuccess && sheetsData.isSuccess && childrenData.isSuccess ?
                 <>
                     <Container className="background-container-theme">
                         <p className="data-type-text">Andmed: Kvantitatiivsed | Kvalitatiivsed</p>
-                        <ChildDataTable headers={headers} data={parsedData} sheetsData={sheetsData} />
+                        <ChildDataTable headers={headers} data={parsedData} sheetsData={sheetsData.data} />
                     </Container>
                 </>
                 : <Loader></Loader>

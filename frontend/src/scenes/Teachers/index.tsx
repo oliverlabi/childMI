@@ -41,7 +41,7 @@ const Teachers = () => {
                             return(
                                 <Tab eventKey={startYear} title={startYear} key={startYear}>
                                     <Container className="background-container-theme">
-                                        <h5 className="container-title">{startYear} aastal alustanud õpetajad</h5>
+                                        <h5 className="container-title">{startYear} aasta andmetega õpetajad</h5>
                                         <ScrollableList header="Õpetaja nimi">
                                             {
                                                 yearData ? yearData.map((entry: ListDataType) => (
