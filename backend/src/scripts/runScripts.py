@@ -1,4 +1,9 @@
 import subprocess
+from config import fileName, currentSheetID, currentSheetHeaderIndex
+
+print("File name:", fileName)
+print("Current sheet ID:", currentSheetID)
+print("Current sheet header index:", currentSheetHeaderIndex, "\n")
 
 print("Insert sheet data: ")
 subprocess.call("insertSheet.py", shell=True)

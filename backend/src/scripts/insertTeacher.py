@@ -16,6 +16,6 @@ for i in range(0, len(currentDataFrame.iloc[0:])):
 
     childData.append({"first_name": teacherCode[0], "last_name": teacherCode[1], "start_year": currentSheetYear})
 
-sql = "INSERT INTO teacher (first_name, last_name, start_year) SELECT * FROM (SELECT %(first_name)s, (%(last_name)s), (%(start_year)s)) AS tmp WHERE NOT EXISTS (SELECT first_name, last_name FROM teacher WHERE first_name = (%(first_name)s) AND last_name = (%(last_name)s) AND start_year = (%(start_year)s)) LIMIT 1"
+sql = "INSERT INTO teacher (first_name, last_name, start_year) SELECT * FROM (SELECT %(first_name)s, (%(last_name)s), (%(start_year)s)) AS tmp WHERE NOT EXISTS (SELECT first_name, last_name, start_year FROM teacher WHERE first_name = (%(first_name)s) AND last_name = (%(last_name)s) AND start_year = (%(start_year)s))"
 
 insertData(sql, childData)

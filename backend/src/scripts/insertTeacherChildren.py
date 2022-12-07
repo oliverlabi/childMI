@@ -10,10 +10,10 @@ cursor.execute("SELECT c.id, c.name_code FROM child c JOIN child_properties cp o
 childData = list(cursor.fetchall())
 childData = list(({"id": child_id, "name_code": name}) for (child_id, name) in childData)
 
-cursor.execute("SELECT id, first_name, last_name FROM teacher")
+cursor.execute("SELECT id, first_name, last_name, start_year FROM teacher WHERE start_year=" + currentSheetYear)
 
 teacherData = list(cursor.fetchall())
-teacherData = list(({"id": teacher_id, "first_name": first_name, "last_name": last_name}) for (teacher_id, first_name, last_name) in teacherData)
+teacherData = list(({"id": teacher_id, "first_name": first_name, "last_name": last_name, "start_year": start_year}) for (teacher_id, first_name, last_name, start_year) in teacherData)
 
 excelChildTeacherData = dataframe.iloc[1:, [teacherDataIndex, childDataIndex]]
 

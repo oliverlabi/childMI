@@ -14,10 +14,10 @@ cursor.execute("SELECT id, name FROM school")
 schoolData = list(cursor.fetchall())
 schoolData = list(({"id": id, "name": name}) for (id, name) in schoolData)
 
-cursor.execute("SELECT id, first_name, last_name FROM teacher")
+cursor.execute("SELECT id, first_name, last_name, start_year FROM teacher WHERE start_year=" + currentSheetYear)
 
 teacherData = list(cursor.fetchall())
-teacherData = list(({"id": teacher_id, "first_name": first_name, "last_name": last_name}) for (teacher_id, first_name, last_name) in teacherData)
+teacherData = list(({"id": teacher_id, "first_name": first_name, "last_name": last_name, "start_year": start_year}) for (teacher_id, first_name, last_name, start_year) in teacherData)
 
 excelSchoolTeacherData = dataframe.iloc[1:, 0:1]
 
@@ -26,7 +26,7 @@ schoolTeacherData = []
 for i in range(0, len(excelSchoolTeacherData.iloc[0:])):
     teacherName = excelSchoolTeacherData.iloc[0:, [0]].iloc[i, 0]
     teacherName = teacherName.split(" ", 1)
-    teacherID = next(item for item in teacherData if item["first_name"] == teacherName[0] and item["last_name"] == teacherName[1])["id"]
+    teacherID = next(item for item in teacherData if item["first_name"] == teacherName[0] and item["last_name"] == teacherName[1] and item["start_year"] == int(currentSheetYear))["id"]
     schoolName = excelSchoolTeacherData.index[i]
     schoolID = lookupDictInList(str(schoolName), schoolData, "name")["id"]
 

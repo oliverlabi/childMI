@@ -12,13 +12,14 @@ currentSheetYear = splitFileName[1]
 currentSheetSeason = splitFileName[2].split(".")[0]
 currentSheetURL = "https://drive.google.com/drive/u/1/folders/1-DNyesUvEzLJZSrEFVuri1R9hDMdnzOi"
 currentSheetID = "2"
+currentSheetHeaderIndex = 0
 
 if currentSheetDataType == "qv":
     currentSheetDataType = 0
 if currentSheetDataType == "ql":
     currentSheetDataType = 1
 
-dataframe = pd.read_excel("./data/" + fileName, index_col=0, header=0, keep_default_na=False)
+dataframe = pd.read_excel("./data/" + fileName, index_col=0, header=currentSheetHeaderIndex, keep_default_na=False)
 dataframe = dataframe.where(dataframe.notna(), None)
 
 # -------------------------------------------------------------------------------
