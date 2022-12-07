@@ -25,7 +25,6 @@ const insertPropertiesData = (parsedData: parsedDataType, dict: IAllChildrenProp
 
 const insertYearlyData = (sheets: IAllSheetsDataResponse[], index: number, parsedData: parsedDataType, dict: IAllChildrenPropertiesDataBySheetResponse, highestHeaderId: number) => {
     const sheet = sheets[index];
-
     const sheetSeason = sheet && sheet["season"] === SeasonEnums.AUTUMN ? "sügis" : "kevad";
 
     if(sheet && !parsedData[dict["child_id"]][highestHeaderId + 1]){
@@ -45,13 +44,13 @@ const insertNullCells = (parsedData: parsedDataType, headers: IAllPropertiesBySh
     })
 }
 
-const insertChildrenData = (parsedData: parsedDataType, dict: IAllChildrenPropertiesDataBySheetResponse, headersLength: number, childData: IAllChildrenDataBySheetResponse[]) => {
+const insertChildrenData = (parsedData: parsedDataType, dict: IAllChildrenPropertiesDataBySheetResponse, highestHeaderId: number, childData: IAllChildrenDataBySheetResponse[]) => {
     const currentChildId = dict["child_id"];
     const currentChildData = childData.filter(obj => obj.id === currentChildId)
-    parsedData[dict["child_id"]][headersLength + 2] = currentChildData[0] && currentChildData[0].name_code;
-    parsedData[dict["child_id"]][headersLength + 3] = currentChildData[0] && currentChildData[0].age.toString();
-    parsedData[dict["child_id"]][headersLength + 4] = currentChildData[0] && currentChildData[0].gender;
-    parsedData[dict["child_id"]][headersLength + 5] = currentChildData[0] && currentChildData[0].special_need;
+    parsedData[dict["child_id"]][highestHeaderId + 2] = currentChildData[0] && currentChildData[0].name_code;
+    parsedData[dict["child_id"]][highestHeaderId + 3] = currentChildData[0] && currentChildData[0].age.toString();
+    parsedData[dict["child_id"]][highestHeaderId + 4] = currentChildData[0] && currentChildData[0].gender;
+    parsedData[dict["child_id"]][highestHeaderId + 5] = currentChildData[0] && currentChildData[0].special_need;
 }
 
 const addChildHeaders = (headers: IAllPropertiesBySheetResponse[]) => {
@@ -70,7 +69,7 @@ const addChildHeaders = (headers: IAllPropertiesBySheetResponse[]) => {
 
 const shiftLastCellsFirst = (parsedData: parsedDataType) => {
     Object.entries(parsedData).map((data) => {
-        const childId: string = data[0];
+        const childId = data[0] as unknown as number;
         const dataArray = Object.entries(data[1]);
         const splicedData = dataArray.splice(dataArray.length - ChildDataHeaders.length - 1, dataArray.length);
         // @ts-ignore
@@ -89,7 +88,7 @@ const Students = () => {
     useEffect(() => {
         if((sheetId === 0 || isNaN(sheetId)) && sheetsData.isSuccess){
             setSheetId(sheetsData.data[0].id);
-            location.pathname = `/children/${sheetsData.data[0].id}`
+            window.history.replaceState(null, null, `/children/${sheetsData.data[0].id}`)
         }
     }, [sheetsData.isSuccess])
 
@@ -104,6 +103,8 @@ const Students = () => {
     if(childrenPropertiesData.isSuccess && propsData.isSuccess && sheetsData.isSuccess && childrenData.isSuccess) {
         const highestHeaderId = Math.max(...propsData.data.map((o: IAllPropertiesBySheetResponse) => o.id))
         headers = addChildHeaders(propsData.data);
+
+        console.log(highestHeaderId)
 
         childrenPropertiesData.data.forEach((dict: IAllChildrenPropertiesDataBySheetResponse, index: number) => {
             insertPropertiesData(parsedData, dict);

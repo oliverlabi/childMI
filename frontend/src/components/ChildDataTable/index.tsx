@@ -1,14 +1,19 @@
 import Table from 'react-bootstrap/Table';
 import './css/index.scss';
 import {ChildDataTableProps} from "./types";
-import {Link, useParams} from "react-router-dom";
+import {Link} from "react-router-dom";
+import {useEffect, useState} from "react";
 
 const ChildDataTable = ({headers, data, sheetsData}: ChildDataTableProps) => {
-    const { sheetId } = useParams();
+    const [sheetId, setSheetId] = useState("0");
 
     const refreshPage = () => {
         window.location.reload();
     }
+
+    useEffect(() => {
+        setSheetId(location.pathname.split("/")[2])
+    }, [window.history])
 
     return (
         <Table responsive>
