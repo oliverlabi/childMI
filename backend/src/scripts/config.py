@@ -4,7 +4,7 @@ import mysql.connector
 # -------------------------------------------------------------------------------
 
 # Excel file
-fileName = "qv-2020-0.ods"
+fileName = "qv-2022-1.ods"
 
 splitFileName = fileName.split("-")
 currentSheetDataType = splitFileName[0]
@@ -12,7 +12,7 @@ currentSheetYear = splitFileName[1]
 currentSheetSeason = splitFileName[2].split(".")[0]
 currentSheetURL = "https://drive.google.com/drive/u/1/folders/1-DNyesUvEzLJZSrEFVuri1R9hDMdnzOi"
 currentSheetID = "2"
-currentSheetHeaderIndex = 2
+currentSheetHeaderIndex = 0
 
 if currentSheetDataType == "qv":
     currentSheetDataType = 0
@@ -47,12 +47,13 @@ allPropertyGroups = []  # capitalized rawPropertyGroup values without unnamed da
 
 propertyHeaders = dataframe.iloc[0].values
 
-writingGroupName = "Kirjutamine"
+writingGroupName = "Kirjutamisoskus"
 childDataGroupName = "Taustaandmed"
 parentDataGroupName = "Kodune keelekeskkond"
 childNameProperty = "Lapse kood"
 childAgeProperty = "Lapse vanus"
 childGenderProperty = "Lapse sugu"
+childSpecialNeedProperty = "Kas lapsel on mõni erivajadus, mis onseotud keelelise arenguga"
 commentProperty = "Kommentaarid"
 teacherNameProperty = "Õpetaja kood"
 schoolNameProperty = "Kool"
@@ -81,6 +82,10 @@ def insertData(sql, variables):
 
 def lookupDictInList(lookupValue, listData, itemName):
     return next(item for item in listData if item[itemName] == lookupValue)
+
+
+def lookupBoolFromDictInListWithTwoKeys(listData, firstLookup, firstKey, secondLookup, secondKey):
+    return next((item for item in listData if item[firstKey] == firstLookup and item[secondKey] == secondLookup), False)
 
 
 def lookupPropertyInGroup(lookupValue, itemName, list):

@@ -18,7 +18,6 @@ teacherData = list(({"id": teacher_id, "first_name": first_name, "last_name": la
 excelChildTeacherData = dataframe.iloc[1:, [teacherDataIndex, childHeaders[1]["index"], childHeaders[2]["index"], childHeaders[3]["index"], childHeaders[4]["index"]]]
 
 childTeacherData = []
-print(childData)
 for i in range(0, len(excelChildTeacherData.iloc[0:])):
     teacherName = excelChildTeacherData.iloc[0:, [0]].iloc[i, 0]
     teacherName = teacherName.split(" ", 1)
@@ -27,12 +26,14 @@ for i in range(0, len(excelChildTeacherData.iloc[0:])):
     childFirstHeader = str(excelChildTeacherData.iloc[0:, [1]].iloc[i, 0])
     childSecondHeader = excelChildTeacherData.iloc[0:, [2]].iloc[i, 0]
     childThirdHeader = excelChildTeacherData.iloc[0:, [3]].iloc[i, 0]
-    if childSecondHeader == '' and childHeaders[2]["name"] == childAgeProperty:
-        childSecondHeader = 0
-    if childThirdHeader == '' and childHeaders[3]["name"] == childGenderProperty:
-        childThirdHeader = "E"
-    childID = next(item for item in childData if item[childHeaders[1]["name"]] == childFirstHeader and (item[childHeaders[2]["name"]] == childSecondHeader) and item[childHeaders[3]["name"]] == childThirdHeader)["id"]
-    childTeacherData.append({"teacher_id": teacherID, "child_id": childID})
+    child = next((item for item in childData if item[childHeaders[1]["name"]] == childFirstHeader
+                   and (item[childHeaders[2]["name"]] == childSecondHeader) and item[childHeaders[3]["name"]] == childThirdHeader), None)
+
+    if child["name_code"] == 'Alisa':
+        print("child")
+    if child:
+        childID = child["id"]
+        childTeacherData.append({"teacher_id": teacherID, "child_id": childID})
 
 sql = "INSERT INTO teacher_children (child_id, teacher_id) SELECT * FROM (SELECT (%(child_id)s) AS childID, (%(teacher_id)s) AS teacherID) AS tmp WHERE NOT EXISTS (SELECT child_id, teacher_id FROM teacher_children WHERE child_id = (%(child_id)s) AND teacher_id = (%(teacher_id)s)) LIMIT 1"
 
