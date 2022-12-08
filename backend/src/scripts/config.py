@@ -4,13 +4,13 @@ import mysql.connector
 # -------------------------------------------------------------------------------
 
 # Excel file
-fileName = "qv-2022-1.ods"
+fileName = "qv-2021-0.ods"
 
 splitFileName = fileName.split("-")
 currentSheetDataType = splitFileName[0]
 currentSheetYear = splitFileName[1]
 currentSheetSeason = splitFileName[2].split(".")[0]
-currentSheetURL = "https://drive.google.com/drive/u/1/folders/1-DNyesUvEzLJZSrEFVuri1R9hDMdnzOi"
+currentSheetURL = "test"
 currentSheetID = "2"
 currentSheetHeaderIndex = 0
 
@@ -47,7 +47,7 @@ allPropertyGroups = []  # capitalized rawPropertyGroup values without unnamed da
 
 propertyHeaders = dataframe.iloc[0].values
 
-writingGroupName = "Kirjutamisoskus"
+writingGroupName = "Kirjutamine"
 childDataGroupName = "Taustaandmed"
 parentDataGroupName = "Kodune keelekeskkond"
 childNameProperty = "Lapse kood"

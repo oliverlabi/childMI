@@ -26,11 +26,12 @@ for i in range(0, len(excelChildTeacherData.iloc[0:])):
     childFirstHeader = str(excelChildTeacherData.iloc[0:, [1]].iloc[i, 0])
     childSecondHeader = excelChildTeacherData.iloc[0:, [2]].iloc[i, 0]
     childThirdHeader = excelChildTeacherData.iloc[0:, [3]].iloc[i, 0]
+    childFourthHeaderData = excelChildTeacherData.iloc[0:, [4]].iloc[i, 0]
     child = next((item for item in childData if item[childHeaders[1]["name"]] == childFirstHeader
-                   and (item[childHeaders[2]["name"]] == childSecondHeader) and item[childHeaders[3]["name"]] == childThirdHeader), None)
+                  and item[childHeaders[2]["name"]] == childSecondHeader
+                  and item[childHeaders[3]["name"]] == childThirdHeader
+                  and item[childHeaders[4]["name"]] == childFourthHeaderData), None)
 
-    if child["name_code"] == 'Alisa':
-        print("child")
     if child:
         childID = child["id"]
         childTeacherData.append({"teacher_id": teacherID, "child_id": childID})
