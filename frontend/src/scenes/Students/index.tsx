@@ -9,9 +9,7 @@ import {
     IAllChildrenDataBySheetResponse,
     IAllChildrenPropertiesDataBySheetResponse,
     IAllPropertiesBySheetResponse,
-    IAllSheetsDataResponse
 } from "../../api/apiResponseTypes";
-import {SeasonEnums} from "../../utils/sheetDataMapping";
 import {ChildDataHeaders} from "../../utils/customHeaders";
 import {useEffect, useState} from "react";
 
@@ -21,17 +19,6 @@ const insertPropertiesData = (parsedData: parsedDataType, dict: IAllChildrenProp
     }
 
     parsedData[dict["child_id"]][dict["property_id"]] = dict["child_property_value"];
-}
-
-const insertYearlyData = (sheets: IAllSheetsDataResponse[], index: number, parsedData: parsedDataType, dict: IAllChildrenPropertiesDataBySheetResponse, highestHeaderId: number) => {
-    const sheet = sheets[index];
-    const sheetSeason = sheet && sheet["season"] === SeasonEnums.AUTUMN ? "sügis" : "kevad";
-
-    if(sheet && !parsedData[dict["child_id"]][highestHeaderId + 1]){
-        parsedData[dict["child_id"]][highestHeaderId + 1] = `${sheet["year"]} ${sheetSeason}`;
-    } else if (parsedData[dict["child_id"]][highestHeaderId + 1] === undefined){
-        parsedData[dict["child_id"]][highestHeaderId + 1] = null;
-    }
 }
 
 const insertNullCells = (parsedData: parsedDataType, headers: IAllPropertiesBySheetResponse[]) => {
@@ -47,10 +34,10 @@ const insertNullCells = (parsedData: parsedDataType, headers: IAllPropertiesBySh
 const insertChildrenData = (parsedData: parsedDataType, dict: IAllChildrenPropertiesDataBySheetResponse, highestHeaderId: number, childData: IAllChildrenDataBySheetResponse[]) => {
     const currentChildId = dict["child_id"];
     const currentChildData = childData.filter(obj => obj.id === currentChildId)
-    parsedData[dict["child_id"]][highestHeaderId + 2] = currentChildData[0] && currentChildData[0].name_code;
-    parsedData[dict["child_id"]][highestHeaderId + 3] = currentChildData[0] && currentChildData[0].age.toString();
-    parsedData[dict["child_id"]][highestHeaderId + 4] = currentChildData[0] && currentChildData[0].gender;
-    parsedData[dict["child_id"]][highestHeaderId + 5] = currentChildData[0] && currentChildData[0].special_need;
+    parsedData[dict["child_id"]][highestHeaderId + 1] = currentChildData[0] && currentChildData[0].name_code;
+    parsedData[dict["child_id"]][highestHeaderId + 2] = currentChildData[0] && currentChildData[0].age.toString();
+    parsedData[dict["child_id"]][highestHeaderId + 3] = currentChildData[0] && currentChildData[0].gender;
+    parsedData[dict["child_id"]][highestHeaderId + 4] = currentChildData[0] && currentChildData[0].special_need;
 }
 
 const addChildHeaders = (headers: IAllPropertiesBySheetResponse[]) => {
@@ -71,7 +58,7 @@ const shiftLastCellsFirst = (parsedData: parsedDataType) => {
     Object.entries(parsedData).map((data) => {
         const childId = data[0] as unknown as number;
         const dataArray = Object.entries(data[1]);
-        const splicedData = dataArray.splice(dataArray.length - ChildDataHeaders.length - 1, dataArray.length);
+        const splicedData = dataArray.splice(dataArray.length - ChildDataHeaders.length, dataArray.length);
         // @ts-ignore
         return parsedData[childId] = [...splicedData, ...dataArray]
     });
@@ -104,11 +91,8 @@ const Students = () => {
         const highestHeaderId = Math.max(...propsData.data.map((o: IAllPropertiesBySheetResponse) => o.id))
         headers = addChildHeaders(propsData.data);
 
-        console.log(highestHeaderId)
-
-        childrenPropertiesData.data.forEach((dict: IAllChildrenPropertiesDataBySheetResponse, index: number) => {
+        childrenPropertiesData.data.forEach((dict: IAllChildrenPropertiesDataBySheetResponse) => {
             insertPropertiesData(parsedData, dict);
-            insertYearlyData(sheetsData.data, index, parsedData, dict, highestHeaderId);
             insertChildrenData(parsedData, dict, highestHeaderId, childrenData.data);
         })
 
@@ -125,7 +109,7 @@ const Students = () => {
             {childrenPropertiesData.isSuccess && propsData.isSuccess && sheetsData.isSuccess && childrenData.isSuccess ?
                 <>
                     <Container className="background-container-theme">
-                        <p className="data-type-text">Andmed: Kvantitatiivsed | Kvalitatiivsed</p>
+                        <p className="data-type-text">Andmed: Kvantitatiivsed</p>
                         <ChildDataTable headers={headers} data={parsedData} sheetsData={sheetsData.data} />
                     </Container>
                 </>
