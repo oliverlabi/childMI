@@ -50,3 +50,25 @@ exports.getSchoolChildren = async (req, res) => {
         return res.status(500).send(error.message);
     }
 }
+
+exports.getTeacherSchools = async (req, res) => {
+    try {
+        const { fullName } = req.params;
+        const results = await sequelize.query(
+            "SELECT " +
+                "t.id AS teacher_id, " +
+                "ts.school_id " +
+            "FROM teacher_school ts " +
+            "INNER JOIN teacher t ON ts.teacher_id = t.id " +
+            "INNER JOIN school s on ts.school_id = s.id " +
+            "WHERE CONCAT(t.first_name, ' ' , t.last_name) = ?",
+            {
+                replacements: [fullName],
+                type: QueryTypes.SELECT
+            }
+        )
+        return res.status(200).json({ results });
+    } catch (error) {
+        return res.status(500).send(error.message);
+    }
+}

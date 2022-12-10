@@ -59,6 +59,11 @@ export interface ISchoolChildrenByIdResponse {
     school_id: number
 }
 
+export interface ITeacherSchoolsByFullNameResponse {
+    teacher_id: number,
+    school_id: number
+}
+
 export interface IAllTeacherDataResponse {
     id: number,
     full_name: string,

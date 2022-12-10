@@ -1,5 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import {ISchoolChildrenByIdResponse, ISchoolTeachersByIdResponse} from "./apiResponseTypes";
+import {
+    ISchoolChildrenByIdResponse,
+    ISchoolTeachersByIdResponse,
+    ITeacherSchoolsByFullNameResponse
+} from "./apiResponseTypes";
 
 export const schoolTeachersApi = createApi({
     reducerPath: 'schoolTeachersApi',
@@ -25,10 +29,21 @@ export const schoolTeachersApi = createApi({
             transformResponse: (response: { results: { schoolData: ISchoolChildrenByIdResponse }[]}) =>
                 response.results,
         }),
+        getTeacherSchoolsByFullName: builder.query<any, { fullName: number }>({
+            query(args) {
+                const { fullName } = args;
+                return {
+                    url: `school_teachers/teacher/schools/${fullName}`
+                }
+            },
+            transformResponse: (response: { results: { teacherSchoolData: ITeacherSchoolsByFullNameResponse }[]}) =>
+                response.results,
+        }),
     }),
 })
 
 export const {
     useGetSchoolTeachersByIdQuery,
-    useGetSchoolChildrenByIdQuery
+    useGetSchoolChildrenByIdQuery,
+    useGetTeacherSchoolsByFullNameQuery
 } = schoolTeachersApi;
