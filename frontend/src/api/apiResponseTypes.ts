@@ -75,6 +75,13 @@ export interface ITeacherSchoolsByFullNameResponse {
     school_name: string
 }
 
+export interface IAllPropertiesByGroupsByChildIdResponse {
+    id: number,
+    property_group_name: string,
+    property_name: string,
+    property_value: string
+}
+
 export interface IAllTeacherDataResponse {
     id: number,
     full_name: string,

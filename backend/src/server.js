@@ -8,6 +8,7 @@ const teacherRoutes = require("./routes/teacher")
 const schoolTeacherRoutes = require("./routes/teacher_school")
 const teacherChildrenRoutes = require("./routes/teacher_children")
 const sheetRoutes = require("./routes/sheet")
+const propertyGroupRoutes = require("./routes/property_group")
 
 const app = express();
 app.use(express.json());
@@ -35,6 +36,8 @@ app.use("/api/school_teachers/", schoolTeacherRoutes);
 app.use("/api/teacher_children/", teacherChildrenRoutes);
 app.use("/api/teacher/", teacherRoutes);
 app.use("/api/sheets/", sheetRoutes);
+app.use("/api/property_group/", propertyGroupRoutes);
+
 
 const PORT = process.env.PORT || 8081;
 app.listen(PORT, () => {

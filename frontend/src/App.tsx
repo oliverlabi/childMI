@@ -1,6 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
 import Students from "./scenes/Students";
+import Student from "./scenes/Students/Student";
 import Teachers from "./scenes/Teachers";
 import Teacher from "./scenes/Teachers/Teacher";
 import Schools from "./scenes/Schools";
@@ -13,6 +14,7 @@ const App = () =>
                 <Route index element={<Navigate to="/children" replace />} />
                 <Route path="/children/" element={ <Students /> } />
                 <Route path="/children/:sheetId" element={ <Students /> } />
+                <Route path="/children/:sheetId/:id" element={ <Student /> } />
                 <Route path="/teachers" element={ <Teachers /> } />
                 <Route path="/teachers/:year/:id" element={ <Teacher /> } />
                 <Route path="/schools" element={ <Schools /> } />

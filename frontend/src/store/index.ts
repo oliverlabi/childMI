@@ -7,6 +7,7 @@ import { schoolTeachersApi } from "../api/schoolTeachersApi";
 import {sheetApi} from "../api/sheetApi";
 import {childApi} from "../api/childApi";
 import {teacherChildrenApi} from "../api/teacherChildrenApi";
+import {propertyGroupApi} from "../api/propertyGroupApi";
 
 export const store = configureStore({
     reducer: {
@@ -17,6 +18,7 @@ export const store = configureStore({
         [schoolTeachersApi.reducerPath]: schoolTeachersApi.reducer,
         [teacherChildrenApi.reducerPath]: teacherChildrenApi.reducer,
         [sheetApi.reducerPath]: sheetApi.reducer,
+        [propertyGroupApi.reducerPath]: propertyGroupApi.reducer,
     },
     devTools: true,
     middleware: (getDefaultMiddleware) =>
@@ -27,7 +29,8 @@ export const store = configureStore({
             teacherApi.middleware,
             schoolTeachersApi.middleware,
             teacherChildrenApi.middleware,
-            sheetApi.middleware
+            sheetApi.middleware,
+            propertyGroupApi.middleware,
     ]),
 })
 
