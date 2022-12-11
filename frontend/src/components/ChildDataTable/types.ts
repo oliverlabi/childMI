@@ -13,5 +13,5 @@ export type parsedDataType = {
 }
 
 export type parsedDataRow = {
-    [id: number]: string
+    [id: number]: string | string[]
 }

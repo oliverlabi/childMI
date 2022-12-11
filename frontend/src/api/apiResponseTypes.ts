@@ -65,7 +65,8 @@ export interface IChildrenTeachersAndSchoolsBySheetIdResponse {
     teacher_full_name: string,
     child_name_code: string,
     school_id: number,
-    school_name: string
+    school_name: string,
+    teacher_year: number
 }
 
 export interface ITeacherSchoolsByFullNameResponse {

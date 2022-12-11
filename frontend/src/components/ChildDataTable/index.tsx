@@ -57,8 +57,17 @@ const ChildDataTable = ({headers, data, sheetsData}: ChildDataTableProps) => {
                         return (
                             <tr className="table-row" key={dataDict[1] as string + index}>
                                 {Object.entries(dataDict[1]).map((entry, index) => {
+
                                     if(index === 0){
-                                        return <td className="data-clickable-column" key={entry[0] + entry[1] + index}><Link to={`/children/${sheetId}/${dataDict[0]}`}>{entry[1][1]}</Link></td>
+                                        return <td className="data-clickable-column" key={entry[0] + entry[1] + index}><Link to={`/schools/${entry[1][1][1]}`}>{entry[1][1][0]}</Link></td>
+                                    }
+
+                                    if(index === 1){
+                                            return <td className="data-clickable-column" key={entry[0] + entry[1] + index}><Link to={`/teachers/${entry[1][1][2]}/${entry[1][1][1]}`}>{entry[1][1][0]}</Link></td>
+                                    }
+
+                                    if(index === 2){
+                                        return <td className="data-clickable-column" key={entry[0] + entry[1] + index}><Link to={`/children/${sheetId}/${dataDict[0][0]}`}>{entry[1][1]}</Link></td>
                                     }
 
                                     return <td key={entry[0] + entry[1] + index}>{entry[1][1]}</td>

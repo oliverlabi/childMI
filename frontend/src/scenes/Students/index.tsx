@@ -8,10 +8,11 @@ import {parsedDataType} from "../../components/ChildDataTable/types";
 import {
     IAllChildrenDataBySheetResponse,
     IAllChildrenPropertiesDataBySheetResponse,
-    IAllPropertiesBySheetResponse,
+    IAllPropertiesBySheetResponse, IChildrenTeachersAndSchoolsBySheetIdResponse,
 } from "../../api/apiResponseTypes";
 import {ChildDataHeaders} from "../../utils/customHeaders";
 import {useEffect, useState} from "react";
+import {useGetAllChildrenTeachersAndSchoolsBySheetIdQuery} from "../../api/teacherChildrenApi";
 
 const insertPropertiesData = (parsedData: parsedDataType, dict: IAllChildrenPropertiesDataBySheetResponse) => {
     if (parsedData[dict["child_id"]] === undefined){
@@ -23,7 +24,7 @@ const insertPropertiesData = (parsedData: parsedDataType, dict: IAllChildrenProp
 
 const insertNullCells = (parsedData: parsedDataType, headers: IAllPropertiesBySheetResponse[]) => {
     Object.entries(parsedData).map((dict) => {
-        for(let i = headers[4]["id"]; i<headers.length + headers[4]["id"]; i++){
+        for(let i = headers[ChildDataHeaders.length]["id"]; i<headers.length + headers[ChildDataHeaders.length]["id"]; i++){
             if(dict[1][i] === undefined){
                 dict[1][i] = null;
             }
@@ -31,13 +32,17 @@ const insertNullCells = (parsedData: parsedDataType, headers: IAllPropertiesBySh
     })
 }
 
-const insertChildrenData = (parsedData: parsedDataType, dict: IAllChildrenPropertiesDataBySheetResponse, highestHeaderId: number, childData: IAllChildrenDataBySheetResponse[]) => {
+const insertChildrenData = (parsedData: parsedDataType, dict: IAllChildrenPropertiesDataBySheetResponse, highestHeaderId: number, childData: IAllChildrenDataBySheetResponse[], schoolTeachersData: IChildrenTeachersAndSchoolsBySheetIdResponse[]) => {
     const currentChildId = dict["child_id"];
     const currentChildData = childData.filter(obj => obj.id === currentChildId)
-    parsedData[dict["child_id"]][highestHeaderId + 1] = currentChildData[0] && currentChildData[0].name_code;
-    parsedData[dict["child_id"]][highestHeaderId + 2] = currentChildData[0] && currentChildData[0].age.toString();
-    parsedData[dict["child_id"]][highestHeaderId + 3] = currentChildData[0] && currentChildData[0].gender;
-    parsedData[dict["child_id"]][highestHeaderId + 4] = currentChildData[0] && currentChildData[0].special_need;
+    const currentChildTeacherAndSchoolData = schoolTeachersData.filter(obj => obj.child_id === currentChildId)
+
+    parsedData[dict["child_id"]][highestHeaderId + 1] = [currentChildTeacherAndSchoolData[0]?.school_name, currentChildTeacherAndSchoolData[0]?.school_id.toString()];
+    parsedData[dict["child_id"]][highestHeaderId + 2] = [currentChildTeacherAndSchoolData[0]?.teacher_full_name, currentChildTeacherAndSchoolData[0]?.teacher_id.toString(), currentChildTeacherAndSchoolData[0]?.teacher_year.toString()];
+    parsedData[dict["child_id"]][highestHeaderId + 3] = currentChildData[0]?.name_code;
+    parsedData[dict["child_id"]][highestHeaderId + 4] = currentChildData[0]?.age.toString();
+    parsedData[dict["child_id"]][highestHeaderId + 5] = currentChildData[0]?.gender;
+    parsedData[dict["child_id"]][highestHeaderId + 6] = currentChildData[0]?.special_need;
 }
 
 const addChildHeaders = (headers: IAllPropertiesBySheetResponse[]) => {
@@ -71,6 +76,7 @@ const Students = () => {
     const childrenPropertiesData = useGetAllChildrenPropertiesDataBySheetQuery({sheetId: parsedParam});
     const childrenData = useGetAllChildrenDataBySheetQuery({sheetId: parsedParam});
     const propsData = useGetAllPropertiesBySheetQuery({sheetId: parsedParam});
+    const childrenTeachersAndSchoolsData = useGetAllChildrenTeachersAndSchoolsBySheetIdQuery({sheetId: parsedParam});
 
     useEffect(() => {
         if((sheetId === 0 || isNaN(sheetId)) && sheetsData.isSuccess){
@@ -87,13 +93,13 @@ const Students = () => {
     const parsedData: parsedDataType = {};
     let headers;
 
-    if(childrenPropertiesData.isSuccess && propsData.isSuccess && sheetsData.isSuccess && childrenData.isSuccess) {
+    if(childrenPropertiesData.isSuccess && propsData.isSuccess && sheetsData.isSuccess && childrenData.isSuccess && childrenTeachersAndSchoolsData.isSuccess) {
         const highestHeaderId = Math.max(...propsData.data.map((o: IAllPropertiesBySheetResponse) => o.id))
         headers = addChildHeaders(propsData.data);
 
         childrenPropertiesData.data.forEach((dict: IAllChildrenPropertiesDataBySheetResponse) => {
             insertPropertiesData(parsedData, dict);
-            insertChildrenData(parsedData, dict, highestHeaderId, childrenData.data);
+            insertChildrenData(parsedData, dict, highestHeaderId, childrenData.data, childrenTeachersAndSchoolsData.data);
         })
 
         insertNullCells(parsedData, headers);
@@ -106,7 +112,7 @@ const Students = () => {
             <Container className="background-title-container">
                 <h2>Õpilaste andmed</h2>
             </Container>
-            {childrenPropertiesData.isSuccess && propsData.isSuccess && sheetsData.isSuccess && childrenData.isSuccess ?
+            {childrenPropertiesData.isSuccess && propsData.isSuccess && sheetsData.isSuccess && childrenData.isSuccess && childrenTeachersAndSchoolsData.isSuccess ?
                 <>
                     <Container className="background-container-theme">
                         <p className="data-type-text">Andmed: Kvantitatiivsed</p>
