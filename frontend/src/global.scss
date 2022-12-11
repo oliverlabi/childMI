@@ -15,6 +15,27 @@ h1 {
   color: black;
 }
 
+h5 {
+  font-weight: 600;
+}
+
 #root {
   width: 100%;
+}
+
+a {
+  color: $main-theme;
+}
+
+a:hover {
+  color: black;
+}
+
+.nav-tabs {
+  color: $main-theme;
+}
+
+:root {
+  --bs-link-color: $main-theme;
+  --bs-link-hover-color: black;
 }

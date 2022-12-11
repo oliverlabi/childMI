@@ -61,10 +61,6 @@ th, tr {
   color: white;
 }
 
-.data-clickable-column a {
-  color: $main-theme;
-}
-
-.data-clickable-column a:hover {
-  color: black;
+.table-responsive {
+  overflow: unset;
 }

@@ -30,15 +30,20 @@ exports.getSchoolChildren = async (req, res) => {
     try {
         const { id } = req.params;
         const results = await sequelize.query(
-            "SELECT " +
+            "SELECT DISTINCT " +
                 "c.id AS child_id," +
                 "c.name_code, " +
-                "ts.school_id " +
+                "ts.school_id, " +
+                "sh.id AS sheet_id " +
             "FROM teacher_school ts " +
             "INNER JOIN teacher t ON ts.teacher_id = t.id " +
             "INNER JOIN school s on ts.school_id = s.id " +
             "INNER JOIN teacher_children tc ON t.id = tc.teacher_id " +
             "INNER JOIN child c ON tc.child_id = c.id " +
+            "INNER JOIN child_properties cp ON c.id = cp.child_id " +
+            "INNER JOIN properties p ON p.id = cp.property_id " +
+            "INNER JOIN property_group pg ON p.group = pg.id " +
+            "INNER JOIN sheet sh ON sh.id = pg.sheet_id " +
             "WHERE s.id = ?;",
             {
                 replacements: [id],

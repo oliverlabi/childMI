@@ -10,6 +10,7 @@ import {ITeacherSchoolsByFullNameResponse} from "../../api/apiResponseTypes";
 type ListDataField = {
     id: number,
     name: string,
+    sheet_id?: number
 }
 
 const Teacher = () => {
@@ -23,7 +24,7 @@ const Teacher = () => {
     const teacherSchoolsArray: string[] = [];
     const childrenListData = isTeacherChildrenDataLoaded
         ? children.map((childrenObject: any) => (
-            {"id": childrenObject.child_id, "name": childrenObject.child_name}
+            {"id": childrenObject.child_id, "name": childrenObject.child_name, "sheet_id": childrenObject.sheet_id}
         ))
         : "No data";
 
@@ -60,11 +61,11 @@ const Teacher = () => {
                                 }
                             </Col>
                             <Col className="container-right-column">
-                                <ScrollableList header="Lapse nimetähed">
+                                <ScrollableList header="Lapse nimekoodid">
                                     {
                                         childrenListData ? childrenListData.map((entry: ListDataField) => (
                                             entry.name != ''
-                                                ? <div className="scrollable-list-data-row" key={entry.id}><Link to={`${entry.id}`}>{entry.name}</Link></div>
+                                                ? <div className="scrollable-list-data-row" key={entry.id}><Link to={`/children/${entry.sheet_id}/${entry.id}`}>{entry.name}</Link></div>
                                                 : null
                                         )) : <div>Andmed puuduvad</div>
                                     }

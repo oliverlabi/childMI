@@ -56,7 +56,8 @@ export interface ISchoolTeachersByIdResponse {
 export interface ISchoolChildrenByIdResponse {
     child_id: number,
     name_code: string,
-    school_id: number
+    school_id: number,
+    sheet_id: number
 }
 
 export interface IChildrenTeachersAndSchoolsBySheetIdResponse {
@@ -104,7 +105,8 @@ export interface ITeacherDataResponse {
 
 export interface ITeacherChildrenResponse {
     child_name: string,
-    child_id: string
+    child_id: string,
+    sheet_id: number,
 }
 
 export interface IAllTeacherYearsResponse {

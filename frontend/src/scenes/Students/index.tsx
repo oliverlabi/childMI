@@ -39,7 +39,7 @@ const insertChildrenData = (parsedData: parsedDataType, dict: IAllChildrenProper
 
     parsedData[dict["child_id"]][highestHeaderId + 1] = [currentChildTeacherAndSchoolData[0]?.school_name, currentChildTeacherAndSchoolData[0]?.school_id.toString()];
     parsedData[dict["child_id"]][highestHeaderId + 2] = [currentChildTeacherAndSchoolData[0]?.teacher_full_name, currentChildTeacherAndSchoolData[0]?.teacher_id.toString(), currentChildTeacherAndSchoolData[0]?.teacher_year.toString()];
-    parsedData[dict["child_id"]][highestHeaderId + 3] = currentChildData[0]?.name_code;
+    parsedData[dict["child_id"]][highestHeaderId + 3] = [currentChildId.toString(), currentChildData[0]?.name_code];
     parsedData[dict["child_id"]][highestHeaderId + 4] = currentChildData[0]?.age.toString();
     parsedData[dict["child_id"]][highestHeaderId + 5] = currentChildData[0]?.gender;
     parsedData[dict["child_id"]][highestHeaderId + 6] = currentChildData[0]?.special_need;

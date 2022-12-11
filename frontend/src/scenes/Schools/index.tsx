@@ -19,7 +19,7 @@ const Schools = () => {
             </Container>
             {isSuccess ?
                 <Container className="background-container-theme">
-                    <h3 className="container-title">Koolide nimekiri</h3>
+                    <h5 className="container-title">Koolide nimekiri</h5>
                     <ScrollableList header="Kooli nimi">
                         {
                             schools ? schools.map((entry: ListDataField) => (

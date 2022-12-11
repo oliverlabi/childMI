@@ -6,6 +6,7 @@ import { Container, Tab, Tabs } from "react-bootstrap";
 import "./css/index.scss";
 import {Link} from "react-router-dom";
 import Loader from "../../components/Loader";
+import {IAllTeacherYearsResponse} from "../../api/apiResponseTypes";
 
 export type ListDataType = {
     id: number,
@@ -18,7 +19,7 @@ const Teachers = () => {
     const years: number[] = [];
 
     !isSuccess ||
-            yearData.forEach((data: any) => {
+            yearData.forEach((data: IAllTeacherYearsResponse) => {
                 if (!years.includes(data.start_year)){
                     years.push(data.start_year);
                 }
@@ -33,7 +34,7 @@ const Teachers = () => {
                 ?
                     <Tabs
                         defaultActiveKey={yearData[0] ? yearData[0].start_year : "Pole andmeid"}
-                        className="background-year-tabs"
+                        className="background-tabs"
                     >
                         {years.map(((year: number) => {
                             const startYear = year;

@@ -65,14 +65,23 @@ exports.getTeacherDataWithChildren = async (req, res) => {
     try {
         const { id } = req.params;
         const results = await sequelize.query(
-            "SELECT " +
-            "c.name_code AS child_name, " +
-            "c.id AS child_id " +
+            "SELECT DISTINCT " +
+                "c.name_code AS child_name, " +
+                "c.id AS child_id, " +
+                "s.id AS sheet_id " +
             "FROM teacher t " +
             "INNER JOIN teacher_children tc " +
             "ON t.id = tc.teacher_id " +
             "INNER JOIN child c " +
             "ON c.id = tc.child_id " +
+            "INNER JOIN child_properties cp " +
+            "ON c.id = cp.child_id " +
+            "INNER JOIN properties p " +
+            "ON p.id = cp.property_id " +
+            "INNER JOIN property_group pg " +
+            "ON pg.id = p.group " +
+            "INNER JOIN sheet s " +
+            "ON s.id = pg.sheet_id " +
             "WHERE t.id = ?;",
             {
                 replacements: [id],
