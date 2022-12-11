@@ -2,8 +2,6 @@
 
 Table {
   background-color: $tertiary-theme;
-  border-collapse: separate;
-  border-spacing: 0;
 }
 
 .two-tables {
@@ -31,6 +29,10 @@ Table {
 th, tr {
   text-align: center;
   border-color: $secondary-theme;
+}
+
+.data-year-column td, .data-year-column-active td {
+  border-bottom: none;
 }
 
 .data-type-text {

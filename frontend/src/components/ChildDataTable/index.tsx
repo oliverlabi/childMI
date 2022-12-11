@@ -35,10 +35,10 @@ const ChildDataTable = ({headers, data, sheetsData}: ChildDataTableProps) => {
                             const sheetYear = data && data[1]["year"]
 
                             if(sheetId === currentId.toString()){
-                                return <td className="data-year-column-active" key={data[0] + data[1]}><Link to={`/children/${currentId}/`}>{`${sheetYear} ${sheetSeason}`}</Link></td>
+                                return <tr className="data-year-column-active" key={data[0] + data[1]}><td><Link to={`/children/${currentId}/`}>{`${sheetYear} ${sheetSeason}`}</Link></td></tr>
                             }
 
-                            return <td className="data-year-column" key={data[0] + data[1]} onClick={refreshPage}><Link to={`/children/${currentId}/`}>{`${sheetYear} ${sheetSeason}`}</Link></td>
+                            return <tr className="data-year-column" key={data[0] + data[1]} onClick={refreshPage}><td><Link to={`/children/${currentId}/`}>{`${sheetYear} ${sheetSeason}`}</Link></td></tr>
                         })}
                     </tbody>
                 </Table>
