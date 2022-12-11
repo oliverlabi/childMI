@@ -38,7 +38,7 @@ const ChildDataTable = ({headers, data, sheetsData}: ChildDataTableProps) => {
                                 return <tr className="data-year-column-active" key={data[0] + data[1]}><td><Link to={`/children/${currentId}/`}>{`${sheetYear} ${sheetSeason}`}</Link></td></tr>
                             }
 
-                            return <tr className="data-year-column" key={data[0] + data[1]} onClick={refreshPage}><td><Link to={`/children/${currentId}/`}>{`${sheetYear} ${sheetSeason}`}</Link></td></tr>
+                            return <tr className="data-year-column" key={data[0] + data[1]}><td onClick={refreshPage}><Link to={`/children/${currentId}/`}>{`${sheetYear} ${sheetSeason}`}</Link></td></tr>
                         })}
                     </tbody>
                 </Table>
