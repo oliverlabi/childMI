@@ -6,6 +6,7 @@ const childRoutes = require("./routes/child")
 const schoolRoutes = require("./routes/school")
 const teacherRoutes = require("./routes/teacher")
 const schoolTeacherRoutes = require("./routes/teacher_school")
+const teacherChildrenRoutes = require("./routes/teacher_children")
 const sheetRoutes = require("./routes/sheet")
 
 const app = express();
@@ -31,6 +32,7 @@ app.use("/api/child_properties/", childPropertyRoutes);
 app.use("/api/child/", childRoutes);
 app.use("/api/school/", schoolRoutes);
 app.use("/api/school_teachers/", schoolTeacherRoutes);
+app.use("/api/teacher_children/", teacherChildrenRoutes);
 app.use("/api/teacher/", teacherRoutes);
 app.use("/api/sheets/", sheetRoutes);
 

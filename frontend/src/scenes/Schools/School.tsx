@@ -28,7 +28,7 @@ const School = () => {
                                 <ScrollableList header="Õpetajate nimed">
                                     {
                                         schoolTeachersData ? schoolTeachersData.map((entry: any) => (
-                                            entry.teacher_full_name != ''
+                                            entry?.teacher_full_name != ''
                                                 ? <div className="scrollable-list-data-row" key={"t" + entry.teacher_id}><Link to={`/teachers/${entry.start_year}/${entry.teacher_id}`}>{entry.teacher_full_name}</Link></div>
                                                 : null
                                         )): <div>Andmed puuduvad</div>
@@ -40,7 +40,7 @@ const School = () => {
                                 <ScrollableList header="Lapse nimetähed">
                                     {
                                         schoolChildrenData ? schoolChildrenData.map((entry: any) => (
-                                            entry.name_code != ''
+                                            entry?.name_code != ''
                                                 ? <div className="scrollable-list-data-row" key={"c" + entry.child_id}><Link to={`${entry.child_id}`}>{entry.name_code}</Link></div>
                                                 : null
                                         )): <div>Andmed puuduvad</div>

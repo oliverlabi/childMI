@@ -6,6 +6,7 @@ import { teacherApi } from "../api/teacherApi";
 import { schoolTeachersApi } from "../api/schoolTeachersApi";
 import {sheetApi} from "../api/sheetApi";
 import {childApi} from "../api/childApi";
+import {teacherChildrenApi} from "../api/teacherChildrenApi";
 
 export const store = configureStore({
     reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
         [schoolApi.reducerPath]: schoolApi.reducer,
         [teacherApi.reducerPath]: teacherApi.reducer,
         [schoolTeachersApi.reducerPath]: schoolTeachersApi.reducer,
+        [teacherChildrenApi.reducerPath]: teacherChildrenApi.reducer,
         [sheetApi.reducerPath]: sheetApi.reducer,
     },
     devTools: true,
@@ -24,6 +26,7 @@ export const store = configureStore({
             schoolApi.middleware,
             teacherApi.middleware,
             schoolTeachersApi.middleware,
+            teacherChildrenApi.middleware,
             sheetApi.middleware
     ]),
 })
