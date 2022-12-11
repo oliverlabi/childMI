@@ -4,6 +4,8 @@ import {Link, useParams} from "react-router-dom";
 import ScrollableList from "../../components/ScrollableList";
 import "./css/Teacher.scss";
 import Loader from "../../components/Loader";
+import {useGetTeacherSchoolsByFullNameQuery} from "../../api/schoolTeachersApi";
+import {ITeacherSchoolsByFullNameResponse} from "../../api/apiResponseTypes";
 
 type ListDataField = {
     id: number,
@@ -16,7 +18,9 @@ const Teacher = () => {
     const paramsYear = parseInt(params.year);
     const { data: teacher, isSuccess: isTeacherDataLoaded } = useGetTeacherDataQuery({year: paramsYear, id: paramsId});
     const { data: children, isSuccess: isTeacherChildrenDataLoaded } = useGetTeacherChildrenQuery({year: paramsYear, id: paramsId});
+    const { data: teacherSchools, isSuccess: isTeacherSchoolsDataLoaded } = useGetTeacherSchoolsByFullNameQuery({fullName: teacher?.full_name.replace(" ", "")})
 
+    const teacherSchoolsArray: string[] = [];
     const childrenListData = isTeacherChildrenDataLoaded
         ? children.map((childrenObject: any) => (
             {"id": childrenObject.child_id, "name": childrenObject.child_name}
@@ -26,11 +30,10 @@ const Teacher = () => {
     const header = isTeacherDataLoaded && teacher.full_name ? `Õpetaja ${teacher.full_name}` : "Andmeid pole!";
     const teacherName = isTeacherDataLoaded && teacher.full_name ? teacher.full_name : "Puudu";
     const teacherStartYear = isTeacherDataLoaded && teacher.start_year ? teacher.start_year : "Puudu";
-    const teacherSchool = isTeacherDataLoaded && teacher.school_name ? teacher.school_name : "Puudu";
 
     return (
         <>
-            {isTeacherDataLoaded && isTeacherChildrenDataLoaded ?
+            {isTeacherDataLoaded && isTeacherChildrenDataLoaded && isTeacherSchoolsDataLoaded ?
                 <>
                     <Container className="background-title-container">
                         <h2>{header}</h2>
@@ -45,7 +48,16 @@ const Teacher = () => {
                             <Col className="container-middle-column">
                                 <p>{teacherName}</p>
                                 <p>{teacherStartYear}</p>
-                                <Link to={`/schools/${teacher.school_id}`}>{teacherSchool}</Link>
+                                {
+                                    teacherSchools.map((school: ITeacherSchoolsByFullNameResponse) => {
+                                        if(teacherSchoolsArray.includes(school.school_name)) {
+                                            return;
+                                        }
+
+                                        teacherSchoolsArray.push(school.school_name);
+                                        return <Link to={`/schools/${school.school_id}`} key={school.school_name}>{school?.school_name ? school.school_name : "Puudu"}</Link>
+                                    })
+                                }
                             </Col>
                             <Col className="container-right-column">
                                 <ScrollableList header="Lapse nimetähed">

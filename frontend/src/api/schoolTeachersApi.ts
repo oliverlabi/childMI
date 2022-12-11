@@ -13,7 +13,7 @@ export const schoolTeachersApi = createApi({
             query(args) {
                 const { id } = args;
                 return {
-                    url: `school_teachers/teacher/${id}/`
+                    url: `school_teachers/teachers/${id}/`
                 }
             },
             transformResponse: (response: { results: { schoolData: ISchoolTeachersByIdResponse }[]}) =>
@@ -23,7 +23,7 @@ export const schoolTeachersApi = createApi({
             query(args) {
                 const { id } = args;
                 return {
-                    url: `school_teachers/child/${id}/`
+                    url: `school_teachers/children/${id}/`
                 }
             },
             transformResponse: (response: { results: { schoolData: ISchoolChildrenByIdResponse }[]}) =>
@@ -33,7 +33,7 @@ export const schoolTeachersApi = createApi({
             query(args) {
                 const { fullName } = args;
                 return {
-                    url: `school_teachers/teacher/schools/${fullName}`
+                    url: `school_teachers/schools/${fullName}`
                 }
             },
             transformResponse: (response: { results: { teacherSchoolData: ITeacherSchoolsByFullNameResponse }[]}) =>

@@ -61,7 +61,8 @@ export interface ISchoolChildrenByIdResponse {
 
 export interface ITeacherSchoolsByFullNameResponse {
     teacher_id: number,
-    school_id: number
+    school_id: number,
+    school_name: string
 }
 
 export interface IAllTeacherDataResponse {
