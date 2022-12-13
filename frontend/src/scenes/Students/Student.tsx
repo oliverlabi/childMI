@@ -37,7 +37,7 @@ const Student = () => {
 
                 // Temporary until I add school and teacher data
                 const childHeader = reversedChildDataHeaders[index - 1 + 2]["name"].replace(/['`~!@#$%^&*?_|+=;:".<>\[\]\\]/gi, '');
-                propertyGroups[ChildDataPropertyGroup][childHeader] = data
+                propertyGroups[ChildDataPropertyGroup][childHeader] = data ? data : "Andmed puuduvad"
             })
         }
 
