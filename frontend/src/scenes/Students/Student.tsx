@@ -51,32 +51,33 @@ const Student = () => {
         }
     }) : null
 
+    const header = childData.isSuccess && childData.data[0]["name_code"] ? `Õpilase ${childData.data[0]["name_code"]} andmed` : "Õpilase nimi puudub";
+
     return (
         <>
-            <Container className="background-title-container">
-                <h2>Õpilane</h2>
-            </Container>
-            {propertiesWithGroupsData.isSuccess && childData.isSuccess
-                ?
-                <Tabs
-                    defaultActiveKey={Object.keys(propertyGroups)[0] ? Object.keys(propertyGroups)[0] : "Pole andmeid"}
-                    className="background-tabs"
-                >
-                    {Object.entries(propertyGroups).map((entry) => {
-                        return(
-                            <Tab eventKey={entry[0]} title={entry[0]} key={entry[0]}>
-                                <Container className="background-container-theme">
-                                    <h5 className="container-title">{entry[0]}</h5>
+            {propertiesWithGroupsData.isSuccess && childData.isSuccess ?
+                <>
+                    <Container className="background-title-container">
+                        <h2>{header}</h2>
+                    </Container>
+                    <Tabs
+                        defaultActiveKey={Object.keys(propertyGroups)[0] ? Object.keys(propertyGroups)[0] : "Pole andmeid"}
+                        className="background-tabs"
+                    >
+                        {Object.entries(propertyGroups).map((entry) => {
+                            return(
+                                <Tab eventKey={entry[0]} title={entry[0]} key={entry[0]}>
+                                    <Container className="background-container-theme">
+                                        <h5 className="container-title">{entry[0]}</h5>
                                         {Object.entries(entry[1]).map((property) => {
                                             return <p key={property[0]}>{`${property[0]}: ${property[1]}` }</p>
                                         })}
-                                </Container>
-                            </Tab>
-                        )
-                    })}
-                </Tabs>
-                :
-                <Loader></Loader>
+                                    </Container>
+                                </Tab>
+                            )
+                        })}
+                    </Tabs>
+                </> : <Loader></Loader>
             }
         </>
     )
