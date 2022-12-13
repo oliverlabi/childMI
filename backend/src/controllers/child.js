@@ -48,7 +48,7 @@ exports.getChild = async (req, res) => {
             "INNER JOIN properties p ON cp.property_id = p.id " +
             "INNER JOIN property_group pg ON pg.id = p.group " +
             "INNER JOIN sheet s ON s.id = pg.sheet_id " +
-            "WHERE s.id = ? AND c.id = ? " +
+            "WHERE s.id = ? AND c.id = ? ",
             {
                 replacements: [sheetId, childId],
                 type: QueryTypes.SELECT

@@ -12,6 +12,7 @@ const School = () => {
     const { data: schoolChildrenData, isSuccess: isSchoolChildrenDataLoaded } = useGetSchoolChildrenByIdQuery({id: paramsId});
 
     const header = isSchoolTeachersDataLoaded && schoolTeachersData ? `${schoolTeachersData[0].school_name}` : "Andmeid pole!";
+    const usedTeacherNames: string[] = [];
 
     return (
         <>
@@ -27,11 +28,22 @@ const School = () => {
                                 <p className="scrollable-list-subheader">Õpetajate nimekiri</p>
                                 <ScrollableList header="Õpetajate nimed">
                                     {
-                                        schoolTeachersData ? schoolTeachersData.map((entry: any) => (
-                                            entry?.teacher_full_name != ''
-                                                ? <div className="scrollable-list-data-row" key={"t" + entry.teacher_id}><Link to={`/teachers/${entry.year}/${entry.teacher_id}`}>{entry.teacher_full_name}</Link></div>
-                                                : null
-                                        )): <div>Andmed puuduvad</div>
+                                        schoolTeachersData ? schoolTeachersData.map((entry: any) => {
+                                            if (entry?.teacher_full_name == '' || !entry) {
+                                                return;
+                                            }
+
+                                            if (usedTeacherNames.includes(entry.teacher_full_name)) {
+                                                return;
+                                            }
+
+                                            usedTeacherNames.push(entry.teacher_full_name);
+
+                                            return (<div className="scrollable-list-data-row" key={"t" + entry.teacher_id}>
+                                                    <Link
+                                                        to={`/teachers/${entry.teacher_id}`}>{entry.teacher_full_name}</Link>
+                                                    </div>)
+                                        }): <div>Andmed puuduvad</div>
                                     }
                                 </ScrollableList>
                             </Col>
