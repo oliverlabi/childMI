@@ -103,6 +103,7 @@ export interface ITeacherChildrenResponse {
     child_name: string,
     child_id: string,
     sheet_id: number,
+    year: number,
 }
 
 export interface IAllTeacherYearsResponse {
