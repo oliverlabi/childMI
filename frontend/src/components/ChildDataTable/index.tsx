@@ -67,7 +67,7 @@ const ChildDataTable = ({headers, data, sheetsData}: ChildDataTableProps) => {
                                     }
 
                                     if(index === 2){
-                                        return <td className="data-clickable-column" key={entry[0] + entry[1] + index}><Link to={`/children/${sheetId}/${entry[1][1][0]}`}>{entry[1][1]}</Link></td>
+                                        return <td className="data-clickable-column" key={entry[0] + entry[1] + index}><Link to={`/children/${sheetId}/${entry[1][1][0]}`}>{entry[1][1][1]}</Link></td>
                                     }
 
                                     return <td key={entry[0] + entry[1] + index}>{entry[1][1]}</td>
