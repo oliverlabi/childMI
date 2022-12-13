@@ -18,10 +18,11 @@ export const teacherChildrenApi = createApi({
             transformResponse: (response: { results: { data: IChildrenTeachersAndSchoolsBySheetIdResponse }[]}) =>
                 response.results,
         }),
-        getAllTeacherYears: builder.query<any, void>({
-            query() {
+        getAllTeacherYears: builder.query<any, { teacherId: number }>({
+            query(args) {
+                const { teacherId } = args;
                 return {
-                    url: `teacher_children/years/`,
+                    url: `teacher_children/years/${teacherId}`,
                     credentials: "include"
                 }
             },

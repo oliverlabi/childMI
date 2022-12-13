@@ -5,7 +5,8 @@ import ScrollableList from "../../components/ScrollableList";
 import "./css/Teacher.scss";
 import Loader from "../../components/Loader";
 import {useGetTeacherSchoolsByIdQuery} from "../../api/schoolTeachersApi";
-import {ITeacherSchoolsByIdResponse} from "../../api/apiResponseTypes";
+import {IAllTeacherYearsResponse, ITeacherSchoolsByIdResponse} from "../../api/apiResponseTypes";
+import {useGetAllTeacherYearsQuery} from "../../api/teacherChildrenApi";
 
 type ListDataField = {
     id: number,
@@ -20,10 +21,10 @@ const Teacher = () => {
     const { data: teacher, isSuccess: isTeacherDataLoaded } = useGetTeacherDataQuery({id: paramsId});
     const { data: children, isSuccess: isTeacherChildrenDataLoaded } = useGetTeacherChildrenQuery({id: paramsId});
     const { data: teacherSchools, isSuccess: isTeacherSchoolsDataLoaded } = useGetTeacherSchoolsByIdQuery({id: teacher?.teacher_id})
-
-    console.log(teacherSchools, teacher?.id, teacher)
+    const { data: teacherYears, isSuccess: isTeacherYearsDataLoaded } = useGetAllTeacherYearsQuery({teacherId: teacher?.teacher_id});
 
     const teacherSchoolsArray: string[] = [];
+    const teacherYearsArray: string[] = [];
     const childrenListData = isTeacherChildrenDataLoaded
         ? children.map((childrenObject: any) => (
             {"id": childrenObject.child_id, "name": childrenObject.child_name, "sheet_id": childrenObject.sheet_id, "year": childrenObject.year}
@@ -35,7 +36,7 @@ const Teacher = () => {
 
     return (
         <>
-            {isTeacherDataLoaded && isTeacherChildrenDataLoaded && isTeacherSchoolsDataLoaded ?
+            {isTeacherDataLoaded && isTeacherChildrenDataLoaded && isTeacherSchoolsDataLoaded && isTeacherYearsDataLoaded ?
                 <>
                     <Container className="background-title-container">
                         <h2>{header}</h2>
@@ -49,7 +50,25 @@ const Teacher = () => {
                             </Col>
                             <Col className="container-middle-column">
                                 <p>{teacherName}</p>
-                                <p>undeveloped</p>
+                                <span>
+                                {
+                                    teacherYears.map((teacher: IAllTeacherYearsResponse, index: number) => {
+                                        const teacherYearsArrayLength: number = teacherYears.length;
+                                        const currentYear = teacher.year.toString()
+                                        if(teacherSchoolsArray.includes(currentYear)) {
+                                            return;
+                                        }
+
+                                        teacherYearsArray.push(currentYear);
+
+                                        if (teacherYearsArrayLength === index + 1) {
+                                            return <>{currentYear}<p /></>
+                                        }
+
+                                        return <>{currentYear}, </>
+                                    })
+                                }
+                                </span>
                                 {
                                     teacherSchools.map((school: ITeacherSchoolsByIdResponse) => {
                                         if(teacherSchoolsArray.includes(school.school_name)) {
@@ -66,7 +85,7 @@ const Teacher = () => {
                                     {
                                         childrenListData ? childrenListData.map((entry: ListDataField) => (
                                             entry.name != ''
-                                                ? <div className="scrollable-list-data-row" key={entry.id}><Link to={`/children/${entry.sheet_id}/${entry.id}`}>{entry.name}</Link> ({entry.year})</div>
+                                                ? <div className="scrollable-list-data-row" key={entry.id}><Link to={`/children/${entry.sheet_id}/${entry.id}`}>{entry.name}</Link>({entry.year})</div>
                                                 : null
                                         )) : <div>Andmed puuduvad</div>
                                     }

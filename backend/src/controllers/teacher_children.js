@@ -37,11 +37,15 @@ exports.getAllChildrenTeachersAndSchools = async (req, res) => {
 
 exports.getAllTeacherYears = async (req, res) => {
     try {
+        const { teacherId } = req.params;
         const results = await sequelize.query(
             "SELECT DISTINCT " +
-                "year " +
-            "FROM teacher_children;",
+                "tc.year " +
+            "FROM teacher t " +
+            "INNER JOIN teacher_children tc ON t.id = tc.teacher_id " +
+            "WHERE t.id = ?",
             {
+                replacements: [teacherId],
                 type: QueryTypes.SELECT,
             })
         return res.status(200).json({ results });
