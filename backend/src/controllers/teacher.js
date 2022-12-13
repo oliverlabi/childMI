@@ -4,11 +4,12 @@ const { QueryTypes } = require("sequelize");
 exports.getAllTeachers = async (req, res) => {
     try {
         const results = await sequelize.query(
-            "SELECT " +
-                "id, " +
-                "CONCAT(first_name, ' ', last_name) AS full_name, " +
-                "start_year " +
-            "FROM teacher",
+            "SELECT DISTINCT " +
+                "t.id, " +
+                "CONCAT(t.first_name, ' ', t.last_name) AS full_name, " +
+                "tc.year " +
+            "FROM teacher t " +
+            "INNER JOIN teacher_children tc ON t.id = tc.teacher_id",
             { type: QueryTypes.SELECT })
         return res.status(200).json({ results });
     } catch (error) {
@@ -20,12 +21,13 @@ exports.getAllTeachersByYear = async (req, res) => {
     try {
         const { year } = req.params;
         const results = await sequelize.query(
-            "SELECT " +
-            "id, " +
-            "CONCAT(first_name, ' ', last_name) AS full_name, " +
-            "start_year " +
-            "FROM teacher " +
-            "WHERE start_year = ?;",
+            "SELECT DISTINCT " +
+                "t.id, " +
+                "CONCAT(t.first_name, ' ', t.last_name) AS full_name, " +
+                "tc.year " +
+            "FROM teacher t " +
+            "INNER JOIN teacher_children tc ON t.id = tc.teacher_id " +
+            "WHERE tc.year = ?",
             {
                 replacements: [year],
                 type: QueryTypes.SELECT,
@@ -38,21 +40,15 @@ exports.getAllTeachersByYear = async (req, res) => {
 
 exports.getTeacher = async (req, res) => {
     try {
-        const { id, year } = req.params;
+        const { id } = req.params;
         const results = await sequelize.query(
-            "SELECT " +
+            "SELECT DISTINCT " +
                 "t.id AS teacher_id, " +
-                "CONCAT(t.first_name, ' ', t.last_name) AS full_name, " +
-                "t.start_year, " +
-                "s.id AS school_id, " +
-                "s.name AS school_name " +
+                "CONCAT(t.first_name, ' ', t.last_name) AS full_name " +
             "FROM teacher t " +
-            "INNER JOIN teacher_school ts ON t.id = ts.teacher_id " +
-            "INNER JOIN school s ON s.id = ts.school_id " +
-            "WHERE t.id = ? " +
-            "AND t.start_year = ?;",
+            "WHERE t.id = ?;",
             {
-                replacements: [id, year],
+                replacements: [id],
                 type: QueryTypes.SELECT,
             })
         return res.status(200).json({ results });
@@ -70,18 +66,12 @@ exports.getTeacherDataWithChildren = async (req, res) => {
                 "c.id AS child_id, " +
                 "s.id AS sheet_id " +
             "FROM teacher t " +
-            "INNER JOIN teacher_children tc " +
-            "ON t.id = tc.teacher_id " +
-            "INNER JOIN child c " +
-            "ON c.id = tc.child_id " +
-            "INNER JOIN child_properties cp " +
-            "ON c.id = cp.child_id " +
-            "INNER JOIN properties p " +
-            "ON p.id = cp.property_id " +
-            "INNER JOIN property_group pg " +
-            "ON pg.id = p.group " +
-            "INNER JOIN sheet s " +
-            "ON s.id = pg.sheet_id " +
+            "INNER JOIN teacher_children tc ON t.id = tc.teacher_id " +
+            "INNER JOIN child c ON c.id = tc.child_id " +
+            "INNER JOIN child_properties cp ON c.id = cp.child_id " +
+            "INNER JOIN properties p ON p.id = cp.property_id " +
+            "INNER JOIN property_group pg ON pg.id = p.group " +
+            "INNER JOIN sheet s ON s.id = pg.sheet_id " +
             "WHERE t.id = ?;",
             {
                 replacements: [id],
@@ -93,13 +83,18 @@ exports.getTeacherDataWithChildren = async (req, res) => {
     }
 }
 
-exports.getAllYears = async (req, res) => {
+exports.getTeacherYears = async (req, res) => {
     try {
+        const { id } = req.params;
         const results = await sequelize.query(
             "SELECT DISTINCT " +
-                "start_year " +
-            "FROM teacher;",
+                "t.id, " +
+                "CONCAT(t.first_name, t.last_name) AS full_name, " +
+                "tc.year from teacher t " +
+            "INNER JOIN teacher_children tc ON t.id = tc.teacher_id " +
+            "WHERE t.id = ?;",
             {
+                replacements: [id],
                 type: QueryTypes.SELECT,
             })
         return res.status(200).json({ results });

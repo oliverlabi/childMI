@@ -5,7 +5,7 @@ exports.getAllPropertiesByGroupsByChildId = async (req, res) => {
     try {
         const { childId } = req.params;
         const results = await sequelize.query(
-            "SELECT " +
+            "SELECT DISTINCT " +
                 "pg.id, " +
                 "pg.name AS property_group_name, " +
                 "p.name AS property_name, " +

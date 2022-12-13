@@ -4,14 +4,14 @@ import mysql.connector
 # -------------------------------------------------------------------------------
 
 # Excel file
-fileName = "qv-2021-0.ods"
+fileName = "qv-2022-1.ods"
 
 splitFileName = fileName.split("-")
 currentSheetDataType = splitFileName[0]
 currentSheetYear = splitFileName[1]
 currentSheetSeason = splitFileName[2].split(".")[0]
 currentSheetURL = "test"
-currentSheetID = "2"
+currentSheetID = "3"
 currentSheetHeaderIndex = 0
 
 if currentSheetDataType == "qv":

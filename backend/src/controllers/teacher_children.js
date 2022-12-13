@@ -11,7 +11,7 @@ exports.getAllChildrenTeachersAndSchools = async (req, res) => {
                 "CONCAT(t.first_name, ' ', t.last_name) AS teacher_full_name, " +
                 "c.name_code AS child_name_code, " +
                 "ts.school_id, " +
-                "t.start_year as teacher_year, " +
+                "tc.year as teacher_year, " +
                 "s.name AS school_name " +
             "FROM teacher_school ts " +
             "INNER JOIN teacher t ON ts.teacher_id = t.id " +
@@ -28,6 +28,22 @@ exports.getAllChildrenTeachersAndSchools = async (req, res) => {
                 type: QueryTypes.SELECT
             }
         )
+        return res.status(200).json({ results });
+    } catch (error) {
+        return res.status(500).send(error.message);
+    }
+}
+
+
+exports.getAllTeacherYears = async (req, res) => {
+    try {
+        const results = await sequelize.query(
+            "SELECT DISTINCT " +
+                "year " +
+            "FROM teacher_children;",
+            {
+                type: QueryTypes.SELECT,
+            })
         return res.status(200).json({ results });
     } catch (error) {
         return res.status(500).send(error.message);

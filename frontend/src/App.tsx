@@ -16,7 +16,7 @@ const App = () =>
                 <Route path="/children/:sheetId" element={ <Students /> } />
                 <Route path="/children/:sheetId/:id" element={ <Student /> } />
                 <Route path="/teachers" element={ <Teachers /> } />
-                <Route path="/teachers/:year/:id" element={ <Teacher /> } />
+                <Route path="/teachers/:id" element={ <Teacher /> } />
                 <Route path="/schools" element={ <Schools /> } />
                 <Route path="/schools/:id" element={ <School /> } />
                 <Route path="*" element={<Navigate to="/children" replace />} />

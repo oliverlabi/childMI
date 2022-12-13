@@ -47,7 +47,7 @@ export interface IAllSchoolDataResponse {
 
 export interface ISchoolTeachersByIdResponse {
     teacher_id: number,
-    start_year: number,
+    year: number,
     teacher_full_name: string,
     school_id: number,
     school_name: string
@@ -70,8 +70,7 @@ export interface IChildrenTeachersAndSchoolsBySheetIdResponse {
     teacher_year: number
 }
 
-export interface ITeacherSchoolsByFullNameResponse {
-    teacher_id: number,
+export interface ITeacherSchoolsByIdResponse {
     school_id: number,
     school_name: string
 }
@@ -86,21 +85,18 @@ export interface IAllPropertiesByGroupsByChildIdResponse {
 export interface IAllTeacherDataResponse {
     id: number,
     full_name: string,
-    start_year: number
+    year: number
 }
 
 export interface IAllTeachersByYearResponse {
     id: number,
     full_name: string,
-    start_year?: number
+    year?: number
 }
 
 export interface ITeacherDataResponse {
     id: number,
     full_name: string,
-    start_year: number,
-    school_id: number,
-    school_name: string
 }
 
 export interface ITeacherChildrenResponse {
@@ -110,5 +106,5 @@ export interface ITeacherChildrenResponse {
 }
 
 export interface IAllTeacherYearsResponse {
-    start_year: number
+    year: number
 }

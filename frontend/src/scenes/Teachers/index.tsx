@@ -11,7 +11,7 @@ import {IAllTeacherYearsResponse} from "../../api/apiResponseTypes";
 export type ListDataType = {
     id: number,
     full_name: string,
-    start_year?: number,
+    year?: number,
 }
 
 const Teachers = () => {
@@ -20,8 +20,8 @@ const Teachers = () => {
 
     !isSuccess ||
             yearData.forEach((data: IAllTeacherYearsResponse) => {
-                if (!years.includes(data.start_year)){
-                    years.push(data.start_year);
+                if (!years.includes(data.year)){
+                    years.push(data.year);
                 }
             })
 
@@ -33,7 +33,7 @@ const Teachers = () => {
             {isSuccess
                 ?
                     <Tabs
-                        defaultActiveKey={yearData[0] ? yearData[0].start_year : "Pole andmeid"}
+                        defaultActiveKey={yearData[0] ? yearData[0].year : "Pole andmeid"}
                         className="background-tabs"
                     >
                         {years.map(((year: number) => {
@@ -46,8 +46,8 @@ const Teachers = () => {
                                         <ScrollableList header="Õpetaja nimi">
                                             {
                                                 yearData ? yearData.map((entry: ListDataType) => (
-                                                    entry.full_name != '' && entry.start_year == startYear
-                                                        ? <div className="scrollable-list-data-row" key={entry.id}><Link to={`${entry.start_year}/${entry.id}`}>{entry.full_name}</Link></div>
+                                                    entry.full_name != '' && entry.year == startYear
+                                                        ? <div className="scrollable-list-data-row" key={entry.id}><Link to={`${entry.id}`}>{entry.full_name}</Link></div>
                                                         : null
                                                 )): <div>Andmed puuduvad</div>
                                             }

@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import {
     ISchoolChildrenByIdResponse,
     ISchoolTeachersByIdResponse,
-    ITeacherSchoolsByFullNameResponse
+    ITeacherSchoolsByIdResponse
 } from "./apiResponseTypes";
 
 export const schoolTeachersApi = createApi({
@@ -29,14 +29,14 @@ export const schoolTeachersApi = createApi({
             transformResponse: (response: { results: { schoolData: ISchoolChildrenByIdResponse }[]}) =>
                 response.results,
         }),
-        getTeacherSchoolsByFullName: builder.query<any, { fullName: number }>({
+        getTeacherSchoolsById: builder.query<any, { id: number }>({
             query(args) {
-                const { fullName } = args;
+                const { id } = args;
                 return {
-                    url: `school_teachers/schools/${fullName}`
+                    url: `school_teachers/schools/${id}/`
                 }
             },
-            transformResponse: (response: { results: { teacherSchoolData: ITeacherSchoolsByFullNameResponse }[]}) =>
+            transformResponse: (response: { results: { teacherSchoolData: ITeacherSchoolsByIdResponse }[]}) =>
                 response.results,
         }),
     }),
@@ -45,5 +45,5 @@ export const schoolTeachersApi = createApi({
 export const {
     useGetSchoolTeachersByIdQuery,
     useGetSchoolChildrenByIdQuery,
-    useGetTeacherSchoolsByFullNameQuery
+    useGetTeacherSchoolsByIdQuery
 } = schoolTeachersApi;

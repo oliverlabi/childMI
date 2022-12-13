@@ -4,7 +4,7 @@ const { QueryTypes } = require("sequelize");
 exports.getAllSchools = async (req, res) => {
     try {
         const results = await sequelize.query(
-            "SELECT " +
+            "SELECT DISTINCT " +
                 "id, " +
                 "name " +
             "FROM school",
@@ -19,7 +19,7 @@ exports.getSchool = async (req, res) => {
     try {
         const { id } = req.params;
         const results = await sequelize.query(
-            "SELECT " +
+            "SELECT DISTINCT " +
                 "name " +
             "FROM school " +
             "WHERE id = ?",

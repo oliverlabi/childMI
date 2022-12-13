@@ -5,14 +5,15 @@ exports.getSchoolTeachers = async (req, res) => {
     try {
         const { id } = req.params;
         const results = await sequelize.query(
-            "SELECT " +
+            "SELECT DISTINCT " +
                 "ts.teacher_id, " +
-                "t.start_year, " +
+                "tc.year, " +
                 "CONCAT(t.first_name, ' ' , t.last_name) as teacher_full_name, " +
                 "ts.school_id, " +
                 "s.name AS school_name " +
             "FROM teacher_school ts " +
             "INNER JOIN teacher t ON ts.teacher_id = t.id " +
+            "INNER JOIN teacher_children tc on t.id = tc.teacher_id " +
             "INNER JOIN school s ON ts.school_id = s.id " +
             "WHERE s.id = ?;",
             {
@@ -58,19 +59,18 @@ exports.getSchoolChildren = async (req, res) => {
 
 exports.getTeacherSchools = async (req, res) => {
     try {
-        const { fullName } = req.params;
-        console.log(fullName);
+        const { id } = req.params;
         const results = await sequelize.query(
-            "SELECT " +
+            "SELECT DISTINCT " +
                 "t.id AS teacher_id, " +
                 "ts.school_id, " +
                 "s.name AS school_name " +
             "FROM teacher_school ts " +
             "INNER JOIN teacher t ON ts.teacher_id = t.id " +
             "INNER JOIN school s on ts.school_id = s.id " +
-            "WHERE CONCAT(t.first_name, t.last_name) = ?",
+            "WHERE t.id = ?;",
             {
-                replacements: [fullName],
+                replacements: [id],
                 type: QueryTypes.SELECT
             }
         )

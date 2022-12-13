@@ -29,7 +29,7 @@ const School = () => {
                                     {
                                         schoolTeachersData ? schoolTeachersData.map((entry: any) => (
                                             entry?.teacher_full_name != ''
-                                                ? <div className="scrollable-list-data-row" key={"t" + entry.teacher_id}><Link to={`/teachers/${entry.start_year}/${entry.teacher_id}`}>{entry.teacher_full_name}</Link></div>
+                                                ? <div className="scrollable-list-data-row" key={"t" + entry.teacher_id}><Link to={`/teachers/${entry.year}/${entry.teacher_id}`}>{entry.teacher_full_name}</Link></div>
                                                 : null
                                         )): <div>Andmed puuduvad</div>
                                     }

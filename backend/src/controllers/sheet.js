@@ -4,11 +4,11 @@ const { QueryTypes } = require("sequelize");
 exports.getAllSheets = async (req, res) => {
     try {
         const results = await sequelize.query(
-            "SELECT " +
-            "id, " +
-            "year, " +
-            "season, " +
-            "type " +
+            "SELECT DISTINCT " +
+                "id, " +
+                "year, " +
+                "season, " +
+                "type " +
             "FROM sheet",
             { type: QueryTypes.SELECT })
         return res.status(200).json({ results });

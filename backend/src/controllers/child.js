@@ -6,7 +6,7 @@ exports.getAllChildren = async (req, res) => {
         const { sheetId } = req.params;
 
         const results = await sequelize.query(
-            "SELECT " +
+            "SELECT DISTINCT " +
                 "c.id, " +
                 "c.name_code, " +
                 "c.age, " +
@@ -37,7 +37,7 @@ exports.getChild = async (req, res) => {
     try {
         const { sheetId, childId } = req.params;
         const results = await sequelize.query(
-            "SELECT " +
+            "SELECT DISTINCT " +
                 "c.id, " +
                 "c.name_code, " +
                 "c.age, " +
@@ -48,13 +48,7 @@ exports.getChild = async (req, res) => {
             "INNER JOIN properties p ON cp.property_id = p.id " +
             "INNER JOIN property_group pg ON pg.id = p.group " +
             "INNER JOIN sheet s ON s.id = pg.sheet_id " +
-            "WHERE s.id = ? " +
-            "AND c.id = ? " +
-            "GROUP BY c.id, " +
-                "c.name_code, " +
-                "c.age, " +
-                "c.gender, " +
-                "c.special_need;",
+            "WHERE s.id = ? AND c.id = ? " +
             {
                 replacements: [sheetId, childId],
                 type: QueryTypes.SELECT
