@@ -85,7 +85,7 @@ const Teacher = () => {
                                     {
                                         childrenListData ? childrenListData.map((entry: ListDataField) => (
                                             entry.name != ''
-                                                ? <div className="scrollable-list-data-row" key={entry.id}><Link to={`/children/${entry.sheet_id}/${entry.id}`}>{entry.name}</Link>({entry.year})</div>
+                                                ? <div className="scrollable-list-data-row" key={entry.id}><Link to={`/children/${entry.sheet_id}/${entry.id}`}>{entry.name}</Link> ({entry.year})</div>
                                                 : null
                                         )) : <div>Andmed puuduvad</div>
                                     }

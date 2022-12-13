@@ -19,11 +19,11 @@ const Teachers = () => {
     const years: number[] = [];
 
     !isSuccess ||
-            yearData.forEach((data: IAllTeacherYearsResponse) => {
+        yearData.forEach((data: IAllTeacherYearsResponse) => {
                 if (!years.includes(data.year)){
                     years.push(data.year);
                 }
-            })
+            });
 
     return (
         <>
@@ -36,20 +36,22 @@ const Teachers = () => {
                         defaultActiveKey={yearData[0] ? yearData[0].year : "Pole andmeid"}
                         className="background-tabs"
                     >
-                        {years.map(((year: number) => {
-                            const startYear = year;
+                        {years.sort() && years.map(((year: number) => {
+                            const dataYear = year;
 
                             return(
-                                <Tab eventKey={startYear} title={startYear} key={startYear}>
+                                <Tab eventKey={dataYear} title={dataYear} key={dataYear}>
                                     <Container className="background-container-theme">
-                                        <h5 className="container-title">{startYear} aasta andmetega õpetajad</h5>
+                                        <h5 className="container-title">{dataYear} aasta andmetega õpetajad</h5>
                                         <ScrollableList header="Õpetaja nimi">
                                             {
-                                                yearData ? yearData.map((entry: ListDataType) => (
-                                                    entry.full_name != '' && entry.year == startYear
-                                                        ? <div className="scrollable-list-data-row" key={entry.id}><Link to={`${entry.id}`}>{entry.full_name}</Link></div>
-                                                        : null
-                                                )): <div>Andmed puuduvad</div>
+                                                yearData
+                                                    ? yearData.map((entry: ListDataType) => (
+                                                        entry.full_name != '' && entry.year == dataYear
+                                                            ? <div className="scrollable-list-data-row" key={entry.id}><Link to={`${entry.id}`}>{entry.full_name}</Link></div>
+                                                            : null
+                                                    ))
+                                                    : <div>Andmed puuduvad</div>
                                             }
                                         </ScrollableList>
                                     </Container>
