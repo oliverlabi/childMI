@@ -8,6 +8,7 @@ import {sheetApi} from "../api/sheetApi";
 import {childApi} from "../api/childApi";
 import {teacherChildrenApi} from "../api/teacherChildrenApi";
 import {propertyGroupApi} from "../api/propertyGroupApi";
+import {commentApi} from "../api/commentApi";
 
 export const store = configureStore({
     reducer: {
@@ -19,6 +20,7 @@ export const store = configureStore({
         [teacherChildrenApi.reducerPath]: teacherChildrenApi.reducer,
         [sheetApi.reducerPath]: sheetApi.reducer,
         [propertyGroupApi.reducerPath]: propertyGroupApi.reducer,
+        [commentApi.reducerPath]: commentApi.reducer,
     },
     devTools: true,
     middleware: (getDefaultMiddleware) =>
@@ -31,6 +33,7 @@ export const store = configureStore({
             teacherChildrenApi.middleware,
             sheetApi.middleware,
             propertyGroupApi.middleware,
+            commentApi.middleware,
     ]),
 })
 

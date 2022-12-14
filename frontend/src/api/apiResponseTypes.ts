@@ -40,6 +40,11 @@ export interface IAllSheetsDataResponse {
     type: number
 }
 
+export interface IAllCommentsBySheetIdResponse {
+    child_id: number,
+    comment: string,
+}
+
 export interface IAllSchoolDataResponse {
     id: number,
     name: string

@@ -7,12 +7,13 @@ import {useGetAllChildrenDataBySheetQuery} from "../../api/childApi";
 import {parsedDataType} from "../../components/ChildDataTable/types";
 import {
     IAllChildrenDataBySheetResponse,
-    IAllChildrenPropertiesDataBySheetResponse,
+    IAllChildrenPropertiesDataBySheetResponse, IAllCommentsBySheetIdResponse,
     IAllPropertiesBySheetResponse, IChildrenTeachersAndSchoolsBySheetIdResponse,
 } from "../../api/apiResponseTypes";
-import {ChildDataHeaders} from "../../utils/customHeaders";
+import {ChildDataHeaders, CommentHeader} from "../../utils/customHeaders";
 import {useEffect, useState} from "react";
 import {useGetAllChildrenTeachersAndSchoolsBySheetIdQuery} from "../../api/teacherChildrenApi";
+import {useGetAllCommentsBySheetIdQuery} from "../../api/commentApi";
 
 const insertPropertiesData = (parsedData: parsedDataType, dict: IAllChildrenPropertiesDataBySheetResponse) => {
     if (parsedData[dict["child_id"]] === undefined){
@@ -20,6 +21,15 @@ const insertPropertiesData = (parsedData: parsedDataType, dict: IAllChildrenProp
     }
 
     parsedData[dict["child_id"]][dict["property_id"]] = dict["child_property_value"];
+}
+
+const insertCommentData = (parsedData: parsedDataType, dict: IAllChildrenPropertiesDataBySheetResponse, commentData: IAllCommentsBySheetIdResponse[], highestHeaderId: number) => {
+    const currentChildComment = commentData.filter(obj => obj.child_id === dict["child_id"]);
+    if (parsedData[dict["child_id"]] === undefined){
+        parsedData[dict["child_id"]] = {};
+    }
+
+    parsedData[dict["child_id"]][highestHeaderId] = currentChildComment[0].comment;
 }
 
 const insertNullCells = (parsedData: parsedDataType, headers: IAllPropertiesBySheetResponse[]) => {
@@ -77,6 +87,7 @@ const Students = () => {
     const childrenData = useGetAllChildrenDataBySheetQuery({sheetId: parsedParam});
     const propsData = useGetAllPropertiesBySheetQuery({sheetId: parsedParam});
     const childrenTeachersAndSchoolsData = useGetAllChildrenTeachersAndSchoolsBySheetIdQuery({sheetId: parsedParam});
+    const commentData = useGetAllCommentsBySheetIdQuery({sheetId: parsedParam})
 
     useEffect(() => {
         if((sheetId === 0 || isNaN(sheetId)) && sheetsData.isSuccess){
@@ -94,11 +105,14 @@ const Students = () => {
     let headers;
 
     if(childrenPropertiesData.isSuccess && propsData.isSuccess && sheetsData.isSuccess && childrenData.isSuccess && childrenTeachersAndSchoolsData.isSuccess) {
-        const highestHeaderId = Math.max(...propsData.data.map((o: IAllPropertiesBySheetResponse) => o.id))
+        const commentHeaderLength = 1;
+        const highestHeaderId = Math.max(...propsData.data.map((o: IAllPropertiesBySheetResponse) => o.id)) + commentHeaderLength
         headers = addChildHeaders(propsData.data);
+        headers.push({id: propsData.data.length + commentHeaderLength, name: CommentHeader});
 
         childrenPropertiesData.data.forEach((dict: IAllChildrenPropertiesDataBySheetResponse) => {
             insertPropertiesData(parsedData, dict);
+            insertCommentData(parsedData, dict, commentData.data, highestHeaderId);
             insertChildrenData(parsedData, dict, highestHeaderId, childrenData.data, childrenTeachersAndSchoolsData.data);
         })
 
