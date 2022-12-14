@@ -27,9 +27,9 @@ for i in range(0, len(excelChildTeacherData.iloc[0:])):
     childSecondHeader = excelChildTeacherData.iloc[0:, [2]].iloc[i, 0]
     childThirdHeader = excelChildTeacherData.iloc[0:, [3]].iloc[i, 0]
     childFourthHeaderData = excelChildTeacherData.iloc[0:, [4]].iloc[i, 0]
-    child = next((item for item in childData if item[childHeaders[1]["name"]] == childFirstHeader
-                  and item[childHeaders[2]["name"]] == childSecondHeader
-                  and item[childHeaders[3]["name"]] == childThirdHeader
+    child = next((item for item in childData if (item[childHeaders[1]["name"]] == childFirstHeader or item[childHeaders[1]["name"]] == childNamePropertyEmpty)
+                  and (item[childHeaders[2]["name"]] == childSecondHeader or item[childHeaders[2]["name"]] == childAgePropertyEmpty)
+                  and (item[childHeaders[3]["name"]] == childThirdHeader or item[childHeaders[3]["name"]] == childGenderPropertyEmpty)
                   and item[childHeaders[4]["name"]] == childFourthHeaderData), None)
 
     if child:

@@ -18,15 +18,15 @@ for i in range(0, len(currentDataFrame.iloc[0:])):
 
     nameCode = currentDataFrame.iloc[0:, [1]].iloc[i, 0]
     if nameCode is None:
-        nameCode = "Nimeviga"
+        nameCode = childNamePropertyEmpty
 
     age = currentDataFrame.iloc[0:, [2]].iloc[i, 0]
     if age == '':
-        age = 0
+        age = childAgePropertyEmpty
 
     gender = currentDataFrame.iloc[0:, [3]].iloc[i, 0]
     if gender == '':
-        gender = "E"
+        gender = childGenderPropertyEmpty
 
     special_need = currentDataFrame.iloc[0:, [4]].iloc[i, 0]
 

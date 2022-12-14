@@ -39,8 +39,9 @@ for property in propertiesData:
         childThirdHeaderData = str(excelChildNameData.iloc[0:, [2]].iloc[i, 0])
         childFourthHeaderData = str(excelChildNameData.iloc[0:, [3]].iloc[i, 0])
 
-        dbChild = next((item for item in childData if item[childHeaders[1]["name"]] == childFirstHeaderData and item[
-            childHeaders[2]["name"]] == childSecondHeaderData and item[childHeaders[3]["name"]] == childThirdHeaderData and
+        dbChild = next((item for item in childData if (item[childHeaders[1]["name"]] == childFirstHeaderData or item[childHeaders[1]["name"]] == childNamePropertyEmpty) and
+                        (item[childHeaders[2]["name"]] == childSecondHeaderData or item[childHeaders[2]["name"]] == childAgePropertyEmpty) and
+                        (item[childHeaders[3]["name"]] == childThirdHeaderData or item[childHeaders[3]["name"]] == childGenderPropertyEmpty) and
                         item[childHeaders[4]["name"]] == childFourthHeaderData), None)
 
         if dbChild:
