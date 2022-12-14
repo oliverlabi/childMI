@@ -29,7 +29,7 @@ const insertCommentData = (parsedData: parsedDataType, dict: IAllChildrenPropert
         parsedData[dict["child_id"]] = {};
     }
 
-    parsedData[dict["child_id"]][highestHeaderId] = currentChildComment[0].comment;
+    parsedData[dict["child_id"]][highestHeaderId] = currentChildComment[0]?.comment;
 }
 
 const insertNullCells = (parsedData: parsedDataType, headers: IAllPropertiesBySheetResponse[]) => {
