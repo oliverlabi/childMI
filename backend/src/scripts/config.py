@@ -51,8 +51,14 @@ writingGroupName = "Kirjutamine"
 childDataGroupName = "Taustaandmed"
 parentDataGroupName = "Kodune keelekeskkond"
 childNameProperty = "Lapse kood"
+childNamePropertyEmpty = "Nimeviga"
+
 childAgeProperty = "Lapse vanus"
+childAgePropertyEmpty = 0
+
 childGenderProperty = "Lapse sugu"
+childGenderPropertyEmpty = "E"
+
 childSpecialNeedProperty = "Kas lapsel on mõni erivajadus, mis onseotud keelelise arenguga"
 commentProperty = "Kommentaarid"
 teacherNameProperty = "Õpetaja kood"
