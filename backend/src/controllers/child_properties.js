@@ -4,7 +4,6 @@ const { QueryTypes } = require("sequelize");
 exports.getAllChildProperties = async (req, res) => {
     try {
         const { sheetId } = req.params;
-        console.log(sheetId);
         const results = await sequelize.query(
         "SELECT DISTINCT " +
             "c.id as child_id,   " +

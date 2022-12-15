@@ -10,7 +10,10 @@ export interface IChildDataBySheetAndIdResponse {
     name_code: string,
     age: number,
     gender: string,
-    special_need: number
+    special_need: number,
+    teacher_id: number,
+    teacher_full_name: string,
+    school_name: string,
 }
 
 export interface IAllChildrenPropertiesDataBySheetResponse {

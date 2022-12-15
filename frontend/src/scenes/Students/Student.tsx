@@ -1,6 +1,6 @@
 import {Container, Tabs, Tab} from "react-bootstrap";
 import {useGetAllPropertiesByGroupsByChildIdQuery} from "../../api/propertyGroupApi";
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {IAllPropertiesByGroupsByChildIdResponse} from "../../api/apiResponseTypes";
 import Loader from "../../components/Loader";
 import "./css/Student.scss";
@@ -30,13 +30,12 @@ const Student = () => {
 
         if (index === 0) {
             Object.values(childData.data[0]).map((data, index) => {
-
-                if(index === 0){
+                if(index === 0 || index === 1 || index === 2){
                     return;
                 }
 
-                // Temporary until I add school and teacher data
-                const childHeader = reversedChildDataHeaders[index - 1 + 2]["name"].replace(/['`~!@#$%^&*?_|+=;:".<>\[\]\\]/gi, '');
+                const childHeader = reversedChildDataHeaders[index - 3]["name"].replace(/['`~!@#$%^&*?_|+=;:".<>\[\]\\]/gi, '');
+
                 propertyGroups[ChildDataPropertyGroup][childHeader] = data ? data : "Andmed puuduvad"
             })
         }
@@ -64,12 +63,20 @@ const Student = () => {
                         defaultActiveKey={Object.keys(propertyGroups)[0] ? Object.keys(propertyGroups)[0] : "Pole andmeid"}
                         className="background-tabs"
                     >
-                        {Object.entries(propertyGroups).map((entry) => {
+                        {Object.entries(propertyGroups).map((entry, groupIndex) => {
                             return(
                                 <Tab eventKey={entry[0]} title={entry[0]} key={entry[0]}>
                                     <Container className="background-container-theme">
                                         <h5 className="container-title">{entry[0]}</h5>
-                                        {Object.entries(entry[1]).map((property) => {
+                                        {Object.entries(entry[1]).map((property, propertyIndex) => {
+                                            if(groupIndex === 0 && propertyIndex === 0){
+                                                return <p>{property[0]}: <Link to={`/teachers/${childData.data[0].teacher_id}`} key={property[0]}>{`${property[1]}` }</Link></p>
+                                            }
+
+                                            if(groupIndex === 0 && propertyIndex === 1){
+                                                return <p>{property[0]}: <Link to={`/schools/${childData.data[0].school_id}`} key={property[0]}>{`${property[1]}` }</Link></p>
+                                            }
+
                                             return <p key={property[0]}>{`${property[0]}: ${property[1]}` }</p>
                                         })}
                                     </Container>
