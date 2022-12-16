@@ -1,0 +1,35 @@
+@import "@/global";
+
+.div-container {
+  display: flex;
+  width: 100%;
+
+  .data-search-field {
+    display: inline-flex;
+    width: 50%;
+    justify-content: flex-end;
+
+    button {
+      border-radius: 5px;
+      border: none;
+      background-color: $main-theme;
+      height: 30px;
+      margin-left: 10px;
+    }
+  }
+
+  .data-type-choice {
+    display: inline-flex;
+    width: 50%;
+    justify-content: flex-start;
+  }
+
+}
+
+.student-counter {
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: -20px;
+  display: flex;
+  justify-content: flex-end;
+}

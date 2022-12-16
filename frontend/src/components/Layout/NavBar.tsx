@@ -10,7 +10,7 @@ const NavBar = () => {
     return (
         <>
             <Navbar expand="md">
-                <Navbar.Brand>Lastekeele korpuse haldusliides</Navbar.Brand>
+                <Navbar.Brand>Lastekeele korpus</Navbar.Brand>
                 <Navbar.Toggle className="navbar-toggle"></Navbar.Toggle>
                 <Navbar.Collapse role={undefined}>
                     <Nav className="justify-content-end" activeKey={splitPath}>

@@ -11,9 +11,10 @@ import {
     IAllPropertiesBySheetResponse, IChildrenTeachersAndSchoolsBySheetIdResponse,
 } from "../../api/apiResponseTypes";
 import {ChildDataHeaders, CommentHeader} from "../../utils/customHeaders";
-import {useEffect, useState} from "react";
+import {ChangeEvent, useEffect, useRef, useState} from "react";
 import {useGetAllChildrenTeachersAndSchoolsBySheetIdQuery} from "../../api/teacherChildrenApi";
 import {useGetAllCommentsBySheetIdQuery} from "../../api/commentApi";
+import "./css/index.scss"
 
 const insertPropertiesData = (parsedData: parsedDataType, dict: IAllChildrenPropertiesDataBySheetResponse) => {
     if (parsedData[dict["child_id"]] === undefined){
@@ -80,6 +81,8 @@ const shiftLastCellsFirst = (parsedData: parsedDataType) => {
 }
 
 const Students = () => {
+    const searchValue = useRef("");
+    const [filteredData, setFilteredData] = useState({});
     const [sheetId, setSheetId] = useState(0);
     const parsedParam = parseInt(String(sheetId))
     const sheetsData = useGetAllSheetsDataQuery();
@@ -88,6 +91,20 @@ const Students = () => {
     const propsData = useGetAllPropertiesBySheetQuery({sheetId: parsedParam});
     const childrenTeachersAndSchoolsData = useGetAllChildrenTeachersAndSchoolsBySheetIdQuery({sheetId: parsedParam});
     const commentData = useGetAllCommentsBySheetIdQuery({sheetId: parsedParam})
+
+    const handleSearchValueChange = (event: ChangeEvent<HTMLInputElement>) => {
+        searchValue.current = event.target.value;
+    }
+
+    const handleSearch = () => {
+        setFilteredData(Object.values(parsedData).filter((data) => {
+            return Object.values(data).some(values => values[1] && typeof values[1] !== "string"
+                ? (values[1] as string[]).some((value: string) => value.toLowerCase() === searchValue.current.toLowerCase())
+                : typeof values[1] === "string" && values[1]
+                    ? (values[1] as string).toLowerCase() === searchValue.current.toLowerCase()
+                    : false)
+        }))
+    }
 
     useEffect(() => {
         if((sheetId === 0 || isNaN(sheetId)) && sheetsData.isSuccess){
@@ -129,8 +146,19 @@ const Students = () => {
             {childrenPropertiesData.isSuccess && propsData.isSuccess && sheetsData.isSuccess && childrenData.isSuccess && childrenTeachersAndSchoolsData.isSuccess ?
                 <>
                     <Container className="background-container-theme">
-                        <p className="data-type-text">Andmed: Kvantitatiivsed</p>
-                        <ChildDataTable headers={headers} data={parsedData} sheetsData={sheetsData.data} />
+                        <div className="div-container">
+                            <div className="data-type-choice">
+                                <p>Andmed: Kvantitatiivsed</p>
+                            </div>
+                            <div className="data-search-field">
+                                <p><input type="text" onChange={handleSearchValueChange}></input></p>
+                                <button onClick={handleSearch}>Otsi</button>
+                            </div>
+                        </div>
+                        <ChildDataTable headers={headers} data={Object.keys(filteredData)?.length ? filteredData : parsedData} sheetsData={sheetsData.data} />
+                        <div className="student-counter">
+                            <p>Andmete arv: {Object.keys(filteredData)?.length ? Object.keys(filteredData)?.length : Object.keys(parsedData)?.length}</p>
+                        </div>
                     </Container>
                 </>
                 : <Loader></Loader>
