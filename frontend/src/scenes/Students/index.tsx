@@ -151,7 +151,7 @@ const Students = () => {
                                 <p>Andmed: Kvantitatiivsed</p>
                             </div>
                             <div className="data-search-field">
-                                <p><input type="text" onChange={handleSearchValueChange}></input></p>
+                                <p><input type="text" onChange={handleSearchValueChange} placeholder="Sisesta otsingusõna..."></input></p>
                                 <button onClick={handleSearch}>Otsi</button>
                             </div>
                         </div>
