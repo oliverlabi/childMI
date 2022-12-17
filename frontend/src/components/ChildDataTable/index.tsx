@@ -1,20 +1,54 @@
 import Table from 'react-bootstrap/Table';
 import './css/index.scss';
-import {ChildDataTableProps} from "./types";
+import {ChildDataTableProps, parsedDataType} from "./types";
 import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {SeasonEnums} from "../../utils/sheetDataMapping";
 
 const ChildDataTable = ({headers, data, sheetsData}: ChildDataTableProps) => {
     const [sheetId, setSheetId] = useState("0");
+    const [sortedData, setSortedData] = useState<parsedDataType>([])
+    const [sortingState] = useState({
+        currentIndex: null,
+        direction: null,
+    })
 
     const refreshPage = () => {
         window.location.reload();
     }
 
+    const handleSortClick = (headerIndex: number) => {
+        if(sortingState.currentIndex === headerIndex) {
+            sortingState.direction = sortingState.direction === "desc" ? "asc" : "desc";
+            setSortedData(Object.values(sortedData).reverse());
+            return;
+        }
+
+        setSortedData(Object.values(sortedData).sort(((a, b) => {
+            sortingState.currentIndex = headerIndex;
+            sortingState.direction = "desc";
+
+            if(!a[headerIndex][1]){
+                return 0;
+            }
+
+            if(typeof a[headerIndex][1] !== "string"){
+                return a[headerIndex][1][0].localeCompare(b[headerIndex][1][0])
+            }
+
+            return a[headerIndex][1].localeCompare(b[headerIndex][1])
+        })));
+    }
+
     useEffect(() => {
         setSheetId(location.pathname.split("/")[2])
-    }, [window.history])
+    }, [window.history]);
+
+    useEffect(() => {
+        setSortedData(data);
+        sortingState.direction = null;
+        sortingState.currentIndex = null;
+    }, [data]);
 
     return (
         <div className="two-tables">
@@ -47,13 +81,13 @@ const ChildDataTable = ({headers, data, sheetsData}: ChildDataTableProps) => {
                 <Table responsive>
                     <thead>
                         <tr className="table-header">
-                            {headers ? headers.map(header => {
-                                return <th id={header.name} key={`${header.id + header.name}`}>{header.name}</th>
+                            {headers ? headers.map((header, index) => {
+                                return <th id={header.name} key={`${header.id + header.name}`} onClick={() => handleSortClick(index)}>{header.name}</th>
                             }) : <th>No headers data</th>}
                         </tr>
                     </thead>
                     <tbody>
-                    {Object.entries(data).map((dataDict, index) => {
+                    {Object.entries(Object.values(sortedData)?.length ? sortedData : data).map((dataDict, index) => {
                         return (
                             <tr className="table-row" key={dataDict[1] as string + index}>
                                 {Object.entries(dataDict[1]).map((entry, index) => {
@@ -67,7 +101,7 @@ const ChildDataTable = ({headers, data, sheetsData}: ChildDataTableProps) => {
                                     }
 
                                     if(index === 2){
-                                        return <td className="data-clickable-column" key={entry[0] + entry[1] + index}><Link to={`/children/${sheetId}/${entry[1][1][0]}`}>{entry[1][1][1]}</Link></td>
+                                        return <td className="data-clickable-column" key={entry[0] + entry[1] + index}><Link to={`/children/${sheetId}/${entry[1][1][1]}`}>{entry[1][1][0]}</Link></td>
                                     }
 
                                     return <td key={entry[0] + entry[1] + index}>{entry[1][1]}</td>

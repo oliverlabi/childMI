@@ -10,7 +10,7 @@ import {
     IAllChildrenPropertiesDataBySheetResponse, IAllCommentsBySheetIdResponse,
     IAllPropertiesBySheetResponse, IChildrenTeachersAndSchoolsBySheetIdResponse,
 } from "../../api/apiResponseTypes";
-import {ChildDataHeaders, CommentHeader} from "../../utils/customHeaders";
+import {ChildDataHeaders, ChildDataHeadersOriginal, CommentHeader} from "../../utils/customHeaders";
 import {ChangeEvent, useEffect, useRef, useState} from "react";
 import {useGetAllChildrenTeachersAndSchoolsBySheetIdQuery} from "../../api/teacherChildrenApi";
 import {useGetAllCommentsBySheetIdQuery} from "../../api/commentApi";
@@ -50,7 +50,7 @@ const insertChildrenData = (parsedData: parsedDataType, dict: IAllChildrenProper
 
     parsedData[dict["child_id"]][highestHeaderId + 1] = [currentChildTeacherAndSchoolData[0]?.school_name, currentChildTeacherAndSchoolData[0]?.school_id.toString()];
     parsedData[dict["child_id"]][highestHeaderId + 2] = [currentChildTeacherAndSchoolData[0]?.teacher_full_name, currentChildTeacherAndSchoolData[0]?.teacher_id.toString()];
-    parsedData[dict["child_id"]][highestHeaderId + 3] = [currentChildId.toString(), currentChildData[0]?.name_code];
+    parsedData[dict["child_id"]][highestHeaderId + 3] = [currentChildData[0]?.name_code, currentChildId.toString()];
     parsedData[dict["child_id"]][highestHeaderId + 4] = currentChildData[0]?.age.toString();
     parsedData[dict["child_id"]][highestHeaderId + 5] = currentChildData[0]?.gender;
     parsedData[dict["child_id"]][highestHeaderId + 6] = currentChildData[0]?.special_need;
@@ -59,10 +59,10 @@ const insertChildrenData = (parsedData: parsedDataType, dict: IAllChildrenProper
 const addChildHeaders = (headers: IAllPropertiesBySheetResponse[]) => {
     const newHeaders =  JSON.parse(JSON.stringify(headers));
 
-    ChildDataHeaders.forEach((childHeader, index) => {
-        const currentIndex = headers.length + index;
-
-        childHeader["id"] = currentIndex + 1;
+    const currentIndex = headers.length;
+    ChildDataHeaders.forEach((childHeader: {id: number, name: string}, index) => {
+        const currentHeaderId = ChildDataHeadersOriginal[index]["id"] + 1;
+        childHeader["id"] = currentIndex + currentHeaderId;
 
         newHeaders.unshift(childHeader);
     })
@@ -90,7 +90,7 @@ const Students = () => {
     const childrenData = useGetAllChildrenDataBySheetQuery({sheetId: parsedParam});
     const propsData = useGetAllPropertiesBySheetQuery({sheetId: parsedParam});
     const childrenTeachersAndSchoolsData = useGetAllChildrenTeachersAndSchoolsBySheetIdQuery({sheetId: parsedParam});
-    const commentData = useGetAllCommentsBySheetIdQuery({sheetId: parsedParam})
+    const commentData = useGetAllCommentsBySheetIdQuery({sheetId: parsedParam});
 
     const handleSearchValueChange = (event: ChangeEvent<HTMLInputElement>) => {
         searchValue.current = event.target.value;

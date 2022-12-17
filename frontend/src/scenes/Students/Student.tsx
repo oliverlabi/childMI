@@ -70,14 +70,14 @@ const Student = () => {
                                         <h5 className="container-title">{entry[0]}</h5>
                                         {Object.entries(entry[1]).map((property, propertyIndex) => {
                                             if(groupIndex === 0 && propertyIndex === 0){
-                                                return <p>{property[0]}: <Link to={`/teachers/${childData.data[0].teacher_id}`} key={property[0]}>{`${property[1]}` }</Link></p>
+                                                return <p key={"teacher-p-" + property[1]}>{property[0]}: <Link key={"teacher-link-" + property[1]} to={`/teachers/${childData.data[0].teacher_id}`}>{`${property[1]}` }</Link></p>
                                             }
 
                                             if(groupIndex === 0 && propertyIndex === 1){
-                                                return <p>{property[0]}: <Link to={`/schools/${childData.data[0].school_id}`} key={property[0]}>{`${property[1]}` }</Link></p>
+                                                return <p key={"school-p-" + property[1]}>{property[0]}: <Link key={"school-link-" + property[1]} to={`/schools/${childData.data[0].school_id}`}>{`${property[1]}` }</Link></p>
                                             }
 
-                                            return <p key={property[0]}>{`${property[0]}: ${property[1]}` }</p>
+                                            return <p key={"student-data-" + property[0]}>{`${property[0]}: ${property[1]}` }</p>
                                         })}
                                     </Container>
                                 </Tab>

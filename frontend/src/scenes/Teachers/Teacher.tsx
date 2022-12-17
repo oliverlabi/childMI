@@ -62,10 +62,10 @@ const Teacher = () => {
                                         teacherYearsArray.push(currentYear);
 
                                         if (teacherYearsArrayLength === index + 1) {
-                                            return <>{currentYear}<p /></>
+                                            return <span key={"div-container-" + currentYear+currentYear}>{currentYear}<p key={"yearly-data-" + currentYear} /></span>
                                         }
 
-                                        return <>{currentYear}, </>
+                                        return <span key={"div-container-" + currentYear}>{currentYear}, </span>
                                     })
                                 }
                                 </span>
@@ -76,7 +76,7 @@ const Teacher = () => {
                                         }
 
                                         teacherSchoolsArray.push(school.school_name);
-                                        return <Link to={`/schools/${school.school_id}`} key={school.school_name}>{school?.school_name ? school.school_name : "Puudu"}</Link>
+                                        return <Link to={`/schools/${school.school_id}`} key={"school-data-" + school.school_name}>{school?.school_name ? school.school_name : "Puudu"}</Link>
                                     })
                                 }
                             </Col>
@@ -85,7 +85,7 @@ const Teacher = () => {
                                     {
                                         childrenListData ? childrenListData.map((entry: ListDataField) => (
                                             entry.name != ''
-                                                ? <div className="scrollable-list-data-row" key={entry.id}><Link to={`/children/${entry.sheet_id}/${entry.id}`}>{entry.name}</Link> ({entry.year})</div>
+                                                ? <div className="scrollable-list-data-row" key={"scrollable-list-data-" + entry.id}><Link to={`/children/${entry.sheet_id}/${entry.id}`}>{entry.name}</Link> ({entry.year})</div>
                                                 : null
                                         )) : <div>Andmed puuduvad</div>
                                     }
