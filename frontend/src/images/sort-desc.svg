@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   shape-rendering="geometricPrecision"
+   text-rendering="geometricPrecision"
+   image-rendering="optimizeQuality"
+   fill-rule="evenodd"
+   clip-rule="evenodd"
+   viewBox="0 0 322 511.21"
+   version="1.1"
+   id="svg667"
+   sodipodi:docname="sort-desc-icon.svg"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs671">
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath741">
+      <rect
+         style="fill:#ffffff"
+         id="rect743"
+         width="645.64154"
+         height="320.04581"
+         x="-164.03119"
+         y="233.09695" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath735">
+      <rect
+         style="fill:#ffffff"
+         id="rect737"
+         width="658.74683"
+         height="281.79037"
+         x="-166.23161"
+         y="-51.908756" />
+    </clipPath>
+  </defs>
+  <sodipodi:namedview
+     id="namedview669"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="1.6216428"
+     inkscape:cx="161.25623"
+     inkscape:cy="206.58064"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg667" />
+  <path
+     fill-rule="nonzero"
+     d="M295.27 211.54H26.71c-6.23-.02-12.48-2.18-17.54-6.58-11.12-9.69-12.29-26.57-2.61-37.69L144.3 9.16c.95-1.07 1.99-2.1 3.13-3.03 11.36-9.4 28.19-7.81 37.58 3.55l129.97 157.07a26.65 26.65 0 0 1 7.02 18.06c0 14.76-11.97 26.73-26.73 26.73zM26.71 299.68l268.56-.01c14.76 0 26.73 11.97 26.73 26.73 0 6.96-2.66 13.3-7.02 18.06L185.01 501.53c-9.39 11.36-26.22 12.95-37.58 3.55-1.14-.93-2.18-1.96-3.13-3.03L6.56 343.94c-9.68-11.12-8.51-28 2.61-37.69 5.06-4.4 11.31-6.56 17.54-6.57z"
+     id="path665"
+     clip-path="url(#clipPath741)" />
+  <path
+     fill-rule="nonzero"
+     d="M 51.49,169.41 H 269.67 L 163.39,40.96 Z M 16.1,310.66 h 287.79 c 8.9,0 16.11,7.21 16.11,16.11 0,4.18 -1.59,7.98 -4.2,10.85 L 176.1,506.46 c -5.66,6.85 -15.82,7.8 -22.66,2.14 L 151.56,506.77 3.96,337.34 c -5.84,-6.7 -5.14,-16.88 1.57,-22.71 a 16.09,16.09 0 0 1 10.57,-3.97 z m 253.57,32.22 H 51.49 l 111.9,128.45 z M 303.89,201.63 H 16.1 c -3.75,0 -7.52,-1.31 -10.57,-3.96 -6.71,-5.84 -7.41,-16.01 -1.57,-22.72 L 151.55,5.52 153.44,3.69 c 6.84,-5.66 17,-4.7 22.66,2.14 l 139.7,168.84 c 2.61,2.87 4.2,6.68 4.2,10.85 0,8.9 -7.21,16.11 -16.11,16.11 z"
+     id="path681"
+     clip-path="url(#clipPath735)"
+     transform="translate(0.94774134,0.99071021)" />
+</svg>

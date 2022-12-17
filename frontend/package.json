@@ -22,7 +22,6 @@
     "babel-plugin-transform-class-properties": "^6.24.1",
     "css-loader": "^6.7.1",
     "css-minimizer-webpack-plugin": "^4.2.2",
-    "file-loader": "^6.2.0",
     "mini-css-extract-plugin": "^2.7.0",
     "node-sass": "^7.0.3",
     "react-refresh": "^0.14.0",

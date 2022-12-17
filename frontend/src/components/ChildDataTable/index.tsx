@@ -4,6 +4,9 @@ import {ChildDataTableProps, parsedDataType} from "./types";
 import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {SeasonEnums} from "../../utils/sheetDataMapping";
+import SortDescLogo from '../../images/sort-desc.svg';
+import SortAscLogo from '../../images/sort-asc.svg';
+import SortDefLogo from '../../images/sort-def.svg'
 
 const ChildDataTable = ({headers, data, sheetsData}: ChildDataTableProps) => {
     const [sheetId, setSheetId] = useState("0");
@@ -33,11 +36,57 @@ const ChildDataTable = ({headers, data, sheetsData}: ChildDataTableProps) => {
             }
 
             if(typeof a[headerIndex][1] !== "string"){
+                if(isNumeric(a[headerIndex][1][0])){
+                    const firstNumber = parseInt(a[headerIndex][1][0]);
+                    const secondNumber = parseInt(b[headerIndex][1][0])
+
+                    if(firstNumber > secondNumber) {
+                        return -1;
+                    }
+
+                    if(secondNumber > firstNumber) {
+                        return 1;
+                    }
+
+                    return 0;
+                }
+
                 return a[headerIndex][1][0].localeCompare(b[headerIndex][1][0])
+            }
+
+            if(isNumeric(a[headerIndex][1])){
+                const firstNumber = parseInt(a[headerIndex][1]);
+                const secondNumber = parseInt(b[headerIndex][1])
+
+                if(firstNumber > secondNumber) {
+                    return 1;
+                }
+
+                if(secondNumber > firstNumber) {
+                    return -1;
+                }
+
+                return 0;
             }
 
             return a[headerIndex][1].localeCompare(b[headerIndex][1])
         })));
+    }
+
+    const isNumeric = (value: string): boolean => {
+        return /^-?\d+$/.test(value);
+    }
+
+    const showLogo = (): string => {
+        if (sortingState.direction === null) {
+            return "";
+        }
+
+        if (sortingState.direction === "asc") {
+            return SortAscLogo;
+        }
+
+        return SortDescLogo;
     }
 
     useEffect(() => {
@@ -82,7 +131,7 @@ const ChildDataTable = ({headers, data, sheetsData}: ChildDataTableProps) => {
                     <thead>
                         <tr className="table-header">
                             {headers ? headers.map((header, index) => {
-                                return <th id={header.name} key={`${header.id + header.name}`} onClick={() => handleSortClick(index)}>{header.name}</th>
+                                return <th id={header.name} key={`${header.id + header.name}`} onClick={() => handleSortClick(index)}>{header.name} {index === sortingState.currentIndex ? <img src={showLogo()} alt={null} className="sort-logo"/> : <img src={SortDefLogo} alt={null} className="sort-logo"/>}</th>
                             }) : <th>No headers data</th>}
                         </tr>
                     </thead>
