@@ -30,11 +30,11 @@ const Student = () => {
 
         if (index === 0) {
             Object.values(childData.data[0]).map((data, index) => {
-                if(index === 0 || index === 1 || index === 2){
+                if(index === 0 || index === 1){
                     return;
                 }
 
-                const childHeader = reversedChildDataHeaders[index - 3]["name"].replace(/['`~!@#$%^&*?_|+=;:".<>\[\]\\]/gi, '');
+                const childHeader = reversedChildDataHeaders[index - 2]["name"].replace(/['`~!@#$%^&*?_|+=;:".<>\[\]\\]/gi, '');
 
                 propertyGroups[ChildDataPropertyGroup][childHeader] = data ? data : "Andmed puuduvad"
             })
@@ -50,7 +50,7 @@ const Student = () => {
         }
     }) : null
 
-    const header = childData.isSuccess && childData.data[0]["name_code"] ? `Õpilase ${childData.data[0]["name_code"]} andmed` : "Õpilase nimi puudub";
+    const header = childData.isSuccess && childData.data[0]["child_id"] ? `Õpilase ${childData.data[0]["child_id"]} andmed` : "Õpilase andmed vigased";
 
     return (
         <>
@@ -69,12 +69,12 @@ const Student = () => {
                                     <Container className="background-container-theme">
                                         <h5 className="container-title">{entry[0]}</h5>
                                         {Object.entries(entry[1]).map((property, propertyIndex) => {
-                                            if(groupIndex === 0 && propertyIndex === 0){
-                                                return <p key={"teacher-p-" + property[1]}>{property[0]}: <Link key={"teacher-link-" + property[1]} to={`/teachers/${childData.data[0].teacher_id}`}>{`${property[1]}` }</Link></p>
-                                            }
-
                                             if(groupIndex === 0 && propertyIndex === 1){
                                                 return <p key={"school-p-" + property[1]}>{property[0]}: <Link key={"school-link-" + property[1]} to={`/schools/${childData.data[0].school_id}`}>{`${property[1]}` }</Link></p>
+                                            }
+
+                                            if(groupIndex === 0 && propertyIndex === 2){
+                                                return <p key={"teacher-p-" + property[1]}>{property[0]}: <Link key={"teacher-link-" + property[1]} to={`/teachers/${childData.data[0].teacher_id}`}>{`${property[1]}` }</Link></p>
                                             }
 
                                             return <p key={"student-data-" + property[0]}>{`${property[0]}: ${property[1]}` }</p>

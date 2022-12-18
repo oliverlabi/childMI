@@ -64,7 +64,6 @@ exports.getTeacherDataWithChildren = async (req, res) => {
         const { id } = req.params;
         const results = await sequelize.query(
             "SELECT DISTINCT " +
-                "c.name_code AS child_name, " +
                 "c.id AS child_id, " +
                 "s.id AS sheet_id, " +
                 "s.year, " +

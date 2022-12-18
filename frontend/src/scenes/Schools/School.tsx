@@ -49,11 +49,11 @@ const School = () => {
                             </Col>
                             <Col className="container-right-column">
                                 <p className="scrollable-list-subheader">Laste nimekiri</p>
-                                <ScrollableList header="Lapse nimetähed">
+                                <ScrollableList header="Õpilaste identifikaatorid">
                                     {
                                         schoolChildrenData ? schoolChildrenData.map((entry: any) => (
-                                            entry?.name_code != ''
-                                                ? <div className="scrollable-list-data-row" key={"c" + entry.child_id}><Link to={`/children/${entry.sheet_id}/${entry.child_id}`}>{entry.name_code}</Link></div>
+                                            entry?.child_id != ''
+                                                ? <div className="scrollable-list-data-row" key={"c" + entry.child_id}><Link to={`/children/${entry.sheet_id}/${entry.child_id}`}>{entry.child_id}</Link></div>
                                                 : null
                                         )): <div>Andmed puuduvad</div>
                                     }

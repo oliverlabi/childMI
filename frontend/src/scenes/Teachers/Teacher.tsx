@@ -29,7 +29,7 @@ const Teacher = () => {
     const teacherYearsArray: string[] = [];
     const childrenListData = isTeacherChildrenDataLoaded
         ? children.map((childrenObject: any) => (
-            {"id": childrenObject.child_id, "name": childrenObject.child_name, "sheet_id": childrenObject.sheet_id, "year": childrenObject.year, "season": childrenObject.season}
+            {"id": childrenObject.child_id, "sheet_id": childrenObject.sheet_id, "year": childrenObject.year, "season": childrenObject.season}
         ))
         : "No data";
 
@@ -83,11 +83,11 @@ const Teacher = () => {
                                 }
                             </Col>
                             <Col className="container-right-column">
-                                <ScrollableList header="Lapse nimekoodid">
+                                <ScrollableList header="Õpilaste identifikaatorid">
                                     {
                                         childrenListData ? childrenListData.map((entry: ListDataField) => (
                                             entry.name != ''
-                                                ? <div className="scrollable-list-data-row" key={"scrollable-list-data-" + entry.id}><Link to={`/children/${entry.sheet_id}/${entry.id}`}>{entry.name}</Link> ({entry.year} {entry.season === SeasonEnums.AUTUMN ? "sügis" : "kevad"})</div>
+                                                ? <div className="scrollable-list-data-row" key={"scrollable-list-data-" + entry.id}><Link to={`/children/${entry.sheet_id}/${entry.id}`}>{entry.id}</Link> ({entry.year} {entry.season === SeasonEnums.AUTUMN ? "sügis" : "kevad"})</div>
                                                 : null
                                         )) : <div>Andmed puuduvad</div>
                                     }

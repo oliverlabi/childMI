@@ -48,9 +48,9 @@ const insertChildrenData = (parsedData: parsedDataType, dict: IAllChildrenProper
     const currentChildData = childData.filter(obj => obj.id === currentChildId)
     const currentChildTeacherAndSchoolData = schoolTeachersData.filter(obj => obj.child_id === currentChildId)
 
-    parsedData[dict["child_id"]][highestHeaderId + 1] = [currentChildTeacherAndSchoolData[0]?.school_name, currentChildTeacherAndSchoolData[0]?.school_id.toString()];
-    parsedData[dict["child_id"]][highestHeaderId + 2] = [currentChildTeacherAndSchoolData[0]?.teacher_full_name, currentChildTeacherAndSchoolData[0]?.teacher_id.toString()];
-    parsedData[dict["child_id"]][highestHeaderId + 3] = [currentChildData[0]?.name_code, currentChildId.toString()];
+    parsedData[dict["child_id"]][highestHeaderId + 1] = [currentChildData[0]?.id.toString(), currentChildId.toString()];
+    parsedData[dict["child_id"]][highestHeaderId + 2] = [currentChildTeacherAndSchoolData[0]?.school_name, currentChildTeacherAndSchoolData[0]?.school_id.toString()];
+    parsedData[dict["child_id"]][highestHeaderId + 3] = [currentChildTeacherAndSchoolData[0]?.teacher_full_name, currentChildTeacherAndSchoolData[0]?.teacher_id.toString()];
     parsedData[dict["child_id"]][highestHeaderId + 4] = currentChildData[0]?.age.toString();
     parsedData[dict["child_id"]][highestHeaderId + 5] = currentChildData[0]?.gender;
     parsedData[dict["child_id"]][highestHeaderId + 6] = currentChildData[0]?.special_need;
@@ -121,7 +121,7 @@ const Students = () => {
     const parsedData: parsedDataType = {};
     let headers;
 
-    if(childrenPropertiesData.isSuccess && propsData.isSuccess && sheetsData.isSuccess && childrenData.isSuccess && childrenTeachersAndSchoolsData.isSuccess) {
+    if(childrenPropertiesData.isSuccess && propsData.isSuccess && sheetsData.isSuccess && childrenData.isSuccess && childrenTeachersAndSchoolsData.isSuccess && commentData.isSuccess) {
         const commentHeaderLength = 1;
         const highestHeaderId = Math.max(...propsData.data.map((o: IAllPropertiesBySheetResponse) => o.id)) + commentHeaderLength
         headers = addChildHeaders(propsData.data);
@@ -143,7 +143,7 @@ const Students = () => {
             <Container className="background-title-container">
                 <h2>Õpilaste andmed</h2>
             </Container>
-            {childrenPropertiesData.isSuccess && propsData.isSuccess && sheetsData.isSuccess && childrenData.isSuccess && childrenTeachersAndSchoolsData.isSuccess ?
+            {childrenPropertiesData.isSuccess && propsData.isSuccess && sheetsData.isSuccess && childrenData.isSuccess && childrenTeachersAndSchoolsData.isSuccess && commentData.isSuccess ?
                 <>
                     <Container className="background-container-theme">
                         <div className="div-container">

@@ -1,13 +1,11 @@
 export interface IAllChildrenDataBySheetResponse {
     id: number,
-    name_code: string,
     age: number,
     gender: string,
     special_need: string
 }
 
 export interface IChildDataBySheetAndIdResponse {
-    name_code: string,
     age: number,
     gender: string,
     special_need: number,
@@ -18,7 +16,6 @@ export interface IChildDataBySheetAndIdResponse {
 
 export interface IAllChildrenPropertiesDataBySheetResponse {
     child_id: number,
-    child_name_code: string,
     property_group_name: string,
     property_id: number,
     child_property_value: string
@@ -30,7 +27,6 @@ export interface IAllPropertiesBySheetResponse {
 }
 
 export interface IAllChildPropertiesBySheetIdAndChildIdResponse {
-    child_name_code: string,
     property_group_name: string,
     property_id: number,
     child_property_value: string
@@ -63,7 +59,6 @@ export interface ISchoolTeachersByIdResponse {
 
 export interface ISchoolChildrenByIdResponse {
     child_id: number,
-    name_code: string,
     school_id: number,
     sheet_id: number
 }
@@ -72,7 +67,6 @@ export interface IChildrenTeachersAndSchoolsBySheetIdResponse {
     child_id: number,
     teacher_id: number,
     teacher_full_name: string,
-    child_name_code: string,
     school_id: number,
     school_name: string,
     teacher_year: number
@@ -108,7 +102,6 @@ export interface ITeacherDataResponse {
 }
 
 export interface ITeacherChildrenResponse {
-    child_name: string,
     child_id: string,
     sheet_id: number,
     year: number,

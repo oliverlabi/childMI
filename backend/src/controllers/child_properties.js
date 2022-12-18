@@ -7,7 +7,6 @@ exports.getAllChildProperties = async (req, res) => {
         const results = await sequelize.query(
         "SELECT DISTINCT " +
             "c.id as child_id,   " +
-            "c.name_code as child_name_code, " +
             "pg.name as property_group_name, " +
             "p.id as property_id, " +
             "cp.value as child_property_value " +
@@ -32,7 +31,6 @@ exports.getChildProperties = async (req, res) => {
         const { sheetId, childId } = req.params;
         const results = await sequelize.query(
             "SELECT DISTINCT " +
-                "c.name_code as child_name_code, " +
                 "pg.name as property_group_name, " +
                 "p.id as property_id, " +
                 "cp.value as child_property_value " +

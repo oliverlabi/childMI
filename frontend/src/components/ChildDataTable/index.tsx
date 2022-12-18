@@ -12,8 +12,8 @@ const ChildDataTable = ({headers, data, sheetsData}: ChildDataTableProps) => {
     const [sheetId, setSheetId] = useState("0");
     const [sortedData, setSortedData] = useState<parsedDataType>([])
     const [sortingState] = useState({
-        currentIndex: null,
-        direction: null,
+        currentIndex: 0,
+        direction: "desc",
     })
 
     const refreshPage = () => {
@@ -95,8 +95,8 @@ const ChildDataTable = ({headers, data, sheetsData}: ChildDataTableProps) => {
 
     useEffect(() => {
         setSortedData(data);
-        sortingState.direction = null;
-        sortingState.currentIndex = null;
+        sortingState.direction = "desc";
+        sortingState.currentIndex = 0;
     }, [data]);
 
     return (
@@ -131,6 +131,11 @@ const ChildDataTable = ({headers, data, sheetsData}: ChildDataTableProps) => {
                     <thead>
                         <tr className="table-header">
                             {headers ? headers.map((header, index) => {
+                                if (index === 0) {
+                                    return <th id={header.name} key={`${header.id + header.name}`} onClick={() => handleSortClick(index)}>{header.name} {index === sortingState.currentIndex ? <img src={showLogo()} alt={null} className="sort-logo"/> : <img src={SortDefLogo} alt={null} className="sort-logo"/>}</th>
+
+                                }
+
                                 return <th id={header.name} key={`${header.id + header.name}`} onClick={() => handleSortClick(index)}>{header.name} {index === sortingState.currentIndex ? <img src={showLogo()} alt={null} className="sort-logo"/> : <img src={SortDefLogo} alt={null} className="sort-logo"/>}</th>
                             }) : <th>No headers data</th>}
                         </tr>
@@ -140,17 +145,16 @@ const ChildDataTable = ({headers, data, sheetsData}: ChildDataTableProps) => {
                         return (
                             <tr className="table-row" key={dataDict[1] as string + index}>
                                 {Object.entries(dataDict[1]).map((entry, index) => {
-
                                     if(index === 0){
-                                        return <td className="data-clickable-column" key={entry[0] + entry[1] + index}><Link to={`/schools/${entry[1][1][1]}`}>{entry[1][1][0]}</Link></td>
+                                        return <td className="data-clickable-column" key={entry[0] + entry[1] + index}><Link to={`/children/${sheetId}/${entry[1][1][1]}`}>{entry[1][1][0]}</Link></td>
                                     }
 
                                     if(index === 1){
-                                            return <td className="data-clickable-column" key={entry[0] + entry[1] + index}><Link to={`/teachers/${entry[1][1][1]}`}>{entry[1][1][0]}</Link></td>
+                                        return <td className="data-clickable-column" key={entry[0] + entry[1] + index}><Link to={`/schools/${entry[1][1][1]}`}>{entry[1][1][0]}</Link></td>
                                     }
 
                                     if(index === 2){
-                                        return <td className="data-clickable-column" key={entry[0] + entry[1] + index}><Link to={`/children/${sheetId}/${entry[1][1][1]}`}>{entry[1][1][0]}</Link></td>
+                                            return <td className="data-clickable-column" key={entry[0] + entry[1] + index}><Link to={`/teachers/${entry[1][1][1]}`}>{entry[1][1][0]}</Link></td>
                                     }
 
                                     return <td key={entry[0] + entry[1] + index}>{entry[1][1]}</td>

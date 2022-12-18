@@ -9,7 +9,6 @@ exports.getAllChildrenTeachersAndSchools = async (req, res) => {
                 "c.id AS child_id, " +
                 "t.id AS teacher_id, " +
                 "CONCAT(t.first_name, ' ', t.last_name) AS teacher_full_name, " +
-                "c.name_code AS child_name_code, " +
                 "ts.school_id, " +
                 "sh.year as teacher_year, " +
                 "s.name AS school_name " +

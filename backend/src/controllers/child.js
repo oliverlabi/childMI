@@ -8,7 +8,6 @@ exports.getAllChildren = async (req, res) => {
         const results = await sequelize.query(
             "SELECT DISTINCT " +
                 "c.id, " +
-                "c.name_code, " +
                 "c.age, " +
                 "c.gender, " +
                 "c.special_need " +
@@ -38,12 +37,11 @@ exports.getChild = async (req, res) => {
         const { sheetId, childId } = req.params;
         const results = await sequelize.query(
             "SELECT DISTINCT " +
-                "c.id AS child_id, " +
                 "t.id AS teacher_id, " +
                 "sc.id AS school_id, " +
-                "CONCAT(t.first_name, ' ', t.last_name) AS teacher_full_name, " +
+                "c.id AS child_id, " +
                 "sc.name AS school_name, " +
-                "c.name_code, " +
+                "CONCAT(t.first_name, ' ', t.last_name) AS teacher_full_name, " +
                 "c.age, " +
                 "c.gender, " +
                 "c.special_need " +
