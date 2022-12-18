@@ -3,5 +3,6 @@ backend/.env
 frontend/node_modules
 .idea
 frontend/package-lock.json
+frontend/src/config
 backend/package-lock.json
 backend/src/scripts/data

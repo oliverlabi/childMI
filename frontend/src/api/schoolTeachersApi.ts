@@ -4,10 +4,11 @@ import {
     ISchoolTeachersByIdResponse,
     ITeacherSchoolsByIdResponse
 } from "./apiResponseTypes";
+import {API_URL} from "../config/config";
 
 export const schoolTeachersApi = createApi({
     reducerPath: 'schoolTeachersApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8081/api/' }),
+    baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
     endpoints: (builder) => ({
         getSchoolTeachersById: builder.query<any, { id: number }>({
             query(args) {

@@ -4,10 +4,11 @@ import {
     IAllChildrenPropertiesDataBySheetResponse,
     IAllPropertiesBySheetResponse
 } from "./apiResponseTypes";
+import {API_URL} from "../config/config";
 
 export const childPropertiesApi = createApi({
     reducerPath: 'childPropertiesApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8081/api/' }),
+    baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
     endpoints: (builder) => ({
         getAllChildrenPropertiesDataBySheet: builder.query<any, {sheetId: number}>({
             query(args) {

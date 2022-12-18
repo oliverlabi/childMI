@@ -5,6 +5,7 @@ import {
     ITeacherChildrenResponse,
     ITeacherDataResponse
 } from "./apiResponseTypes";
+import {API_URL} from "../config/config";
 
 export type ITeachersByYearDict = {
     [year: number]: IAllTeachersByYearResponse[];
@@ -12,7 +13,7 @@ export type ITeachersByYearDict = {
 
 export const teacherApi = createApi({
     reducerPath: 'teacherApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8081/api/' }),
+    baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
     endpoints: (builder) => ({
         getAllTeacherData: builder.query<any, void>({
             query() {

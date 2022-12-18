@@ -3,10 +3,11 @@ import {
     IAllTeacherYearsResponse,
     IChildrenTeachersAndSchoolsBySheetIdResponse,
 } from "./apiResponseTypes";
+import {API_URL} from "../config/config";
 
 export const teacherChildrenApi = createApi({
     reducerPath: 'teacherChildrenApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8081/api/' }),
+    baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
     endpoints: (builder) => ({
         getAllChildrenTeachersAndSchoolsBySheetId: builder.query<any, { sheetId: number }>({
             query(args) {
