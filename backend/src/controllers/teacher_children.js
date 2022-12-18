@@ -11,7 +11,7 @@ exports.getAllChildrenTeachersAndSchools = async (req, res) => {
                 "CONCAT(t.first_name, ' ', t.last_name) AS teacher_full_name, " +
                 "c.name_code AS child_name_code, " +
                 "ts.school_id, " +
-                "tc.year as teacher_year, " +
+                "sh.year as teacher_year, " +
                 "s.name AS school_name " +
             "FROM teacher_school ts " +
             "INNER JOIN teacher t ON ts.teacher_id = t.id " +
@@ -40,9 +40,10 @@ exports.getAllTeacherYears = async (req, res) => {
         const { teacherId } = req.params;
         const results = await sequelize.query(
             "SELECT DISTINCT " +
-                "tc.year " +
+                "s.year " +
             "FROM teacher t " +
             "INNER JOIN teacher_children tc ON t.id = tc.teacher_id " +
+            "INNER JOIN sheet s ON tc.sheet_id = s.id " +
             "WHERE t.id = ?",
             {
                 replacements: [teacherId],

@@ -34,8 +34,8 @@ for i in range(0, len(excelChildTeacherData.iloc[0:])):
 
     if child:
         childID = child["id"]
-        childTeacherData.append({"teacher_id": teacherID, "child_id": childID, "year": currentSheetYear})
+        childTeacherData.append({"teacher_id": teacherID, "child_id": childID, "sheet_id": currentSheetID})
 
-sql = "INSERT INTO teacher_children (child_id, teacher_id, year) SELECT * FROM (SELECT (%(child_id)s) AS childID, (%(teacher_id)s) AS teacherID, (%(year)s)) AS tmp WHERE NOT EXISTS (SELECT child_id, teacher_id, year FROM teacher_children WHERE child_id = (%(child_id)s) AND teacher_id = (%(teacher_id)s) AND year = (%(year)s)) LIMIT 1"
+sql = "INSERT INTO teacher_children (child_id, teacher_id, sheet_id) SELECT * FROM (SELECT (%(child_id)s) AS childID, (%(teacher_id)s) AS teacherID, (%(sheet_id)s) AS sheetID) AS tmp WHERE NOT EXISTS (SELECT child_id, teacher_id, sheet_id FROM teacher_children WHERE child_id = (%(child_id)s) AND teacher_id = (%(teacher_id)s) AND sheet_id = (%(sheet_id)s)) LIMIT 1"
 
 insertData(sql, childTeacherData)
