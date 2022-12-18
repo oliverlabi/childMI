@@ -1,10 +1,8 @@
 const path = require('path');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
-const isDevelopment = true;
-
-module.exports = {
-    mode: isDevelopment ? 'development' : 'production',
+module.exports = (env) => ({
+    mode: env.NODE_ENV === "development" ? "development" : "production",
     entry: path.resolve(__dirname, './src/index.tsx'),
 
     module: {
@@ -16,7 +14,7 @@ module.exports = {
                     {
                         loader: require.resolve('babel-loader'),
                         options: {
-                            plugins: [isDevelopment && require.resolve('react-refresh/babel')].filter(Boolean),
+                            plugins: [(env.NODE_ENV === "development") && require.resolve('react-refresh/babel')].filter(Boolean),
                         },
                     },
                 ],
@@ -47,7 +45,7 @@ module.exports = {
             }
         ]
     },
-    plugins: [isDevelopment && new ReactRefreshWebpackPlugin()].filter(Boolean),
+    plugins: [(env.NODE_ENV === "development" ? "development" : "production") && new ReactRefreshWebpackPlugin()].filter(Boolean),
 
     resolve: {
         extensions: ['*', '.js', '.jsx', '.ts', '.tsx'],
@@ -61,13 +59,13 @@ module.exports = {
         publicPath: "/"
     },
 
-    devtool: 'inline-source-map',
+    devtool: env.NODE_ENV === "development" ? 'inline-source-map' : false,
 
-    devServer: {
+    devServer: env.NODE_ENV === "development" ? {
         hot: true,
         static: path.resolve(__dirname, './dist'),
         historyApiFallback: true,
         host: "dev-childmi.ee",
         port: 8080,
-    },
-};
+    } : {},
+});
