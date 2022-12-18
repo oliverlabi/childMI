@@ -7,12 +7,14 @@ import Loader from "../../components/Loader";
 import {useGetTeacherSchoolsByIdQuery} from "../../api/schoolTeachersApi";
 import {IAllTeacherYearsResponse, ITeacherSchoolsByIdResponse} from "../../api/apiResponseTypes";
 import {useGetAllTeacherYearsQuery} from "../../api/teacherChildrenApi";
+import {SeasonEnums} from "../../utils/sheetDataMapping";
 
 type ListDataField = {
     id: number,
     name: string,
     sheet_id?: number,
     year?: number,
+    season?: number
 }
 
 const Teacher = () => {
@@ -27,7 +29,7 @@ const Teacher = () => {
     const teacherYearsArray: string[] = [];
     const childrenListData = isTeacherChildrenDataLoaded
         ? children.map((childrenObject: any) => (
-            {"id": childrenObject.child_id, "name": childrenObject.child_name, "sheet_id": childrenObject.sheet_id, "year": childrenObject.year}
+            {"id": childrenObject.child_id, "name": childrenObject.child_name, "sheet_id": childrenObject.sheet_id, "year": childrenObject.year, "season": childrenObject.season}
         ))
         : "No data";
 
@@ -54,18 +56,18 @@ const Teacher = () => {
                                 {
                                     teacherYears.map((teacher: IAllTeacherYearsResponse, index: number) => {
                                         const teacherYearsArrayLength: number = teacherYears.length;
-                                        const currentYear = teacher.year.toString()
-                                        if(teacherSchoolsArray.includes(currentYear)) {
+                                        const currentYearAndSeason = `${teacher.year.toString()} ${teacher.season === SeasonEnums.AUTUMN ? "sügis" : "kevad"}`;
+                                        if(teacherSchoolsArray.includes(currentYearAndSeason)) {
                                             return;
                                         }
 
-                                        teacherYearsArray.push(currentYear);
+                                        teacherYearsArray.push(currentYearAndSeason);
 
                                         if (teacherYearsArrayLength === index + 1) {
-                                            return <span key={"div-container-" + currentYear+currentYear}>{currentYear}<p key={"yearly-data-" + currentYear} /></span>
+                                            return <span key={"div-container-" + currentYearAndSeason}>{currentYearAndSeason}<p key={"yearly-data-" + currentYearAndSeason} /></span>
                                         }
 
-                                        return <span key={"div-container-" + currentYear}>{currentYear}, </span>
+                                        return <span key={"div-container-" + currentYearAndSeason}>{currentYearAndSeason}, </span>
                                     })
                                 }
                                 </span>
@@ -85,7 +87,7 @@ const Teacher = () => {
                                     {
                                         childrenListData ? childrenListData.map((entry: ListDataField) => (
                                             entry.name != ''
-                                                ? <div className="scrollable-list-data-row" key={"scrollable-list-data-" + entry.id}><Link to={`/children/${entry.sheet_id}/${entry.id}`}>{entry.name}</Link> ({entry.year})</div>
+                                                ? <div className="scrollable-list-data-row" key={"scrollable-list-data-" + entry.id}><Link to={`/children/${entry.sheet_id}/${entry.id}`}>{entry.name}</Link> ({entry.year} {entry.season === SeasonEnums.AUTUMN ? "sügis" : "kevad"})</div>
                                                 : null
                                         )) : <div>Andmed puuduvad</div>
                                     }

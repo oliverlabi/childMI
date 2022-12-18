@@ -112,8 +112,10 @@ export interface ITeacherChildrenResponse {
     child_id: string,
     sheet_id: number,
     year: number,
+    season: number
 }
 
 export interface IAllTeacherYearsResponse {
-    year: number
+    year: number,
+    season: number
 }

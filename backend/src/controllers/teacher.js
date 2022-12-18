@@ -67,7 +67,8 @@ exports.getTeacherDataWithChildren = async (req, res) => {
                 "c.name_code AS child_name, " +
                 "c.id AS child_id, " +
                 "s.id AS sheet_id, " +
-                "s.year " +
+                "s.year, " +
+                "s.season " +
             "FROM teacher t " +
             "INNER JOIN teacher_children tc ON t.id = tc.teacher_id " +
             "INNER JOIN child c ON c.id = tc.child_id " +
@@ -93,7 +94,7 @@ exports.getTeacherYears = async (req, res) => {
             "SELECT DISTINCT " +
                 "t.id, " +
                 "CONCAT(t.first_name, t.last_name) AS full_name, " +
-                "tc.year from teacher t " +
+                "s.year FROM teacher t " +
             "INNER JOIN teacher_children tc ON t.id = tc.teacher_id " +
             "INNER JOIN sheet s ON s.id = tc.sheet_id " +
             "WHERE t.id = ?;",
