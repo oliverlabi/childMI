@@ -1,4 +1,6 @@
 import Table from 'react-bootstrap/Table';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Popover from 'react-bootstrap/Popover';
 import './css/index.scss';
 import {ChildDataTableProps, parsedDataType} from "./types";
 import {Link} from "react-router-dom";
@@ -73,9 +75,15 @@ const ChildDataTable = ({headers, data, sheetsData}: ChildDataTableProps) => {
         })));
     }
 
-    const handleFilterClick = (headerIndex: number) => {
-
-    }
+    const popover = (
+        <Popover id="popover">
+            <Popover.Header as="h3">Filter</Popover.Header>
+            <Popover.Body>
+                And here's some <strong>amazing</strong> content. It's very engaging.
+                right?
+            </Popover.Body>
+        </Popover>
+    );
 
     const isNumeric = (value: string): boolean => {
         return /^-?\d+$/.test(value);
@@ -135,18 +143,15 @@ const ChildDataTable = ({headers, data, sheetsData}: ChildDataTableProps) => {
                     <thead>
                         <tr className="table-header">
                             {headers ? headers.map((header, index) => {
-                                if (index === 0) {
-                                    return <th id={header.name} key={`${header.id + header.name}`}>
-                                        {header.name} {index === sortingState.currentIndex
-                                        ? <img src={showLogo()} onClick={() => handleSortClick(index)} alt={null} className="sort-logo"/>
-                                        : <img src={SortDefLogo} onClick={() => handleSortClick(index)} alt={null} className="sort-logo"/>}
-                                    </th>
-                                }
-
                                 return <th id={header.name} key={`${header.id + header.name}`}>
                                     {header.name} {index === sortingState.currentIndex
                                     ? <img src={showLogo()} onClick={() => handleSortClick(index)} alt={null} className="sort-logo"/>
                                     : <img src={SortDefLogo} onClick={() => handleSortClick(index)} alt={null} className="sort-logo"/>}
+                                    {
+                                        <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
+                                            <div>Filter</div>
+                                        </OverlayTrigger>
+                                    }
                                 </th>
                             }) : <th>No headers data</th>}
                         </tr>
