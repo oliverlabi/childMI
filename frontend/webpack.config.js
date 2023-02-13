@@ -66,6 +66,6 @@ module.exports = (env) => ({
         static: path.resolve(__dirname, './dist'),
         historyApiFallback: true,
         host: "dev-childmi.ee",
-        port: 8080,
+        port: 49501,
     } : {},
 });

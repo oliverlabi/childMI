@@ -73,6 +73,10 @@ const ChildDataTable = ({headers, data, sheetsData}: ChildDataTableProps) => {
         })));
     }
 
+    const handleFilterClick = (headerIndex: number) => {
+
+    }
+
     const isNumeric = (value: string): boolean => {
         return /^-?\d+$/.test(value);
     }
@@ -132,11 +136,18 @@ const ChildDataTable = ({headers, data, sheetsData}: ChildDataTableProps) => {
                         <tr className="table-header">
                             {headers ? headers.map((header, index) => {
                                 if (index === 0) {
-                                    return <th id={header.name} key={`${header.id + header.name}`} onClick={() => handleSortClick(index)}>{header.name} {index === sortingState.currentIndex ? <img src={showLogo()} alt={null} className="sort-logo"/> : <img src={SortDefLogo} alt={null} className="sort-logo"/>}</th>
-
+                                    return <th id={header.name} key={`${header.id + header.name}`}>
+                                        {header.name} {index === sortingState.currentIndex
+                                        ? <img src={showLogo()} onClick={() => handleSortClick(index)} alt={null} className="sort-logo"/>
+                                        : <img src={SortDefLogo} onClick={() => handleSortClick(index)} alt={null} className="sort-logo"/>}
+                                    </th>
                                 }
 
-                                return <th id={header.name} key={`${header.id + header.name}`} onClick={() => handleSortClick(index)}>{header.name} {index === sortingState.currentIndex ? <img src={showLogo()} alt={null} className="sort-logo"/> : <img src={SortDefLogo} alt={null} className="sort-logo"/>}</th>
+                                return <th id={header.name} key={`${header.id + header.name}`}>
+                                    {header.name} {index === sortingState.currentIndex
+                                    ? <img src={showLogo()} onClick={() => handleSortClick(index)} alt={null} className="sort-logo"/>
+                                    : <img src={SortDefLogo} onClick={() => handleSortClick(index)} alt={null} className="sort-logo"/>}
+                                </th>
                             }) : <th>No headers data</th>}
                         </tr>
                     </thead>
