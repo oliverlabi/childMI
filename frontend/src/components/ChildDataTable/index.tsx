@@ -1,6 +1,4 @@
 import Table from 'react-bootstrap/Table';
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Popover from 'react-bootstrap/Popover';
 import './css/index.scss';
 import {ChildDataTableProps, parsedDataType} from "./types";
 import {Link} from "react-router-dom";
@@ -9,8 +7,9 @@ import {SeasonEnums} from "../../utils/sheetDataMapping";
 import SortDescLogo from '../../images/sort-desc.svg';
 import SortAscLogo from '../../images/sort-asc.svg';
 import SortDefLogo from '../../images/sort-def.svg'
+import {Dropdown, Form} from "react-bootstrap";
 
-const ChildDataTable = ({headers, data, sheetsData}: ChildDataTableProps) => {
+const ChildDataTable = ({headers, data, sheetsData, filterHeaders}: ChildDataTableProps) => {
     const [sheetId, setSheetId] = useState("0");
     const [sortedData, setSortedData] = useState<parsedDataType>([])
     const [sortingState] = useState({
@@ -75,16 +74,6 @@ const ChildDataTable = ({headers, data, sheetsData}: ChildDataTableProps) => {
         })));
     }
 
-    const popover = (
-        <Popover id="popover">
-            <Popover.Header as="h3">Filter</Popover.Header>
-            <Popover.Body>
-                And here's some <strong>amazing</strong> content. It's very engaging.
-                right?
-            </Popover.Body>
-        </Popover>
-    );
-
     const isNumeric = (value: string): boolean => {
         return /^-?\d+$/.test(value);
     }
@@ -148,9 +137,29 @@ const ChildDataTable = ({headers, data, sheetsData}: ChildDataTableProps) => {
                                     ? <img src={showLogo()} onClick={() => handleSortClick(index)} alt={null} className="sort-logo"/>
                                     : <img src={SortDefLogo} onClick={() => handleSortClick(index)} alt={null} className="sort-logo"/>}
                                     {
-                                        <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
-                                            <div>Filter</div>
-                                        </OverlayTrigger>
+                                        <Dropdown>
+                                            <Dropdown.Toggle>
+                                                Filtreeri
+                                            </Dropdown.Toggle>
+                                            <Dropdown.Menu className="filter-dropdown-menu">
+                                                {
+                                                    Object.entries(filterHeaders).map((entry) => {
+                                                        if (parseInt(entry[0]) === index) {
+                                                            return Object.values(entry[1]).map((values, valueIndex) => {
+                                                                return (
+                                                                    <Dropdown.Item>
+                                                                        <Form.Check
+                                                                            id={`${index}-${valueIndex}`}
+                                                                            label={values}
+                                                                        />
+                                                                    </Dropdown.Item>
+                                                                )
+                                                            })
+                                                        }
+                                                    })
+                                                }
+                                            </Dropdown.Menu>
+                                        </Dropdown>
                                     }
                                 </th>
                             }) : <th>No headers data</th>}

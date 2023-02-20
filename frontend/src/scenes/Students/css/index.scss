@@ -33,3 +33,8 @@
   display: flex;
   justify-content: flex-end;
 }
+
+.filter-dropdown-menu {
+  max-height: 17rem;
+  overflow: auto;
+}
