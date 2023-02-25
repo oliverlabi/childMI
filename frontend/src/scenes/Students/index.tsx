@@ -90,16 +90,16 @@ const getFilterHeaders = (parsedData: parsedDataType) => {
             }
 
             if (filteredData[1][1]) {
-                if (filterHeaders[filteredData[0]].includes(filteredData[1][1][0]) || filterHeaders[filteredData[0]].includes(filteredData[1][1])) {
+                if ((filterHeaders[filteredData[0]].includes(filteredData[1][1][0]) || filterHeaders[filteredData[0]].includes(filteredData[1][1]))) {
                     return;
                 }
 
-                if (filteredData[1][1][0]) {
-                    filterHeaders[filteredData[0]].push(filteredData[1][1][0]);
+                if (filteredData[1][1] && !Array.isArray(filteredData[1][1])) {
+                    filterHeaders[filteredData[0]].push(filteredData[1][1]);
                     return;
                 }
 
-                filterHeaders[filteredData[0]].push(filteredData[1][1]);
+                filterHeaders[filteredData[0]].push(filteredData[1][1][0]);
             }
         })
     })

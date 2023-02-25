@@ -9,9 +9,15 @@ import SortAscLogo from '../../images/sort-asc.svg';
 import SortDefLogo from '../../images/sort-def.svg'
 import {Dropdown, Form} from "react-bootstrap";
 
+type filterDataType = {
+    label: string | string[],
+    indexes: string
+}
+
 const ChildDataTable = ({headers, data, sheetsData, filterHeaders}: ChildDataTableProps) => {
     const [sheetId, setSheetId] = useState("0");
-    const [sortedData, setSortedData] = useState<parsedDataType>([])
+    const [sortedData, setSortedData] = useState<parsedDataType>([]);
+    const [currentFilters, setCurrentFilters] = useState<filterDataType[]>([]);
     const [sortingState] = useState({
         currentIndex: 0,
         direction: "desc",
@@ -74,6 +80,45 @@ const ChildDataTable = ({headers, data, sheetsData, filterHeaders}: ChildDataTab
         })));
     }
 
+    const handleFilterClick = (dropdownIndexCode: string, dropdownLabel: string | string[]) => {
+        const newFilterData = {label: dropdownLabel, indexes: dropdownIndexCode};
+        const contains = currentFilters.some(elem =>{
+            return JSON.stringify(newFilterData) === JSON.stringify(elem);
+        });
+
+        if (contains) {
+            return;
+        }
+
+        setCurrentFilters([...currentFilters, newFilterData]);
+    }
+
+    const handleFilterLogic = () => {
+        const allFilteredDataRows: parsedDataType[] = [];
+
+        currentFilters.forEach(value => {
+            const dropdownIndex = parseInt(value.indexes[0]);
+            const newFilteredDataRows = Object.values(sortedData).filter((originalData => {
+                const isNull = Object.values(originalData[dropdownIndex])[1] === null;
+                const isArray = Array.isArray(Object.values(originalData[dropdownIndex])[1])
+
+                if (isNull) {
+                    return !isNull;
+                }
+
+                if (!isArray) {
+                    return Object.values(originalData[dropdownIndex])[1] === value.label;
+                }
+
+                return Object.values(originalData[dropdownIndex])[1][0] === value.label;
+            }));
+
+            allFilteredDataRows.push(...newFilteredDataRows);
+        })
+
+        console.log(allFilteredDataRows);
+    }
+
     const isNumeric = (value: string): boolean => {
         return /^-?\d+$/.test(value);
     }
@@ -99,6 +144,10 @@ const ChildDataTable = ({headers, data, sheetsData, filterHeaders}: ChildDataTab
         sortingState.direction = "desc";
         sortingState.currentIndex = 0;
     }, [data]);
+
+    useEffect(() => {
+        handleFilterLogic();
+    }, [currentFilters])
 
     return (
         <div className="two-tables">
@@ -147,9 +196,11 @@ const ChildDataTable = ({headers, data, sheetsData, filterHeaders}: ChildDataTab
                                                         if (parseInt(entry[0]) === index) {
                                                             return Object.values(entry[1]).map((values, valueIndex) => {
                                                                 return (
-                                                                    <Dropdown.Item>
+                                                                    <Dropdown.Item key={`dropdown-menu-${values}-${valueIndex}`}>
                                                                         <Form.Check
                                                                             id={`${index}-${valueIndex}`}
+                                                                            key={`dropdown-form-check-${values}-${valueIndex}`}
+                                                                            onClick={() => handleFilterClick(`${index}-${valueIndex}`, values)}
                                                                             label={values}
                                                                         />
                                                                     </Dropdown.Item>
