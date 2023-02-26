@@ -1,6 +1,6 @@
 import Table from 'react-bootstrap/Table';
 import './css/index.scss';
-import {ChildDataTableProps, parsedDataType} from "./types";
+import {ChildDataTableProps, filterDataType, parsedDataType} from "./types";
 import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {SeasonEnums} from "../../utils/sheetDataMapping";
@@ -9,14 +9,11 @@ import SortAscLogo from '../../images/sort-asc.svg';
 import SortDefLogo from '../../images/sort-def.svg'
 import {Dropdown, Form} from "react-bootstrap";
 
-type filterDataType = {
-    label: string | string[],
-    indexes: string
-}
 
 const ChildDataTable = ({headers, data, sheetsData, filterHeaders}: ChildDataTableProps) => {
     const [sheetId, setSheetId] = useState("0");
     const [sortedData, setSortedData] = useState<parsedDataType>([]);
+    const [filteredData, setFilteredData] = useState<parsedDataType>([]);
     const [currentFilters, setCurrentFilters] = useState<filterDataType[]>([]);
     const [sortingState] = useState({
         currentIndex: 0,
@@ -42,7 +39,9 @@ const ChildDataTable = ({headers, data, sheetsData, filterHeaders}: ChildDataTab
                 return 0;
             }
 
-            if(typeof a[headerIndex][1] !== "string"){
+            const isStringArray = typeof a[headerIndex][1] !== "string";
+
+            if(isStringArray){
                 if(isNumeric(a[headerIndex][1][0])){
                     const firstNumber = parseInt(a[headerIndex][1][0]);
                     const secondNumber = parseInt(b[headerIndex][1][0])
@@ -82,11 +81,16 @@ const ChildDataTable = ({headers, data, sheetsData, filterHeaders}: ChildDataTab
 
     const handleFilterClick = (dropdownIndexCode: string, dropdownLabel: string | string[]) => {
         const newFilterData = {label: dropdownLabel, indexes: dropdownIndexCode};
-        const contains = currentFilters.some(elem =>{
+        const contains = currentFilters.some(elem => {
             return JSON.stringify(newFilterData) === JSON.stringify(elem);
         });
 
         if (contains) {
+            const arrayWithoutFilter = currentFilters.filter(elem => {
+                return JSON.stringify(newFilterData) !== JSON.stringify(elem);
+            })
+
+            setCurrentFilters(arrayWithoutFilter);
             return;
         }
 
@@ -94,11 +98,11 @@ const ChildDataTable = ({headers, data, sheetsData, filterHeaders}: ChildDataTab
     }
 
     const handleFilterLogic = () => {
-        const allFilteredDataRows: parsedDataType[] = [];
+        let allFilteredDataRows: parsedDataType = [];
 
         currentFilters.forEach(value => {
-            const dropdownIndex = parseInt(value.indexes[0]);
-            const newFilteredDataRows = Object.values(sortedData).filter((originalData => {
+            const dropdownIndex = parseInt(value.indexes.split('-')[0]);
+            allFilteredDataRows = Object.values(sortedData).filter((originalData => {
                 const isNull = Object.values(originalData[dropdownIndex])[1] === null;
                 const isArray = Array.isArray(Object.values(originalData[dropdownIndex])[1])
 
@@ -112,11 +116,9 @@ const ChildDataTable = ({headers, data, sheetsData, filterHeaders}: ChildDataTab
 
                 return Object.values(originalData[dropdownIndex])[1][0] === value.label;
             }));
-
-            allFilteredDataRows.push(...newFilteredDataRows);
         })
 
-        console.log(allFilteredDataRows);
+        setFilteredData(allFilteredDataRows);
     }
 
     const isNumeric = (value: string): boolean => {
@@ -140,10 +142,11 @@ const ChildDataTable = ({headers, data, sheetsData, filterHeaders}: ChildDataTab
     }, [window.history]);
 
     useEffect(() => {
-        setSortedData(data);
+        // @ts-ignore
+        setSortedData( filteredData.length ? filteredData : data);
         sortingState.direction = "desc";
         sortingState.currentIndex = 0;
-    }, [data]);
+    }, [data, filteredData]);
 
     useEffect(() => {
         handleFilterLogic();
@@ -186,9 +189,9 @@ const ChildDataTable = ({headers, data, sheetsData, filterHeaders}: ChildDataTab
                                     ? <img src={showLogo()} onClick={() => handleSortClick(index)} alt={null} className="sort-logo"/>
                                     : <img src={SortDefLogo} onClick={() => handleSortClick(index)} alt={null} className="sort-logo"/>}
                                     {
-                                        <Dropdown>
-                                            <Dropdown.Toggle>
-                                                Filtreeri
+                                        <Dropdown autoClose="outside">
+                                            <Dropdown.Toggle className="filter-dropdown-toggle" bsPrefix="custom-toggle">
+                                                Filtreeri &#x25bd;
                                             </Dropdown.Toggle>
                                             <Dropdown.Menu className="filter-dropdown-menu">
                                                 {
@@ -196,14 +199,12 @@ const ChildDataTable = ({headers, data, sheetsData, filterHeaders}: ChildDataTab
                                                         if (parseInt(entry[0]) === index) {
                                                             return Object.values(entry[1]).map((values, valueIndex) => {
                                                                 return (
-                                                                    <Dropdown.Item key={`dropdown-menu-${values}-${valueIndex}`}>
-                                                                        <Form.Check
-                                                                            id={`${index}-${valueIndex}`}
-                                                                            key={`dropdown-form-check-${values}-${valueIndex}`}
-                                                                            onClick={() => handleFilterClick(`${index}-${valueIndex}`, values)}
-                                                                            label={values}
-                                                                        />
-                                                                    </Dropdown.Item>
+                                                                    <Form.Check
+                                                                        id={`${index}-${valueIndex}`}
+                                                                        key={`dropdown-form-check-${values}-${valueIndex}`}
+                                                                        onClick={() => handleFilterClick(`${index}-${valueIndex}`, values)}
+                                                                        label={values}
+                                                                    />
                                                                 )
                                                             })
                                                         }

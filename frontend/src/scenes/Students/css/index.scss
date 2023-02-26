@@ -37,4 +37,22 @@
 .filter-dropdown-menu {
   max-height: 17rem;
   overflow: auto;
+  padding: 0.5rem;
+  font-weight: normal;
+}
+
+.filter-dropdown-toggle {
+  background: none;
+  color: black;
+  border: none;
+  margin-top: 0.4rem;
+}
+
+.filter-dropdown-toggle:hover,  {
+  background: $main-theme;
+  color: black;
+}
+
+.show .filter-dropdown-toggle {
+  background: $main-theme;
 }

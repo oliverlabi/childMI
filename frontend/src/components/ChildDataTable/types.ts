@@ -9,6 +9,11 @@ export type ChildDataTableProps = {
     filterHeaders: parsedDataType,
 }
 
+export type filterDataType = {
+    label: string | string[],
+    indexes: string
+}
+
 export type parsedDataType = {
     [id: number]: parsedDataRow
 }
