@@ -25,6 +25,7 @@
     "css-minimizer-webpack-plugin": "^4.2.2",
     "mini-css-extract-plugin": "^2.7.0",
     "node-sass": "^7.0.3",
+    "prettier": "^2.8.4",
     "react-refresh": "^0.14.0",
     "sass-loader": "^13.1.0",
     "style-loader": "^3.3.1",

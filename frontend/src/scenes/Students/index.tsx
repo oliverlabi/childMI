@@ -109,7 +109,7 @@ const getFilterHeaders = (parsedData: parsedDataType) => {
 
 const Students = () => {
     const searchValue = useRef("");
-    const [sortedData, setSortedData] = useState({});
+    const [searchData, setSearchData] = useState({});
     const [sheetId, setSheetId] = useState(0);
     const parsedParam = parseInt(String(sheetId))
     const sheetsData = useGetAllSheetsDataQuery();
@@ -124,7 +124,7 @@ const Students = () => {
     }
 
     const handleSearch = () => {
-        setSortedData(Object.values(parsedData).filter((data) => {
+        setSearchData(Object.values(parsedData).filter((data) => {
             return Object.values(data).some(values => values[1] && typeof values[1] !== "string"
                 ? (values[1] as string[]).some((value: string) => value.toLowerCase() === searchValue.current.toLowerCase())
                 : typeof values[1] === "string" && values[1]
@@ -165,7 +165,7 @@ const Students = () => {
         shiftLastCellsFirst(parsedData);
     }
 
-    const filterHeaders = getFilterHeaders(Object.keys(sortedData)?.length ? sortedData : parsedData);
+    const filterHeaders = getFilterHeaders(Object.keys(searchData)?.length ? searchData : parsedData);
 
     return (
         <>
@@ -184,10 +184,8 @@ const Students = () => {
                                 <button onClick={handleSearch}>Otsi</button>
                             </div>
                         </div>
-                        <ChildDataTable headers={headers} data={Object.keys(sortedData)?.length ? sortedData : parsedData} sheetsData={sheetsData.data} filterHeaders={filterHeaders} />
-                        <div className="student-counter">
-                            <p>Andmete arv: {Object.keys(sortedData)?.length ? Object.keys(sortedData)?.length : Object.keys(parsedData)?.length}</p>
-                        </div>
+                        <ChildDataTable headers={headers} data={Object.keys(searchData)?.length ? searchData : parsedData} sheetsData={sheetsData.data} filterHeaders={filterHeaders} />
+
                     </Container>
                 </>
                 : <Loader></Loader>

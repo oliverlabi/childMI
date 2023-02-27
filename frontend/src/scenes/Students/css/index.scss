@@ -48,11 +48,19 @@
   margin-top: 0.4rem;
 }
 
-.filter-dropdown-toggle:hover,  {
+.filter-dropdown-toggle:hover, .filter-dropdown-toggle:active:hover  {
   background: $main-theme;
-  color: black;
+  color: white;
 }
+
 
 .show .filter-dropdown-toggle {
   background: $main-theme;
+  color: white;
+}
+
+.data-filter-error {
+  text-align: left;
+  padding: 2rem;
+  font-size: large;
 }
