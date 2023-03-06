@@ -10,7 +10,7 @@ childData = list(({"id": child_id, childHeaders[1]["name"]: name, childHeaders[2
 excludedProperties = []
 
 rawPropertiesWithGroups = dataframe.items()
-commentGroup = lookupGroupProperties(writingGroupName, rawPropertiesWithGroups, propertyHeaders, excludedProperties)
+commentGroup = lookupGroupProperties(lastGroupName, rawPropertiesWithGroups, propertyHeaders, excludedProperties)
 
 commentDataIndex = lookupPropertyInGroup(commentProperty, "name", commentGroup)["index"]
 childDataIndex = lookupPropertyInGroup(childNameProperty, "name", childHeaders)["index"]

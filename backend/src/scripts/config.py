@@ -4,15 +4,15 @@ import mysql.connector
 # -------------------------------------------------------------------------------
 
 # Excel file
-fileName = "qv-2022-1.ods"
+fileName = "ql-2021-1.ods"
 
 splitFileName = fileName.split("-")
 currentSheetDataType = splitFileName[0]
 currentSheetYear = splitFileName[1]
 currentSheetSeason = splitFileName[2].split(".")[0]
 currentSheetURL = "test"
-currentSheetID = "3"
-currentSheetHeaderIndex = 0
+currentSheetID = "1"
+currentSheetHeaderIndex = 1
 
 if currentSheetDataType == "qv":
     currentSheetDataType = 0
@@ -47,7 +47,7 @@ allPropertyGroups = []  # capitalized rawPropertyGroup values without unnamed da
 
 propertyHeaders = dataframe.iloc[0].values
 
-writingGroupName = "Kirjutamine"
+lastGroupName = "Märkused"
 childDataGroupName = "Taustaandmed"
 parentDataGroupName = "Kodune keelekeskkond"
 childNameProperty = "Lapse kood"
@@ -60,7 +60,9 @@ childGenderProperty = "Lapse sugu"
 childGenderPropertyEmpty = "E"
 
 childSpecialNeedProperty = "Kas lapsel on mõni erivajadus, mis onseotud keelelise arenguga"
-commentProperty = "Kommentaarid"
+
+# Requires comment data property to be in the last group (lastGroupName)
+commentProperty = "Märkused ja tähelepanekud"
 teacherNameProperty = "Õpetaja kood"
 schoolNameProperty = "Kool"
 
