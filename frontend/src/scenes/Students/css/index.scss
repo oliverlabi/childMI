@@ -33,3 +33,34 @@
   display: flex;
   justify-content: flex-end;
 }
+
+.filter-dropdown-menu {
+  max-height: 17rem;
+  overflow: auto;
+  padding: 0.5rem;
+  font-weight: normal;
+}
+
+.filter-dropdown-toggle {
+  background: none;
+  color: black;
+  border: none;
+  margin-top: 0.4rem;
+}
+
+.filter-dropdown-toggle:hover, .filter-dropdown-toggle:active:hover  {
+  background: $main-theme;
+  color: white;
+}
+
+
+.show .filter-dropdown-toggle {
+  background: $main-theme;
+  color: white;
+}
+
+.data-filter-error {
+  text-align: left;
+  padding: 2rem;
+  font-size: large;
+}

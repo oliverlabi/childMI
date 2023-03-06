@@ -80,9 +80,36 @@ const shiftLastCellsFirst = (parsedData: parsedDataType) => {
     });
 }
 
+const getFilterHeaders = (parsedData: parsedDataType) => {
+    const filterHeaders: any = {};
+
+    Object.values(parsedData).map((data) => {
+        Object.entries(data).map((filteredData) => {
+            if (!filterHeaders[filteredData[0]]) {
+                filterHeaders[filteredData[0]] = [];
+            }
+
+            if (filteredData[1][1]) {
+                if ((filterHeaders[filteredData[0]].includes(filteredData[1][1][0]) || filterHeaders[filteredData[0]].includes(filteredData[1][1]))) {
+                    return;
+                }
+
+                if (filteredData[1][1] && !Array.isArray(filteredData[1][1])) {
+                    filterHeaders[filteredData[0]].push(filteredData[1][1]);
+                    return;
+                }
+
+                filterHeaders[filteredData[0]].push(filteredData[1][1][0]);
+            }
+        })
+    })
+
+    return filterHeaders;
+}
+
 const Students = () => {
     const searchValue = useRef("");
-    const [filteredData, setFilteredData] = useState({});
+    const [searchData, setSearchData] = useState({});
     const [sheetId, setSheetId] = useState(0);
     const parsedParam = parseInt(String(sheetId))
     const sheetsData = useGetAllSheetsDataQuery();
@@ -97,7 +124,7 @@ const Students = () => {
     }
 
     const handleSearch = () => {
-        setFilteredData(Object.values(parsedData).filter((data) => {
+        setSearchData(Object.values(parsedData).filter((data) => {
             return Object.values(data).some(values => values[1] && typeof values[1] !== "string"
                 ? (values[1] as string[]).some((value: string) => value.toLowerCase() === searchValue.current.toLowerCase())
                 : typeof values[1] === "string" && values[1]
@@ -138,6 +165,8 @@ const Students = () => {
         shiftLastCellsFirst(parsedData);
     }
 
+    const filterHeaders = getFilterHeaders(Object.keys(searchData)?.length ? searchData : parsedData);
+
     return (
         <>
             <Container className="background-title-container">
@@ -155,10 +184,8 @@ const Students = () => {
                                 <button onClick={handleSearch}>Otsi</button>
                             </div>
                         </div>
-                        <ChildDataTable headers={headers} data={Object.keys(filteredData)?.length ? filteredData : parsedData} sheetsData={sheetsData.data} />
-                        <div className="student-counter">
-                            <p>Andmete arv: {Object.keys(filteredData)?.length ? Object.keys(filteredData)?.length : Object.keys(parsedData)?.length}</p>
-                        </div>
+                        <ChildDataTable headers={headers} data={Object.keys(searchData)?.length ? searchData : parsedData} sheetsData={sheetsData.data} filterHeaders={filterHeaders} />
+
                     </Container>
                 </>
                 : <Loader></Loader>

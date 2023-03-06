@@ -1,5 +1,6 @@
 backend/node_modules
 backend/.env
+backend/src/scripts/getNameIDs.py
 frontend/node_modules
 .idea
 frontend/package-lock.json

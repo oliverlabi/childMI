@@ -6,6 +6,12 @@ export type ChildDataTableProps = {
     headers: IAllPropertiesBySheetResponse[],
     data: parsedDataType,
     sheetsData: IAllSheetsDataResponse[],
+    filterHeaders: parsedDataType,
+}
+
+export type filterDataType = {
+    label: string | string[],
+    indexes: string
 }
 
 export type parsedDataType = {
