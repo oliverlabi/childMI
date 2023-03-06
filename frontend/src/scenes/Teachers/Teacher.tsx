@@ -7,7 +7,7 @@ import Loader from "../../components/Loader";
 import {useGetTeacherSchoolsByIdQuery} from "../../api/schoolTeachersApi";
 import {IAllTeacherYearsResponse, ITeacherSchoolsByIdResponse} from "../../api/apiResponseTypes";
 import {useGetAllTeacherYearsQuery} from "../../api/teacherChildrenApi";
-import {SeasonEnums} from "../../utils/sheetDataMapping";
+import {SeasonEnums} from "../../utils/enums";
 
 type ListDataField = {
     id: number,

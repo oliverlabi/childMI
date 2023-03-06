@@ -4,6 +4,6 @@ export enum SeasonEnums {
 }
 
 export enum SheetTypeEnums {
-    QUANTITATIVE = 0,
-    QUALITATIVE = 1
+    QUANTITATIVE = '0',
+    QUALITATIVE = '1'
 }

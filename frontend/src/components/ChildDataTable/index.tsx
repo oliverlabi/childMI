@@ -3,7 +3,7 @@ import './css/index.scss';
 import {ChildDataTableProps, filterDataType, parsedDataRow, parsedDataType} from "./types";
 import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {SeasonEnums} from "../../utils/sheetDataMapping";
+import {SeasonEnums} from "../../utils/enums";
 import SortDescLogo from '../../images/sort-desc.svg';
 import SortAscLogo from '../../images/sort-asc.svg';
 import SortDefLogo from '../../images/sort-def.svg'

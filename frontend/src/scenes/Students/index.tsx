@@ -1,5 +1,5 @@
 import ChildDataTable from "../../components/ChildDataTable";
-import { Container } from "react-bootstrap";
+import {Container, Nav} from "react-bootstrap";
 import {useGetAllChildrenPropertiesDataBySheetQuery, useGetAllPropertiesBySheetQuery} from "../../api/childPropertiesApi";
 import Loader from "../../components/Loader";
 import {useGetAllSheetsDataQuery} from "../../api/sheetApi";
@@ -111,6 +111,7 @@ const Students = () => {
     const searchValue = useRef("");
     const [searchData, setSearchData] = useState({});
     const [sheetId, setSheetId] = useState(0);
+    const [currentSheetType, setCurrentSheetType] = useState('0');
     const parsedParam = parseInt(String(sheetId))
     const sheetsData = useGetAllSheetsDataQuery();
     const childrenPropertiesData = useGetAllChildrenPropertiesDataBySheetQuery({sheetId: parsedParam});
@@ -136,6 +137,7 @@ const Students = () => {
     useEffect(() => {
         if((sheetId === 0 || isNaN(sheetId)) && sheetsData.isSuccess){
             setSheetId(sheetsData.data[0].id);
+            setCurrentSheetType(sheetsData.data[0].type);
             window.history.replaceState(null, null, `/children/${sheetsData.data[0].id}`)
         }
     }, [sheetsData.isSuccess])
@@ -177,7 +179,20 @@ const Students = () => {
                     <Container className="background-container-theme">
                         <div className="div-container">
                             <div className="data-type-choice">
-                                <p>Andmed: Kvantitatiivsed</p>
+                                <Nav className="data-type-choice-nav">
+                                    <Nav.Item>
+                                        <Nav.Link disabled>
+                                            Kvantitatiivsed
+                                        </Nav.Link>
+                                    </Nav.Item>
+                                    |
+                                    <Nav.Item>
+                                        <Nav.Link>
+                                            Kvalitatiivsed
+                                        </Nav.Link>
+                                    </Nav.Item>
+
+                                </Nav>
                             </div>
                             <div className="data-search-field">
                                 <p><input type="text" onChange={handleSearchValueChange} placeholder="Sisesta otsingusõna..."></input></p>
