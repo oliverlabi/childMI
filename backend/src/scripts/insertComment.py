@@ -26,7 +26,7 @@ for i in range(0, len(excelCommentData.iloc[0:])):
 
     childFirstHeader = str(excelChildIndexes.iloc[0:, [0]].iloc[i, 0])
     childSecondHeader = excelChildIndexes.iloc[0:, [1]].iloc[i, 0]
-    childThirdHeader = excelChildIndexes.iloc[0:, [2]].iloc[i, 0]
+    childThirdHeader = str(excelChildIndexes.iloc[0:, [2]].iloc[i, 0])
     childFourthHeaderData = excelChildIndexes.iloc[0:, [3]].iloc[i, 0]
     child = next((item for item in childData if item[childHeaders[1]["name"]] == childFirstHeader
               and item[childHeaders[2]["name"]] == childSecondHeader
