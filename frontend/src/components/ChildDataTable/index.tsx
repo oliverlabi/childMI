@@ -173,6 +173,7 @@ const ChildDataTable = ({headers, data, sheetsData, filterHeaders}: ChildDataTab
     }, [window.history]);
 
     useEffect(() => {
+        console.log(filteredData, data);
         setSortedData(Array.isArray(filteredData) && filteredData.length ? filteredData : data);
         sortingState.direction = "desc";
         sortingState.currentIndex = 0;
@@ -180,7 +181,7 @@ const ChildDataTable = ({headers, data, sheetsData, filterHeaders}: ChildDataTab
 
     useEffect(() => {
         handleFilterLogic();
-    }, [currentFilters])
+    }, [currentFilters, data])
 
     return (
         <>
