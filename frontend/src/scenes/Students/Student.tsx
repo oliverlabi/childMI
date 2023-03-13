@@ -77,7 +77,7 @@ const Student = () => {
                                                 return <p key={"teacher-p-" + property[1]}>{property[0]}: <Link key={"teacher-link-" + property[1]} to={`/teachers/${childData.data[0].teacher_id}`}>{`${property[1]}` }</Link></p>
                                             }
 
-                                            return <p key={"student-data-" + property[0]}>{`${property[0]}: ${property[1]}` }</p>
+                                            return <p key={"student-data-" + property[0]}>{`${property[0]}: `}<span className={"text-bold"}>{`${property[1]}`}</span></p>
                                         })}
                                     </Container>
                                 </Tab>

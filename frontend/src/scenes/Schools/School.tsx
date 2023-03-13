@@ -4,6 +4,7 @@ import {useGetSchoolChildrenByIdQuery, useGetSchoolTeachersByIdQuery} from "../.
 import ScrollableList from "../../components/ScrollableList";
 import "./css/School.scss"
 import Loader from "../../components/Loader";
+import {SheetTypeEnums} from "../../utils/enums";
 
 const School = () => {
     const params = useParams();
@@ -53,7 +54,7 @@ const School = () => {
                                     {
                                         schoolChildrenData ? schoolChildrenData.map((entry: any) => (
                                             entry?.child_id != ''
-                                                ? <div className="scrollable-list-data-row" key={"c" + entry.child_id}><Link to={`/children/${entry.sheet_id}/${entry.child_id}`}>{entry.child_id}</Link></div>
+                                                ? <div className="scrollable-list-data-row" key={"c" + entry.child_id}><Link to={`/children/${entry.sheet_type === SheetTypeEnums.QUANTITATIVE ? "qv" : "ql"}/${entry.sheet_id}/${entry.child_id}`}>{entry.child_id}</Link></div>
                                                 : null
                                         )): <div>Andmed puuduvad</div>
                                     }

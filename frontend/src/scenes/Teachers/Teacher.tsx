@@ -7,14 +7,15 @@ import Loader from "../../components/Loader";
 import {useGetTeacherSchoolsByIdQuery} from "../../api/schoolTeachersApi";
 import {IAllTeacherYearsResponse, ITeacherSchoolsByIdResponse} from "../../api/apiResponseTypes";
 import {useGetAllTeacherYearsQuery} from "../../api/teacherChildrenApi";
-import {SeasonEnums} from "../../utils/enums";
+import {SeasonEnums, SheetTypeEnums} from "../../utils/enums";
 
 type ListDataField = {
     id: number,
     name: string,
     sheet_id?: number,
     year?: number,
-    season?: number
+    season?: number,
+    type?: number
 }
 
 const Teacher = () => {
@@ -29,7 +30,7 @@ const Teacher = () => {
     const teacherYearsArray: string[] = [];
     const childrenListData = isTeacherChildrenDataLoaded
         ? children.map((childrenObject: any) => (
-            {"id": childrenObject.child_id, "sheet_id": childrenObject.sheet_id, "year": childrenObject.year, "season": childrenObject.season}
+            {"id": childrenObject.child_id, "sheet_id": childrenObject.sheet_id, "year": childrenObject.year, "season": childrenObject.season, "type": childrenObject.type}
         ))
         : "No data";
 
@@ -87,7 +88,7 @@ const Teacher = () => {
                                     {
                                         childrenListData ? childrenListData.map((entry: ListDataField) => (
                                             entry.name != ''
-                                                ? <div className="scrollable-list-data-row" key={"scrollable-list-data-" + entry.id}><Link to={`/children/${entry.sheet_id}/${entry.id}`}>{entry.id}</Link> ({entry.year} {entry.season === SeasonEnums.AUTUMN ? "sügis" : "kevad"})</div>
+                                                ? <div className="scrollable-list-data-row" key={"scrollable-list-data-" + entry.id}><Link to={`/children/${entry.type === SheetTypeEnums.QUANTITATIVE ? "qv" : "ql"}/${entry.sheet_id}/${entry.id}`}>{entry.id}</Link> ({entry.year} {entry.season === SeasonEnums.AUTUMN ? "sügis" : "kevad"})</div>
                                                 : null
                                         )) : <div>Andmed puuduvad</div>
                                     }

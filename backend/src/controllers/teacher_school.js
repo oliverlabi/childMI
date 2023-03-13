@@ -35,7 +35,8 @@ exports.getSchoolChildren = async (req, res) => {
             "SELECT DISTINCT " +
                 "c.id AS child_id," +
                 "ts.school_id, " +
-                "sh.id AS sheet_id " +
+                "sh.id AS sheet_id, " +
+                "sh.type AS sheet_type " +
             "FROM teacher_school ts " +
             "INNER JOIN teacher t ON ts.teacher_id = t.id " +
             "INNER JOIN school s on ts.school_id = s.id " +

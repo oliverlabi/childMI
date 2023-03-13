@@ -7,6 +7,7 @@ export type ChildDataTableProps = {
     data: parsedDataType,
     sheetsData: IAllSheetsDataResponse[],
     filterHeaders: parsedDataType,
+    currentDataType: string
 }
 
 export type filterDataType = {

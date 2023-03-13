@@ -11,7 +11,7 @@ currentSheetDataType = splitFileName[0]
 currentSheetYear = splitFileName[1]
 currentSheetSeason = splitFileName[2].split(".")[0]
 currentSheetURL = "test"
-currentSheetID = "1"
+currentSheetID = "4"
 currentSheetHeaderIndex = 1
 
 if currentSheetDataType == "qv":
@@ -82,9 +82,13 @@ for group in rawPropertyGroups:
 
 
 def insertData(sql, variables):
-    cursor.executemany(sql, variables)
-    childMI.commit()
-    print(cursor.rowcount, "was inserted.")
+    try:
+        cursor.executemany(sql, variables)
+        childMI.commit()
+        print(cursor.rowcount, "was inserted.")
+    except Exception:
+        raise
+
     cursor.close()
 
 
