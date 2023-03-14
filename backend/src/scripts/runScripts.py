@@ -1,5 +1,5 @@
 import subprocess
-from config import fileName, currentSheetID, currentSheetHeaderIndex
+from config import fileName, currentSheetID, currentSheetHeaderIndex, includesComments
 
 print("File name:", fileName)
 print("Current sheet ID:", currentSheetID)
@@ -33,7 +33,8 @@ try:
     print("Insert teacher children data: ")
     subprocess.check_call("insertTeacherChildren.py", shell=True)
 
-    print("Insert comments data: ")
-    subprocess.check_call("insertComment.py", shell=True)
+    if includesComments:
+        print("Insert comments data: ")
+        subprocess.check_call("insertComment.py", shell=True)
 except subprocess.CalledProcessError:
     print("Script stopped because of an error")
