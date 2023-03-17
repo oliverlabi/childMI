@@ -36,7 +36,15 @@ export interface IAllSheetsDataResponse {
     id: number,
     year: number,
     season: number,
-    type: number
+    type: number,
+    starting_years: string,
+}
+
+export interface IAllSheetsDataByTypeResponse {
+    id: number,
+    year: number,
+    season: number
+    starting_years: string,
 }
 
 export interface IAllCommentsBySheetIdResponse {
@@ -60,7 +68,8 @@ export interface ISchoolTeachersByIdResponse {
 export interface ISchoolChildrenByIdResponse {
     child_id: number,
     school_id: number,
-    sheet_id: number
+    sheet_id: number,
+    sheet_type: number
 }
 
 export interface IChildrenTeachersAndSchoolsBySheetIdResponse {
@@ -105,7 +114,8 @@ export interface ITeacherChildrenResponse {
     child_id: string,
     sheet_id: number,
     year: number,
-    season: number
+    season: number,
+    type: number
 }
 
 export interface IAllTeacherYearsResponse {

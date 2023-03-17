@@ -43,7 +43,7 @@
 
 .filter-dropdown-toggle {
   background: none;
-  color: black;
+  color: $black;
   border: none;
   margin-top: 0.4rem;
 }
@@ -63,4 +63,14 @@
   text-align: left;
   padding: 2rem;
   font-size: large;
+}
+
+.nav-item {
+  --bs-nav-link-padding-y: 0;
+  --bs-nav-link-padding-x: 0.25rem;
+  color: $main-theme;
+
+  .disabled {
+    color: $black;
+  }
 }

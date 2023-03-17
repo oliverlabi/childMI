@@ -11,15 +11,15 @@ const App = () =>
     <BrowserRouter>
         <Routes>
             <Route path="/" element={ <Layout /> }>
-                <Route index element={<Navigate to="/children" replace />} />
-                <Route path="/children/" element={ <Students /> } />
-                <Route path="/children/:sheetId" element={ <Students /> } />
-                <Route path="/children/:sheetId/:id" element={ <Student /> } />
+                <Route index element={<Navigate to="/children/" replace />} />
+                <Route path="/children/:type" element={ <Students /> } />
+                <Route path="/children/:type/:sheetId" element={ <Students /> } />
+                <Route path="/children/:type/:sheetId/:id" element={ <Student /> } />
                 <Route path="/teachers" element={ <Teachers /> } />
                 <Route path="/teachers/:id" element={ <Teacher /> } />
                 <Route path="/schools" element={ <Schools /> } />
                 <Route path="/schools/:id" element={ <School /> } />
-                <Route path="*" element={<Navigate to="/children" replace />} />
+                <Route path="*" element={<Navigate to="/children/qv/" replace />} />
             </Route>
         </Routes>
     </BrowserRouter>

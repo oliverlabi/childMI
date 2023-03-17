@@ -67,7 +67,9 @@ exports.getTeacherDataWithChildren = async (req, res) => {
                 "c.id AS child_id, " +
                 "s.id AS sheet_id, " +
                 "s.year, " +
-                "s.season " +
+                "s.season, " +
+                "s.type, " +
+                "s.starting_years " +
             "FROM teacher t " +
             "INNER JOIN teacher_children tc ON t.id = tc.teacher_id " +
             "INNER JOIN child c ON c.id = tc.child_id " +

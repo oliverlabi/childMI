@@ -30,7 +30,7 @@ for i in range(0, len(currentDataFrame.iloc[0:])):
 
     special_need = currentDataFrame.iloc[0:, [4]].iloc[i, 0]
 
-    childData.append({"first_name": teacherCode[0], "last_name": teacherCode[1], "c_name_code": str(nameCode), "age": age, "gender": gender, "special_need": special_need})
+    childData.append({"first_name": teacherCode[0], "last_name": teacherCode[1], "c_name_code": str(nameCode), "age": age, "gender": str(gender), "special_need": special_need})
 
 sql = "INSERT INTO child (name_code, age, gender, special_need) SELECT * FROM (SELECT %(c_name_code)s as nameCode, %(age)s as age, %(gender)s as gender, %(special_need)s as specialNeed) AS tmp WHERE NOT EXISTS (SELECT t.first_name, t.last_name, c.name_code, c.age, c.gender, c.special_need FROM child c, teacher t WHERE t.first_name = (%(first_name)s) AND t.last_name = (%(last_name)s) AND c.name_code = (%(c_name_code)s) AND c.age = (%(age)s) AND gender = (%(gender)s) AND special_need = (%(special_need)s)) LIMIT 1"
 

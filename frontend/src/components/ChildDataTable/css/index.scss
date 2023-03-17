@@ -47,13 +47,12 @@ th, tr {
 .data-year-column, .data-year-column-active {
   background: $main-theme !important;
   border: none;
-  white-space: nowrap;
   flex-direction: column;
   display: flex;
 }
 
 .data-year-column a {
-  color: black;
+  color: $black;
 }
 
 .data-year-column-active a {
@@ -75,7 +74,7 @@ th, tr {
 }
 
 .sort-logo {
-  color: black;
+  color: $black;
   max-height: 20px;
   max-width: 20px;
 }

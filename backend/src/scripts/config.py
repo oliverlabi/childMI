@@ -4,14 +4,15 @@ import mysql.connector
 # -------------------------------------------------------------------------------
 
 # Excel file
-fileName = "qv-2022-1.ods"
+fileName = "ql-2022-1-2021-2022.ods"
 
 splitFileName = fileName.split("-")
 currentSheetDataType = splitFileName[0]
 currentSheetYear = splitFileName[1]
-currentSheetSeason = splitFileName[2].split(".")[0]
+currentSheetSeason = splitFileName[2]
+currentSheetStartingYears = splitFileName[3] + "-" + splitFileName[4].split(".")[0]
 currentSheetURL = "test"
-currentSheetID = "3"
+currentSheetID = "6"
 currentSheetHeaderIndex = 0
 
 if currentSheetDataType == "qv":
@@ -47,9 +48,13 @@ allPropertyGroups = []  # capitalized rawPropertyGroup values without unnamed da
 
 propertyHeaders = dataframe.iloc[0].values
 
-writingGroupName = "Kirjutamine"
+includesComments = True
+
+lastGroupName = "Märkused"
+# Requires comment data property to be in the last group (lastGroupName)
+commentProperty = "Kommentaarid"
+
 childDataGroupName = "Taustaandmed"
-parentDataGroupName = "Kodune keelekeskkond"
 childNameProperty = "Lapse kood"
 childNamePropertyEmpty = "Nimeviga"
 
@@ -60,13 +65,13 @@ childGenderProperty = "Lapse sugu"
 childGenderPropertyEmpty = "E"
 
 childSpecialNeedProperty = "Kas lapsel on mõni erivajadus, mis onseotud keelelise arenguga"
-commentProperty = "Kommentaarid"
+
 teacherNameProperty = "Õpetaja kood"
 schoolNameProperty = "Kool"
 
 # Exclude groups to properly set data to properties and property_group
 
-excludedGroups = [childDataGroupName, parentDataGroupName]
+excludedGroups = [childDataGroupName]
 excludedProperties = [commentProperty]
 
 for group in rawPropertyGroups:
@@ -80,9 +85,13 @@ for group in rawPropertyGroups:
 
 
 def insertData(sql, variables):
-    cursor.executemany(sql, variables)
-    childMI.commit()
-    print(cursor.rowcount, "was inserted.")
+    try:
+        cursor.executemany(sql, variables)
+        childMI.commit()
+        print(cursor.rowcount, "was inserted.")
+    except Exception:
+        raise
+
     cursor.close()
 
 

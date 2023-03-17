@@ -10,7 +10,7 @@ childData = list(({"id": child_id, childHeaders[1]["name"]: name, childHeaders[2
 excludedProperties = []
 
 rawPropertiesWithGroups = dataframe.items()
-commentGroup = lookupGroupProperties(writingGroupName, rawPropertiesWithGroups, propertyHeaders, excludedProperties)
+commentGroup = lookupGroupProperties(lastGroupName, rawPropertiesWithGroups, propertyHeaders, excludedProperties)
 
 commentDataIndex = lookupPropertyInGroup(commentProperty, "name", commentGroup)["index"]
 childDataIndex = lookupPropertyInGroup(childNameProperty, "name", childHeaders)["index"]
@@ -26,7 +26,7 @@ for i in range(0, len(excelCommentData.iloc[0:])):
 
     childFirstHeader = str(excelChildIndexes.iloc[0:, [0]].iloc[i, 0])
     childSecondHeader = excelChildIndexes.iloc[0:, [1]].iloc[i, 0]
-    childThirdHeader = excelChildIndexes.iloc[0:, [2]].iloc[i, 0]
+    childThirdHeader = str(excelChildIndexes.iloc[0:, [2]].iloc[i, 0])
     childFourthHeaderData = excelChildIndexes.iloc[0:, [3]].iloc[i, 0]
     child = next((item for item in childData if item[childHeaders[1]["name"]] == childFirstHeader
               and item[childHeaders[2]["name"]] == childSecondHeader

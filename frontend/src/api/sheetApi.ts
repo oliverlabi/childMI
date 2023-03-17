@@ -1,5 +1,5 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
-import {IAllSheetsDataResponse} from "./apiResponseTypes";
+import {IAllSheetsDataByTypeResponse, IAllSheetsDataResponse} from "./apiResponseTypes";
 import {API_URL} from "../config/config";
 
 export const sheetApi = createApi({
@@ -16,7 +16,33 @@ export const sheetApi = createApi({
             transformResponse: (results: { results: { sheetData: IAllSheetsDataResponse }}) =>
                 results.results,
         }),
+        getAllSheetsDataByType: builder.query<any, { type: number }>({
+            query(args) {
+                const { type } = args;
+                return {
+                    url: `sheets/${type}`,
+                    credentials: "include"
+                }
+            },
+            transformResponse: (results: { results: { sheetData: IAllSheetsDataByTypeResponse }}) =>
+                results.results,
+        }),
+        getFirstSheetWithDifferentType: builder.query<any, { type: number }>({
+            query(args) {
+                const { type } = args;
+                return {
+                    url: `sheets/${type}/first`,
+                    credentials: "include"
+                }
+            },
+            transformResponse: (results: { results: { sheetData: IAllSheetsDataByTypeResponse }}) =>
+                results.results,
+        }),
     }),
 })
 
-export const { useGetAllSheetsDataQuery } = sheetApi
+export const {
+    useGetAllSheetsDataQuery,
+    useGetAllSheetsDataByTypeQuery,
+    useGetFirstSheetWithDifferentTypeQuery,
+} = sheetApi

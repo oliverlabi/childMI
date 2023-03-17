@@ -3,14 +3,14 @@ import './css/index.scss';
 import {ChildDataTableProps, filterDataType, parsedDataRow, parsedDataType} from "./types";
 import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {SeasonEnums} from "../../utils/sheetDataMapping";
+import {SeasonEnums} from "../../utils/enums";
 import SortDescLogo from '../../images/sort-desc.svg';
 import SortAscLogo from '../../images/sort-asc.svg';
 import SortDefLogo from '../../images/sort-def.svg'
 import {Dropdown, Form} from "react-bootstrap";
 
 
-const ChildDataTable = ({headers, data, sheetsData, filterHeaders}: ChildDataTableProps) => {
+const ChildDataTable = ({headers, data, sheetsData, filterHeaders, currentDataType}: ChildDataTableProps) => {
     const [sheetId, setSheetId] = useState("0");
     const [sortedData, setSortedData] = useState<parsedDataType>([]);
     const [filteredData, setFilteredData] = useState<parsedDataType>([]);
@@ -169,11 +169,10 @@ const ChildDataTable = ({headers, data, sheetsData, filterHeaders}: ChildDataTab
     }
 
     useEffect(() => {
-        setSheetId(location.pathname.split("/")[2])
+        setSheetId(location.pathname.split("/")[3])
     }, [window.history]);
 
     useEffect(() => {
-        console.log(filteredData, data);
         setSortedData(Array.isArray(filteredData) && filteredData.length ? filteredData : data);
         sortingState.direction = "desc";
         sortingState.currentIndex = 0;
@@ -198,19 +197,19 @@ const ChildDataTable = ({headers, data, sheetsData, filterHeaders}: ChildDataTab
                         </thead>
                         <tbody className="table-yearly-column">
                         {Object.entries(sheetsData).map((data) => {
-                            const currentId = parseInt(data[0]) + 1
+                            const currentId = data && data[1]["id"];
                             const sheetSeason = data && data[1]["season"] === SeasonEnums.AUTUMN ? "sügis" : "kevad";
-                            const sheetYear = data && data[1]["year"]
-
+                            const sheetYear = data && data[1]["year"];
+                            const sheetStartingYears = data && data[1]["starting_years"];
                             if (sheetId === currentId.toString()) {
                                 return <tr className="data-year-column-active" key={data[0] + data[1]}>
-                                    <td><Link to={`/children/${currentId}/`}>{`${sheetYear} ${sheetSeason}`}</Link></td>
+                                    <td><Link to={`/children/${currentDataType}/${currentId}/`}>{`${sheetYear} ${sheetSeason} \n (${sheetStartingYears})`}</Link></td>
                                 </tr>
                             }
 
                             return <tr className="data-year-column" key={data[0] + data[1]}>
                                 <td onClick={refreshPage}><Link
-                                    to={`/children/${currentId}/`}>{`${sheetYear} ${sheetSeason}`}</Link></td>
+                                    to={`/children/${currentDataType}/${currentId}/`}>{`${sheetYear} ${sheetSeason} \n (${sheetStartingYears})`}</Link></td>
                             </tr>
                         })}
                         </tbody>
@@ -270,7 +269,7 @@ const ChildDataTable = ({headers, data, sheetsData, filterHeaders}: ChildDataTab
                                             if (index === 0) {
                                                 return <td className="data-clickable-column"
                                                            key={entry[0] + entry[1] + index}><Link
-                                                    to={`/children/${sheetId}/${entry[1][1][1]}`}>{entry[1][1][0]}</Link>
+                                                    to={`/children/${currentDataType}/${sheetId}/${entry[1][1][1]}`}>{entry[1][1][0]}</Link>
                                                 </td>
                                             }
 

@@ -1,20 +1,26 @@
 import ChildDataTable from "../../components/ChildDataTable";
-import { Container } from "react-bootstrap";
-import {useGetAllChildrenPropertiesDataBySheetQuery, useGetAllPropertiesBySheetQuery} from "../../api/childPropertiesApi";
+import {Container, Nav} from "react-bootstrap";
+import {
+    useGetAllChildrenPropertiesDataBySheetQuery,
+    useGetAllPropertiesBySheetQuery
+} from "../../api/childPropertiesApi";
 import Loader from "../../components/Loader";
-import {useGetAllSheetsDataQuery} from "../../api/sheetApi";
+import {useGetAllSheetsDataByTypeQuery, useGetFirstSheetWithDifferentTypeQuery} from "../../api/sheetApi";
 import {useGetAllChildrenDataBySheetQuery} from "../../api/childApi";
 import {parsedDataType} from "../../components/ChildDataTable/types";
 import {
     IAllChildrenDataBySheetResponse,
-    IAllChildrenPropertiesDataBySheetResponse, IAllCommentsBySheetIdResponse,
-    IAllPropertiesBySheetResponse, IChildrenTeachersAndSchoolsBySheetIdResponse,
+    IAllChildrenPropertiesDataBySheetResponse,
+    IAllCommentsBySheetIdResponse,
+    IAllPropertiesBySheetResponse,
+    IChildrenTeachersAndSchoolsBySheetIdResponse,
 } from "../../api/apiResponseTypes";
 import {ChildDataHeaders, ChildDataHeadersOriginal, CommentHeader} from "../../utils/customHeaders";
 import {ChangeEvent, useEffect, useRef, useState} from "react";
 import {useGetAllChildrenTeachersAndSchoolsBySheetIdQuery} from "../../api/teacherChildrenApi";
 import {useGetAllCommentsBySheetIdQuery} from "../../api/commentApi";
 import "./css/index.scss"
+import {SheetTypeEnums} from "../../utils/enums";
 
 const insertPropertiesData = (parsedData: parsedDataType, dict: IAllChildrenPropertiesDataBySheetResponse) => {
     if (parsedData[dict["child_id"]] === undefined){
@@ -111,8 +117,10 @@ const Students = () => {
     const searchValue = useRef("");
     const [searchData, setSearchData] = useState({});
     const [sheetId, setSheetId] = useState(0);
+    const currentSheetType = location.pathname.split("/")[2] === "qv" ? SheetTypeEnums.QUANTITATIVE : SheetTypeEnums.QUALITATIVE;
     const parsedParam = parseInt(String(sheetId))
-    const sheetsData = useGetAllSheetsDataQuery();
+    const sheetsData = useGetAllSheetsDataByTypeQuery({type: currentSheetType});
+    const firstDifferentTypeSheet = useGetFirstSheetWithDifferentTypeQuery({type: currentSheetType});
     const childrenPropertiesData = useGetAllChildrenPropertiesDataBySheetQuery({sheetId: parsedParam});
     const childrenData = useGetAllChildrenDataBySheetQuery({sheetId: parsedParam});
     const propsData = useGetAllPropertiesBySheetQuery({sheetId: parsedParam});
@@ -135,20 +143,21 @@ const Students = () => {
 
     useEffect(() => {
         if((sheetId === 0 || isNaN(sheetId)) && sheetsData.isSuccess){
+            const sheetDataTypeText = currentSheetType === 0 ? "qv" : "ql"
             setSheetId(sheetsData.data[0].id);
-            window.history.replaceState(null, null, `/children/${sheetsData.data[0].id}`)
+            window.history.replaceState(null, null, `/children/${sheetDataTypeText}/${sheetsData.data[0].id}/`)
         }
     }, [sheetsData.isSuccess])
 
     useEffect(() => {
-        const sheetId = location.pathname.split("/")[2]
-        sheetsData && setSheetId(parseInt(sheetId));
+        const newSheetId = location.pathname.split("/")[3]
+        setSheetId(parseInt(newSheetId));
     }, [])
 
     const parsedData: parsedDataType = {};
     let headers;
 
-    if(childrenPropertiesData.isSuccess && propsData.isSuccess && sheetsData.isSuccess && childrenData.isSuccess && childrenTeachersAndSchoolsData.isSuccess && commentData.isSuccess) {
+    if(childrenPropertiesData.isSuccess && propsData.isSuccess && sheetsData.isSuccess && childrenData.isSuccess && childrenTeachersAndSchoolsData.isSuccess && commentData.isSuccess && firstDifferentTypeSheet.isSuccess) {
         const commentHeaderLength = 1;
         const highestHeaderId = Math.max(...propsData.data.map((o: IAllPropertiesBySheetResponse) => o.id)) + commentHeaderLength
         headers = addChildHeaders(propsData.data);
@@ -172,20 +181,38 @@ const Students = () => {
             <Container className="background-title-container">
                 <h2>Õpilaste andmed</h2>
             </Container>
-            {childrenPropertiesData.isSuccess && propsData.isSuccess && sheetsData.isSuccess && childrenData.isSuccess && childrenTeachersAndSchoolsData.isSuccess && commentData.isSuccess ?
+            {childrenPropertiesData.isSuccess && propsData.isSuccess && sheetsData.isSuccess && childrenData.isSuccess && childrenTeachersAndSchoolsData.isSuccess && commentData.isSuccess && firstDifferentTypeSheet.isSuccess ?
                 <>
                     <Container className="background-container-theme">
                         <div className="div-container">
                             <div className="data-type-choice">
-                                <p>Andmed: Kvantitatiivsed</p>
+                                <Nav className="data-type-choice-nav">
+                                    <Nav.Item>
+                                        <Nav.Link disabled={currentSheetType === SheetTypeEnums.QUANTITATIVE} href={`/children/qv/${firstDifferentTypeSheet.data[0].id}/`}>
+                                            Kvantitatiivsed
+                                        </Nav.Link>
+                                    </Nav.Item>
+                                    |
+                                    <Nav.Item>
+                                        <Nav.Link disabled={currentSheetType === SheetTypeEnums.QUALITATIVE} href={`/children/ql/${firstDifferentTypeSheet.data[0].id}/`}>
+                                            Kvalitatiivsed
+                                        </Nav.Link>
+                                    </Nav.Item>
+
+                                </Nav>
                             </div>
                             <div className="data-search-field">
                                 <p><input type="text" onChange={handleSearchValueChange} placeholder="Sisesta otsingusõna..."></input></p>
                                 <button onClick={handleSearch}>Otsi</button>
                             </div>
                         </div>
-                        <ChildDataTable headers={headers} data={Object.keys(searchData)?.length ? searchData : parsedData} sheetsData={sheetsData.data} filterHeaders={filterHeaders} />
-
+                        <ChildDataTable
+                            headers={headers}
+                            data={Object.keys(searchData)?.length ? searchData : parsedData}
+                            sheetsData={sheetsData.data}
+                            filterHeaders={filterHeaders}
+                            currentDataType={currentSheetType === SheetTypeEnums.QUANTITATIVE ? "qv" : "ql"}
+                        />
                     </Container>
                 </>
                 : <Loader></Loader>
