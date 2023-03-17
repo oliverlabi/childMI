@@ -15,7 +15,7 @@ const app = express();
 app.use(express.json());
 
 const corsOptions = {
-    origin : [ 'http://localhost:49501' , 'http://dev-childmi.ee:49501' ],
+    origin : [ 'http://greeny.cs.tlu.ee:49500' , 'http://greeny.cs.tlu.ee:49501' ],
     methods: ["GET" , "POST" , "PUT", "DELETE"],
     credentials: true
 };
@@ -40,7 +40,7 @@ app.use("/api/sheets/", sheetRoutes);
 app.use("/api/property_group/", propertyGroupRoutes);
 app.use("/api/comment/", commentRoutes);
 
-const PORT = process.env.PORT || 49501;
+const PORT = process.env.PORT || 49500;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);
 });
