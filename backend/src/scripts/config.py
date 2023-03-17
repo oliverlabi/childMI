@@ -48,7 +48,7 @@ allPropertyGroups = []  # capitalized rawPropertyGroup values without unnamed da
 
 propertyHeaders = dataframe.iloc[0].values
 
-includesComments = False
+includesComments = True
 
 lastGroupName = "Märkused"
 # Requires comment data property to be in the last group (lastGroupName)
