@@ -15,7 +15,8 @@ type ListDataField = {
     sheet_id?: number,
     year?: number,
     season?: number,
-    type?: number
+    type?: number,
+    starting_years?: string,
 }
 
 const Teacher = () => {
@@ -30,7 +31,7 @@ const Teacher = () => {
     const teacherYearsArray: string[] = [];
     const childrenListData = isTeacherChildrenDataLoaded
         ? children.map((childrenObject: any) => (
-            {"id": childrenObject.child_id, "sheet_id": childrenObject.sheet_id, "year": childrenObject.year, "season": childrenObject.season, "type": childrenObject.type}
+            {"id": childrenObject.child_id, "sheet_id": childrenObject.sheet_id, "year": childrenObject.year, "season": childrenObject.season, "type": childrenObject.type, "starting_years": childrenObject.starting_years}
         ))
         : "No data";
 
@@ -88,7 +89,10 @@ const Teacher = () => {
                                     {
                                         childrenListData ? childrenListData.map((entry: ListDataField) => (
                                             entry.name != ''
-                                                ? <div className="scrollable-list-data-row" key={"scrollable-list-data-" + entry.id}><Link to={`/children/${entry.type === SheetTypeEnums.QUANTITATIVE ? "qv" : "ql"}/${entry.sheet_id}/${entry.id}`}>{entry.id}</Link> ({entry.year} {entry.season === SeasonEnums.AUTUMN ? "sügis" : "kevad"})</div>
+                                                ?
+                                                <div className="scrollable-list-data-row" key={"scrollable-list-data-" + entry.id}>
+                                                    <Link to={`/children/${entry.type === SheetTypeEnums.QUANTITATIVE ? "qv" : "ql"}/${entry.sheet_id}/${entry.id}`}>{entry.id}</Link> ({entry.year} {entry.season === SeasonEnums.AUTUMN ? "sügis" : "kevad"}, {entry.starting_years})
+                                                </div>
                                                 : null
                                         )) : <div>Andmed puuduvad</div>
                                     }

@@ -8,7 +8,8 @@ exports.getAllSheets = async (req, res) => {
                 "id, " +
                 "year, " +
                 "season, " +
-                "type " +
+                "type, " +
+                "starting_years " +
             "FROM sheet",
             { type: QueryTypes.SELECT })
         return res.status(200).json({ results });
@@ -24,7 +25,8 @@ exports.getAllSheetsByType = async (req, res) => {
             "SELECT DISTINCT " +
                 "id, " +
                 "year, " +
-                "season " +
+                "season, " +
+                "starting_years " +
             "FROM sheet " +
             "WHERE type = ?",
             {
@@ -45,7 +47,8 @@ exports.getFirstSheetWithDifferentType = async (req, res) => {
             "SELECT DISTINCT " +
             "id, " +
             "year, " +
-            "season " +
+            "season, " +
+            "starting_years " +
             "FROM sheet " +
             "WHERE type != ? " +
             "LIMIT 1",

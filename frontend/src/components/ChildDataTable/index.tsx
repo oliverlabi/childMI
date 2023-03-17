@@ -199,16 +199,17 @@ const ChildDataTable = ({headers, data, sheetsData, filterHeaders, currentDataTy
                         {Object.entries(sheetsData).map((data) => {
                             const currentId = data && data[1]["id"];
                             const sheetSeason = data && data[1]["season"] === SeasonEnums.AUTUMN ? "sügis" : "kevad";
-                            const sheetYear = data && data[1]["year"]
+                            const sheetYear = data && data[1]["year"];
+                            const sheetStartingYears = data && data[1]["starting_years"];
                             if (sheetId === currentId.toString()) {
                                 return <tr className="data-year-column-active" key={data[0] + data[1]}>
-                                    <td><Link to={`/children/${currentDataType}/${currentId}/`}>{`${sheetYear} ${sheetSeason}`}</Link></td>
+                                    <td><Link to={`/children/${currentDataType}/${currentId}/`}>{`${sheetYear} ${sheetSeason} \n (${sheetStartingYears})`}</Link></td>
                                 </tr>
                             }
 
                             return <tr className="data-year-column" key={data[0] + data[1]}>
                                 <td onClick={refreshPage}><Link
-                                    to={`/children/${currentDataType}/${currentId}/`}>{`${sheetYear} ${sheetSeason}`}</Link></td>
+                                    to={`/children/${currentDataType}/${currentId}/`}>{`${sheetYear} ${sheetSeason} \n (${sheetStartingYears})`}</Link></td>
                             </tr>
                         })}
                         </tbody>

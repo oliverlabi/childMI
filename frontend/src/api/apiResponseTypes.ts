@@ -36,13 +36,15 @@ export interface IAllSheetsDataResponse {
     id: number,
     year: number,
     season: number,
-    type: number
+    type: number,
+    starting_years: string,
 }
 
 export interface IAllSheetsDataByTypeResponse {
     id: number,
     year: number,
     season: number
+    starting_years: string,
 }
 
 export interface IAllCommentsBySheetIdResponse {
