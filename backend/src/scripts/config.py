@@ -4,14 +4,15 @@ import mysql.connector
 # -------------------------------------------------------------------------------
 
 # Excel file
-fileName = "ql-2022-1.ods"
+fileName = "ql-2022-1-2021-2022.ods"
 
 splitFileName = fileName.split("-")
 currentSheetDataType = splitFileName[0]
 currentSheetYear = splitFileName[1]
-currentSheetSeason = splitFileName[2].split(".")[0]
+currentSheetSeason = splitFileName[2]
+currentSheetStartingYears = splitFileName[3] + "-" + splitFileName[4].split(".")[0]
 currentSheetURL = "test"
-currentSheetID = "5"
+currentSheetID = "6"
 currentSheetHeaderIndex = 0
 
 if currentSheetDataType == "qv":
@@ -51,7 +52,7 @@ includesComments = False
 
 lastGroupName = "Märkused"
 # Requires comment data property to be in the last group (lastGroupName)
-commentProperty = "Märkused ja tähelepanekud"
+commentProperty = "Kommentaarid"
 
 childDataGroupName = "Taustaandmed"
 childNameProperty = "Lapse kood"
@@ -64,7 +65,6 @@ childGenderProperty = "Lapse sugu"
 childGenderPropertyEmpty = "E"
 
 childSpecialNeedProperty = "Kas lapsel on mõni erivajadus, mis onseotud keelelise arenguga"
-
 
 teacherNameProperty = "Õpetaja kood"
 schoolNameProperty = "Kool"
