@@ -3,7 +3,5 @@ backend/.env
 backend/src/scripts/names.csv
 frontend/node_modules
 .idea
-frontend/package-lock.json
 frontend/src/config
-backend/package-lock.json
 backend/src/scripts/data
