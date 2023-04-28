@@ -25,7 +25,7 @@ dataframe = dataframe.where(dataframe.notna(), None)
 
 # -------------------------------------------------------------------------------
 
-# Database connection
+# Database connection - store locally!
 childMI = mysql.connector.connect(
     host="localhost",
     user="root",
