@@ -14,7 +14,7 @@ Installeerida lähtekood
 
 #### Andmebaas
 1. Installeerida MySQL Server, MySQL Workbench, Node.js ning NPM
-2. Luua lokaalne MySQL server [MySQLi ametlik juhend](https://dev.mysql.com/doc/mysql-getting-started/en/) pordiga 49500
+2. Luua lokaalne MySQL server [(MySQLi ametlik juhend)](https://dev.mysql.com/doc/mysql-getting-started/en/) pordiga 49500
 3. Võtta andmebaasi mudel db_model/db.mwb kasutusele kasutades MySQL Workbench'i "[forward engineer](https://dev.mysql.com/doc/workbench/en/wb-forward-engineering-live-server.html)" funktsionaalsust
 
 #### Tagarakendus (backend)
