@@ -15,7 +15,7 @@ Enne seda on vaja alla laadida childMI hoidla "main" haru lähtekood ning soovit
 ### Andmebaasi ülesseadistamine
 1. Installeerida MySQL Server, MySQL Workbench, Node.js ning NPM
 2. Luua lokaalne MySQL server [(MySQL'i ametlik juhend)](https://dev.mysql.com/doc/workbench/en/wb-installing.html) pordiga 49500
-3. Võtta andmebaasi mudel db_model/db.mwb kasutusele kasutades MySQL Workbench'i [forward engineer](https://dev.mysql.com/doc/workbench/en/wb-forward-engineering-live-server.html) funktsionaalsust
+3. Võtta andmebaasi mudel "/db_model/db.mwb" kasutusele kasutades MySQL Workbench'i [forward engineer](https://dev.mysql.com/doc/workbench/en/wb-forward-engineering-live-server.html) funktsionaalsust
 4. Sisesta andmetabelid andmebaasi "/backend/src/scripts" kaustas olevate skriptide abil.
 
 Produktsiooniversiooni jaoks luua eraldi MySQL server.
