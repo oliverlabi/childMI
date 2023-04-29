@@ -12,15 +12,58 @@ Tehtud [Tallinna Ülikooli Digitehnoloogiate instituudi](https://www.tlu.ee/dt) 
 Rakenduse korrektseks toimimiseks on vaja üles seadistada nii andmebaas, tagarakendus kui ka eesrakendus.
 Enne seda on vaja alla laadida childMI hoidla "main" haru lähtekood ning soovitud kohta lahti pakkida.
 
-#### Andmebaasi ülesseadistamine
+### Andmebaasi ülesseadistamine
 1. Installeerida MySQL Server, MySQL Workbench, Node.js ning NPM
 2. Luua lokaalne MySQL server [(MySQL'i ametlik juhend)](https://dev.mysql.com/doc/workbench/en/wb-installing.html) pordiga 49500
 3. Võtta andmebaasi mudel db_model/db.mwb kasutusele kasutades MySQL Workbench'i [forward engineer](https://dev.mysql.com/doc/workbench/en/wb-forward-engineering-live-server.html) funktsionaalsust
-4. Sisesta andmetabelid andmebaasi "/backend/src/scripts" kaustas olevate skriptide abil
+4. Sisesta andmetabelid andmebaasi "/backend/src/scripts" kaustas olevate skriptide abil.
 
 Produktsiooniversiooni jaoks luua eraldi MySQL server.
 
-#### Tagarakenduse (backend) ülesseadistamine
+<details><summary><b>Skriptide kasutamise juhend</b></summary>
+
+Kuigi skripte on suur kogus, tuleb nende kasutajal tegeleda ainult kahe failiga: „config.py“ ning „runScripts.py“.
+
+Esimese sammuna on vaja konfigureerida „config.py“ faili. Muuta tuleb järgmised andmetabeli muutujad:
+* „fileName“,
+* „currentSheetURL“,
+* „currentSheetID“,
+* „currentSheetHeaderIndex“.
+
+„fileName“ väärtus tähistab andmetabeli faili nime. See peab olema kindlas formaadis, kuna selle pealt tuletatakse teised muutujad. 
+
+Kirjeldatu kuju on järgmine: „andmetabeli tüüp – aasta – hooaeg – õpilaste alustamisaasta 1 – õpilaste alustamisaasta 2“. 
+
+Kõik selle nime osad jaotatakse eraldi muutujatesse, eraldades need koodisiseselt sidekriipsuga. 
+
+* Andmetabeli tüübi võimalikud väärtused on: kvantitatiivsed („qv“) ning kvalitatiivsed („ql“).
+* Faili nime hooaja võimalikud tähistused on: sügised („0“) ning kevadised („1“) andmed. Kui vaja, saab sinna sisestada ka teisi numbreid, juhul, kui on näiteks vaja talviseid või suviseid andmeid sisestada. Töö käigus rohkem kui kahte see-eest vaja ei läinud.  
+* „currentSheetURL“ muutujasse sisestatakse originaalse andmetabeli link
+* „currentSheetID“  muutujale määratakse unikaalne andmebaasi „sheet“ tabeli identifikaator
+* „currentSheetHeaderIndex“ väärtuseks sisestatakse andmetabeli päise indeks
+
+Kui andmetabeli muutujad on paigas, tuleb skriptide kasutajal üle vaadata ning vajadusel kohendada globaalsed muutujad:
+* „lastGroupName“,
+* „commentProperty“,
+* „childDataGroupName“,
+* „childNameProperty“,
+* „childNamePropertyEmpty“,
+* „childAgeProperty“,
+* „childAgePropertyEmpty“, 
+* „childGenderProperty“,
+* „childGenderPropertyEmpty“,
+* „childSpecialNeedProperty“,
+* „teacherNameProperty“,
+* „schoolNameProperty“.
+
+Nimetatud muutujad tähistavad andmetabelites olevaid päiseid. Neile tuleb määrata vastav korrektne nimeline väärtus. Tühjadele („empty“) muutujatele on vaja sisestada väärtus, mis kantakse andmebaasi, kui andmetabelis pole vastavat lahtrit.
+Kui kõik eelnevalt nimetatud muutujad on korrektselt kohandatud, tuleb käivitada „runScripts.py“ fail. See käivitab kõik skriptid ükshaaval, sisestades andmetabeli andmed korrektsetesse andmebaasi tabelitesse. 
+
+Konfiguratsioonivea puhul lõpetab skript tegevuse ning annab kasutajale veateate.
+
+</details>
+
+### Tagarakenduse (backend) ülesseadistamine
 Tagarakenduse puhul on nii arenduse- kui ka produktsiooniversiooni ülesseadistamise protsess ekvivalentne.
 
 1. Luua /backend kausta ".env" fail sisuga:
