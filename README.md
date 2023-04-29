@@ -89,7 +89,7 @@ export const API_URL = "http://localhost:49500/api/"
 3. Installeeri vajalikud NPM paketid, navigeerides käsureal kataloogi /frontend ning kasutades käsku "npm install"
 4. Käivita eesrakendus käsurea käsuga "npm start"
 
-### Produktsiooniversioon
+#### Produktsiooniversioon
 1. Veendu, et arendusversioon toimib. Sellest edasi luuakse produktsiooniversioon
 2. Muuda /frontend/src/config.ts failis muutuja API_URL'i väärtus ümber produktsiooniversiooni tagarakenduse aadressiks
 4. Loo rakenduse produktsiooniversioon käsuga "npm build"
