@@ -64,7 +64,7 @@ Konfiguratsioonivea puhul lõpetab skript tegevuse ning annab kasutajale veateat
 </details>
 
 ### Tagarakenduse (backend) ülesseadistamine
-Tagarakenduse puhul on nii arenduse- kui ka produktsiooniversiooni ülesseadistamise protsess ekvivalentne.
+Tagarakenduse puhul on nii arenduse- kui ka produktsiooniversiooni ülesseadistamise protsess peaaegu üks-ühele.
 
 1. Luua /backend kausta ".env" fail sisuga:
 ```
@@ -75,7 +75,7 @@ PORT=49500
 ```
 2. Installeerida vajalikud NPM paketid, navigeerides käsureal kataloogi /backend ning kasutades käsku "npm install"
 3. Käivitada tagarakendus käsurea käsuga "npm start"
-4. NB! Produktsiooniversiooni korral on vaja "/backend/src/server.js" failis muuta corsOptioni muutuja origin väärtused korrektseteks taga- kui ka eesrakenduse internetiaadressiteks. Vastasel juhul esinevad CORS vead.
+4. Produktsiooniversiooni korral on vaja "/backend/src/server.js" failis muuta corsOptioni muutuja origin väärtused korrektseteks taga- kui ka eesrakenduse internetiaadressiteks. Vastasel juhul esinevad CORS vead.
 
 
 ### Eesrakenduse (frontend) ülesseadistamine
